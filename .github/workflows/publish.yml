@@ -37,10 +37,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Release (bump version, changelog, tag)
-        run: npx commit-and-tag-version
+        run: npx commit-and-tag-version --skip.tag
 
-      - name: Push release commit and tag
-        run: git push --follow-tags origin main
+      - name: Push release commit
+        run: git push origin main
 
       - name: Publish to npm
         run: npm publish --provenance --access public
+
+      - name: Tag and push tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          git tag -a "v${VERSION}" -m "chore(release): ${VERSION}"
+          git push origin "v${VERSION}"
