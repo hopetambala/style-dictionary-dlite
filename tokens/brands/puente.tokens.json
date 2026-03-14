@@ -1,0 +1,13 @@
+{
+  "puente": {
+    "$extends": "{global}",
+    "themes": {
+      "default": {
+        "modes": {
+          "light": {},
+          "dark": {}
+        }
+      }
+    }
+  }
+}

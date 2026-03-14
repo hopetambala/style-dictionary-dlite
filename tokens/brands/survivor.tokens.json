@@ -1,0 +1,55 @@
+{
+  "survivor": {
+    "$extends": "{global}",
+    "themes": {
+      "default": {
+        "modes": {
+          "light": {
+            "color": {
+              "$type": "color",
+              "primary": {
+                "$value": "{primitive.color.blue.600}"
+              }
+            }
+          },
+          "dark": {}
+        }
+      },
+      "winter-holiday": {
+        "modes": {
+          "light": {
+            "color": {
+              "$type": "color",
+              "primary": { "$value": "{primitive.color.red.600}" },
+              "primary-hover": { "$value": "{primitive.color.red.700}" },
+              "secondary": { "$value": "{primitive.color.green.600}" },
+              "background": { "$value": "{primitive.color.red.100}" },
+              "surface-base": { "$value": "{primitive.color.white}" },
+              "surface-sunken": { "$value": "{primitive.color.red.100}" },
+              "surface-raised": { "$value": "{primitive.color.white}" },
+              "action-primary": { "$value": "{primitive.color.red.600}" },
+              "action-secondary": { "$value": "{primitive.color.green.100}" },
+              "success": { "$value": "{primitive.color.green.700}" },
+              "feedback-success": { "$value": "{primitive.color.green.700}" },
+              "feedback-info": { "$value": "{primitive.color.teal.700}" }
+            }
+          },
+          "dark": {
+            "color": {
+              "$type": "color",
+              "primary": { "$value": "{primitive.color.red.500}" },
+              "primary-hover": { "$value": "{primitive.color.red.400}" },
+              "secondary": { "$value": "{primitive.color.green.400}" },
+              "background": { "$value": "{primitive.color.neutral.900}" },
+              "surface-sunken": { "$value": "{primitive.color.neutral.800}" },
+              "surface-raised": { "$value": "{primitive.color.neutral.750}" },
+              "action-primary": { "$value": "{primitive.color.red.500}" },
+              "action-secondary": { "$value": "{primitive.color.green.800}" },
+              "feedback-info": { "$value": "{primitive.color.teal.400}" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
