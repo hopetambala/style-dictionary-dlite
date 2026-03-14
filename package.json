@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Multi-brand, multi-theme design tokens using Style Dictionary",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsx ./build.ts",
     "clean": "rm -rf dist",
