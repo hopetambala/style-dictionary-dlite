@@ -101,7 +101,7 @@ The `$value` is the default (light). `$extensions.mode.dark` only appears when t
 
 ### How it works
 
-At build time, `build.js`:
+At build time, `build.ts`:
 
 1. Loads all `.tokens.json` files into a single document
 2. Resolves chained `$extends` references (deep merge per W3C spec §6.4)
@@ -142,6 +142,8 @@ CSS variables follow the naming convention: `--{brand}-{tier}-{category}-{token}
 yarn install
 yarn build     # generates dist/
 yarn clean     # removes dist/
+yarn test      # runs snapshot tests against dist/
+yarn test:update  # updates snapshots after intentional changes
 ```
 
 ## Adding a new brand

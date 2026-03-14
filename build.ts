@@ -3,16 +3,25 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+type TokenNode = Record<string, unknown> & { $value: unknown };
+
+type TokenTree = {
+  [key: string]: unknown;
+};
+
+// ---------------------------------------------------------------------------
 // W3C DTCG $extends resolver (spec section 6.4)
 //   Deep merge: inherited tokens are copied, local tokens override at same path
 //   Token nodes ($value present) are replaced entirely, not property-merged
 // ---------------------------------------------------------------------------
-function isToken(obj) {
-  return obj && typeof obj === 'object' && '$value' in obj;
+function isToken(obj: unknown): obj is TokenNode {
+  return obj != null && typeof obj === 'object' && '$value' in obj;
 }
 
-function deepMerge(target, source) {
-  const result = { ...target };
+function deepMerge(target: TokenTree, source: TokenTree): TokenTree {
+  const result: TokenTree = { ...target };
   for (const key of Object.keys(source)) {
     const srcVal = source[key];
     const tgtVal = target[key];
@@ -22,7 +31,7 @@ function deepMerge(target, source) {
       srcVal && typeof srcVal === 'object' && !Array.isArray(srcVal) &&
       tgtVal && typeof tgtVal === 'object' && !Array.isArray(tgtVal)
     ) {
-      result[key] = deepMerge(tgtVal, srcVal);
+      result[key] = deepMerge(tgtVal as TokenTree, srcVal as TokenTree);
     } else {
       result[key] = srcVal;
     }
@@ -30,12 +39,12 @@ function deepMerge(target, source) {
   return result;
 }
 
-function resolveReference(doc, refString) {
+function resolveReference(doc: TokenTree, refString: string): unknown {
   const segments = refString.replace(/^\{/, '').replace(/\}$/, '').split('.');
-  let current = doc;
+  let current: unknown = doc;
   for (const seg of segments) {
     if (current && typeof current === 'object') {
-      current = current[seg];
+      current = (current as Record<string, unknown>)[seg];
     } else {
       throw new Error(`Cannot resolve $extends reference: ${refString}`);
     }
@@ -43,16 +52,16 @@ function resolveReference(doc, refString) {
   return current;
 }
 
-function resolveExtends(node, root) {
+function resolveExtends(node: unknown, root: TokenTree): unknown {
   if (!node || typeof node !== 'object' || Array.isArray(node)) return node;
 
-  let result = { ...node };
+  let result: TokenTree = { ...(node as TokenTree) };
 
   if (result.$extends) {
-    const rawBase = resolveReference(root, result.$extends);
+    const rawBase = resolveReference(root, result.$extends as string);
     const resolvedBase = resolveExtends(structuredClone(rawBase), root);
     delete result.$extends;
-    result = deepMerge(resolvedBase, result);
+    result = deepMerge(resolvedBase as TokenTree, result);
   }
 
   for (const key of Object.keys(result)) {
@@ -69,8 +78,8 @@ function resolveExtends(node, root) {
 // ---------------------------------------------------------------------------
 // Load all token files into a single document, resolve $extends
 // ---------------------------------------------------------------------------
-function loadTokenFiles(dir) {
-  const doc = {};
+function loadTokenFiles(dir: string): TokenTree {
+  const doc: TokenTree = {};
   if (!fs.existsSync(dir)) return doc;
   const files = fs.readdirSync(dir)
     .filter((f) => f.endsWith('.tokens.json'))
@@ -87,18 +96,19 @@ function loadTokenFiles(dir) {
 //   Walks the token tree; for any token with $extensions.mode[mode],
 //   replaces $value with the mode-specific value and strips the metadata
 // ---------------------------------------------------------------------------
-function applyInlineModes(node, mode) {
+function applyInlineModes(node: unknown, mode: string): unknown {
   if (!node || typeof node !== 'object' || Array.isArray(node)) return node;
 
-  const result = {};
-  for (const [key, val] of Object.entries(node)) {
+  const result: TokenTree = {};
+  for (const [key, val] of Object.entries(node as TokenTree)) {
     if (isToken(val)) {
-      const modeValue = val.$extensions?.mode?.[mode];
+      const extensions = val.$extensions as Record<string, Record<string, unknown>> | undefined;
+      const modeValue = extensions?.mode?.[mode];
       if (modeValue != null) {
-        const clone = { ...val, $value: modeValue };
+        const clone: TokenTree = { ...val, $value: modeValue };
         // Strip the mode metadata from $extensions
         if (clone.$extensions) {
-          const { mode: _, ...restExt } = clone.$extensions;
+          const { mode: _, ...restExt } = clone.$extensions as Record<string, unknown>;
           if (Object.keys(restExt).length === 0) {
             delete clone.$extensions;
           } else {
@@ -127,22 +137,31 @@ function applyInlineModes(node, mode) {
 //   3. Deep merge brand themes[theme].modes[mode] overrides
 //   4. Strip "themes" group — it's metadata, not output tokens
 // ---------------------------------------------------------------------------
-function extractTokens(resolved, brandName, theme, mode, primitives) {
-  const brand = resolved[brandName];
+function extractTokens(
+  resolved: TokenTree,
+  brandName: string,
+  theme: string,
+  mode: string,
+  primitives: TokenTree,
+): TokenTree {
+  const brand = resolved[brandName] as TokenTree | undefined;
   if (!brand) throw new Error(`Brand "${brandName}" not found`);
 
   // Clone base brand tokens (already has global tokens merged via $extends)
-  const base = structuredClone(brand);
+  const base = structuredClone(brand) as TokenTree;
 
   // Get brand theme+mode overrides
-  const brandModeOverrides = base.themes?.[theme]?.modes?.[mode] ?? {};
+  const themes = base.themes as TokenTree | undefined;
+  const brandModeOverrides = (
+    (themes?.[theme] as TokenTree | undefined)?.modes as TokenTree | undefined
+  )?.[mode] as TokenTree ?? {};
 
   // Remove structural groups — not part of output
   delete base.themes;
   delete base.modes;
 
   // Apply inline mode values from $extensions.mode
-  const modeApplied = applyInlineModes(base, mode);
+  const modeApplied = applyInlineModes(base, mode) as TokenTree;
 
   // Layer brand theme+mode overrides on top
   const merged = deepMerge(modeApplied, brandModeOverrides);
@@ -155,11 +174,16 @@ function extractTokens(resolved, brandName, theme, mode, primitives) {
 // Discover all theme + mode combinations for a brand
 //   Brands have: themes > modes (e.g. themes.default.modes.light)
 // ---------------------------------------------------------------------------
-function discoverThemes(brand) {
-  const combos = [];
-  const themes = brand.themes ?? {};
+interface ThemeCombo {
+  theme: string;
+  mode: string;
+}
+
+function discoverThemes(brand: TokenTree): ThemeCombo[] {
+  const combos: ThemeCombo[] = [];
+  const themes = (brand.themes ?? {}) as TokenTree;
   for (const [theme, themeValue] of Object.entries(themes)) {
-    const modes = themeValue.modes ?? {};
+    const modes = ((themeValue as TokenTree).modes ?? {}) as TokenTree;
     for (const mode of Object.keys(modes)) {
       combos.push({ theme, mode });
     }
@@ -179,13 +203,13 @@ fs.rmSync('dist', { recursive: true, force: true });
 StyleDictionary.registerTransform({
   name: 'name/brand-tier-kebab',
   type: 'name',
-  transform: (token, options) => {
+  transform: (token: any, options: any) => {
     const brand = options.brandName;
-    const path = token.path;
-    const isPrimitive = path[0] === 'primitive';
+    const tokenPath: string[] = token.path;
+    const isPrimitive = tokenPath[0] === 'primitive';
     const tier = isPrimitive ? 'primitive' : 'semantic';
     // For primitives, skip the first "primitive" segment to avoid duplication
-    const segments = isPrimitive ? path.slice(1) : path;
+    const segments = isPrimitive ? tokenPath.slice(1) : tokenPath;
     return [brand, tier, ...segments].join('-');
   },
 });
@@ -196,14 +220,14 @@ StyleDictionary.registerTransform({
   name: 'value/dtcg-color',
   type: 'value',
   transitive: true,
-  filter: (token) => token.$type === 'color',
-  transform: (token) => {
+  filter: (token: any) => token.$type === 'color',
+  transform: (token: any) => {
     const val = token.$value ?? token.value;
     if (val && typeof val === 'object' && val.colorSpace && val.components) {
       // Use hex fallback if available, otherwise compute from sRGB components
       if (val.hex) return val.hex;
       const [r, g, b] = val.components;
-      const toHex = (n) => Math.round(n * 255).toString(16).padStart(2, '0');
+      const toHex = (n: number) => Math.round(n * 255).toString(16).padStart(2, '0');
       return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
     }
     return val;
@@ -215,8 +239,8 @@ StyleDictionary.registerTransform({
   name: 'value/shadow-css',
   type: 'value',
   transitive: true,
-  filter: (token) => token.$type === 'shadow',
-  transform: (token) => {
+  filter: (token: any) => token.$type === 'shadow',
+  transform: (token: any) => {
     const val = token.$value ?? token.value;
     if (val && typeof val === 'object' && val.offsetX !== undefined) {
       return `${val.offsetX} ${val.offsetY} ${val.blur} ${val.spread} ${val.color}`;
@@ -226,22 +250,24 @@ StyleDictionary.registerTransform({
 });
 
 // Load global + brand files into one document, then resolve $extends
-const doc = {
+const doc: TokenTree = {
   ...loadTokenFiles('tokens/globals'),
   ...loadTokenFiles('tokens/brands'),
 };
 
 console.log('Resolving $extends references...');
-const resolved = resolveExtends(doc, doc);
+const resolved = resolveExtends(doc, doc) as TokenTree;
 
 // Primitives are shared across all brands for alias resolution
-const primitives = resolved.primitive ?? {};
+const primitives = (resolved.primitive ?? {}) as TokenTree;
 
 // Discover brands (everything except "global" and "primitive")
-const brandNames = Object.keys(resolved).filter((k) => k !== 'global' && k !== 'primitive' && k !== 'semantic');
+const brandNames = Object.keys(resolved).filter(
+  (k) => k !== 'global' && k !== 'primitive' && k !== 'semantic',
+);
 
 for (const brandName of brandNames) {
-  const combos = discoverThemes(resolved[brandName]);
+  const combos = discoverThemes(resolved[brandName] as TokenTree);
 
   for (const { theme, mode } of combos) {
     console.log(`\n==============================================`);
@@ -265,7 +291,7 @@ for (const brandName of brandNames) {
           ],
         },
       },
-    });
+    } as any);
 
     await sd.buildAllPlatforms();
   }

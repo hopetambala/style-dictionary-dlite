@@ -1,13 +1,19 @@
 {
-  "name": "style-dictionary-multi-brand-multi-theme",
+  "name": "style-dictionary-dlite-tokens",
   "version": "1.0.0",
   "description": "Multi-brand, multi-theme design tokens using Style Dictionary",
   "type": "module",
   "scripts": {
-    "build": "node ./build.js",
-    "clean": "rm -rf dist"
+    "build": "tsx ./build.ts",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "test:update": "vitest run --update"
   },
   "devDependencies": {
-    "style-dictionary": "^5.3.3"
+    "@types/node": "^25.5.0",
+    "style-dictionary": "^5.3.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }
