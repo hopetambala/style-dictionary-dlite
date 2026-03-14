@@ -38,6 +38,39 @@ function resolveReference(doc: TokenTree, refString: string): unknown {
   return current;
 }
 
+/**
+ *  Recursively resolves $extends in a token tree. 
+ * When a node has $extends, it looks up the referenced node,
+ * resolves its $extends recursively, and merges the result with the current node.
+ * @param node The current node to resolve.
+ * @param root The root token tree for reference resolution.
+ * @returns The node with all $extends resolved.
+ * 
+ * Example:
+ * Given a token tree:
+ * {
+ *   "base": {
+ *     "color": { "$value": "#000" }
+ *   },
+ *   "derived": {
+ *     "$extends": "{base}",
+ *     "color": { "$value": "#111" }
+ *   }
+ * }
+ * Calling resolveExtends on the root will produce:
+ * {
+ *   "base": {
+ *     "color": { "$value": "#000" }
+ *   },
+ *   "derived": {
+ *     "color": { "$value": "#111" }
+ *   }
+ * }
+ * Note that the "derived" node has its own color value that overrides the base, but if it didn't have a color, it would inherit the base's color.
+ * Also, if "derived" had additional properties, they would be merged with the base's properties.
+ * The function handles nested $extends and ensures that all references are resolved properly.
+ * It also avoids resolving $extends on nodes that are tokens themselves (i.e., have a $value), as those are considered leaf nodes.
+ */
 export function resolveExtends(node: unknown, root: TokenTree): unknown {
   if (!node || typeof node !== 'object' || Array.isArray(node)) return node;
 
@@ -74,6 +107,36 @@ export function loadTokenFiles(dir: string): TokenTree {
   return doc;
 }
 
+/**
+ * Recursively applies inline mode overrides to a token tree.
+ * If a token has a mode-specific value, it replaces the token's value with the mode-specific value.
+ * @param node The current node to process.
+ * @param mode The mode to apply.
+ * @returns The node with inline mode overrides applied.
+ * Example:
+ * Given a token tree:
+ * {
+ *   "button": {
+ *     "$value": "#000",
+ *     "$extensions": {
+ *       "mode": {
+ *         "dark": "#fff"
+ *       }
+ *     }
+ *   }
+ * }
+ * Calling applyInlineModes with mode "dark" will produce:
+ * {
+ *   "button": {
+ *     "$value": "#fff",
+ *     "$extensions": {}
+ *   }
+ * }
+ * Note that the button token's value has been replaced with the dark mode value, and the mode extension has been removed since it's been applied.
+ * If there were other extensions, they would be preserved.
+ * The function processes the entire tree, so any nested tokens with mode overrides will also be applied.
+ * It only applies overrides to nodes that are tokens (i.e., have a $value) and skips non-token nodes and keys that start with '$'.
+ */
 export function applyInlineModes(node: unknown, mode: string): unknown {
   if (!node || typeof node !== 'object' || Array.isArray(node)) return node;
 

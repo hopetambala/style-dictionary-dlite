@@ -1,13 +1,7 @@
 import StyleDictionary from 'style-dictionary';
 
-/**
- * Custom name transform to generate kebab-case token names with brand and tier:
- * - Primitive tokens: {brand}-primitive-{tokenPath}
- * - Semantic tokens: {brand}-semantic-{tokenPath}
- * Example: "acme-primitive-color-background" or "acme-semantic-color-background"
- */
 StyleDictionary.registerTransform({
-  name: 'name/brand-tier-kebab',
+  name: 'name/brand-tier-camel',
   type: 'name',
   transform: (token: any, options: any) => {
     const brand = options.brandName;
@@ -15,6 +9,14 @@ StyleDictionary.registerTransform({
     const isPrimitive = tokenPath[0] === 'primitive';
     const tier = isPrimitive ? 'primitive' : 'semantic';
     const segments = isPrimitive ? tokenPath.slice(1) : tokenPath;
-    return [brand, tier, ...segments].join('-');
+    const parts = [brand, tier, ...segments]
+      .flatMap((s) => s.split('-'))
+      .map((s, i) =>
+        i === 0
+          ? s.toLowerCase()
+          : s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(),
+      )
+      .join('');
+    return parts;
   },
 });

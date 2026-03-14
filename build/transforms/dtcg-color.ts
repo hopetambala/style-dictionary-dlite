@@ -1,5 +1,15 @@
 import StyleDictionary from 'style-dictionary';
 
+/**
+ * Custom value transform to convert DTCG color objects to hex strings.
+ * Expects color tokens to have a value like:
+ * {
+ *   colorSpace: 'srgb',
+ *   components: [r, g, b],
+ *   hex: '#rrggbb' // optional, if present will be used directly
+ * }
+ * Transforms to a hex string like "#rrggbb".
+ */
 StyleDictionary.registerTransform({
   name: 'value/dtcg-color',
   type: 'value',

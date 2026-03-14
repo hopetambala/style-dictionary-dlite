@@ -1,5 +1,17 @@
 import StyleDictionary from 'style-dictionary';
 
+/**
+ * Custom value transform to convert shadow tokens to CSS box-shadow strings.
+ * Expects shadow tokens to have a value like:
+ * {
+ *   offsetX: '2px',
+ *   offsetY: '4px',
+ *   blur: '6px',
+ *   spread: '0px',
+ *   color: '#000000'
+ * }
+ * Transforms to a CSS string like "2px 4px 6px 0px #000000".
+ */
 StyleDictionary.registerTransform({
   name: 'value/shadow-css',
   type: 'value',

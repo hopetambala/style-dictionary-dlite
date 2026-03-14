@@ -10,6 +10,10 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    "./web/*": "./dist/web/*",
+    "./rn/*/tokens": "./dist/rn/*/tokens.ts"
+  },
   "scripts": {
     "build": "tsx ./build/index.ts",
     "clean": "rm -rf dist",
