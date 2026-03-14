@@ -1,0 +1,8 @@
+import { light } from './light.ts';
+import { dark } from './dark.ts';
+
+export { light } from './light.ts';
+export { dark } from './dark.ts';
+
+export const tokens = { light, dark } as const;
+export type Tokens = typeof light;

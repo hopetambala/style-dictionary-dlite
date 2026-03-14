@@ -74,32 +74,39 @@ for (const brandName of brandNames) {
       await sd.buildAllPlatforms();
     }
 
-    // Read temp JSON files and combine into a single tokens.ts
+    // Read temp JSON files and write separate mode files + barrel index
     const tmpDir = `dist/rn/${brandName}/${theme}/.tmp`;
-    const modeObjects: string[] = [];
+    const outDir = `dist/rn/${brandName}/${theme}`;
 
     for (const mode of modes) {
       const jsonPath = path.join(tmpDir, `${mode}.json`);
       const data = fs.readFileSync(jsonPath, 'utf-8');
-      modeObjects.push(`export const ${mode} = ${data} as const;`);
+      const modeContent = `export const ${mode} = ${data} as const;\n\nexport type ${mode.charAt(0).toUpperCase() + mode.slice(1)}Tokens = typeof ${mode};\n`;
+      fs.writeFileSync(path.join(outDir, `${mode}.ts`), modeContent);
     }
 
+    // Barrel index
+    const imports = modes.map((m) => `import { ${m} } from './${m}.ts';`);
+    const reExports = modes.map((m) => `export { ${m} } from './${m}.ts';`);
     const modeNames = modes.join(', ');
-    const tsContent = [
-      ...modeObjects,
+    const indexContent = [
+      ...imports,
+      '',
+      ...reExports,
       '',
       `export const tokens = { ${modeNames} } as const;`,
       `export type Tokens = typeof ${modes[0]};`,
       '',
     ].join('\n');
-
-    const outDir = `dist/rn/${brandName}/${theme}`;
-    fs.writeFileSync(path.join(outDir, 'tokens.ts'), tsContent);
+    fs.writeFileSync(path.join(outDir, 'index.ts'), indexContent);
 
     // Clean up temp files
     fs.rmSync(tmpDir, { recursive: true, force: true });
 
-    console.log(`✔︎ dist/rn/${brandName}/${theme}/tokens.ts`);
+    for (const mode of modes) {
+      console.log(`✔︎ dist/rn/${brandName}/${theme}/${mode}.ts`);
+    }
+    console.log(`✔︎ dist/rn/${brandName}/${theme}/index.ts`);
   }
 }
 

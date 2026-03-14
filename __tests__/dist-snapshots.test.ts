@@ -87,16 +87,17 @@ for (const brand of rnBrands) {
 
   for (const theme of themes) {
     const themeDir = path.join(brandDir, theme);
-    const tokensFile = path.join(themeDir, 'tokens.ts');
-    if (!fs.existsSync(tokensFile)) continue;
+    const files = fs.readdirSync(themeDir).filter((f) => f.endsWith('.ts')).sort();
 
     describe(`rn/${brand}/${theme}`, () => {
-      test('tokens.ts matches snapshot', async () => {
-        const content = fs.readFileSync(tokensFile, 'utf-8');
-        await expect(content).toMatchFileSnapshot(
-          `__snapshots__/rn/${brand}/${theme}/tokens.ts.snap`,
-        );
-      });
+      for (const file of files) {
+        test(`${file} matches snapshot`, async () => {
+          const content = fs.readFileSync(path.join(themeDir, file), 'utf-8');
+          await expect(content).toMatchFileSnapshot(
+            `__snapshots__/rn/${brand}/${theme}/${file}.snap`,
+          );
+        });
+      }
     });
   }
 }
