@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Release & Publish
 
 on:
   push:
@@ -6,13 +6,15 @@ on:
       - main
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -28,7 +30,16 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Release (bump version, changelog, tag)
+        run: npx commit-and-tag-version
+
+      - name: Push release commit and tag
+        run: git push --follow-tags origin main
+
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
