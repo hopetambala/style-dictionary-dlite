@@ -1,5 +1,3 @@
-import type { TokenTree } from '../../types.ts';
-
 export function webPlatform(brandName: string, theme: string, mode: string) {
   return {
     web: {

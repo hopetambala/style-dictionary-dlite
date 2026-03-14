@@ -143,7 +143,7 @@ Tokens use camelCase following the pattern `{brand}{Tier}{Category}{Name}`:
 
 ## TypeScript
 
-All token objects are typed `as const`, so you get full autocomplete and type-checking. The `Tokens` type is exported for use in function signatures:
+All token objects are fully typed in the generated `.d.ts` files, so you get autocomplete and type-checking. The `Tokens` type is exported for use in function signatures:
 
 ```ts
 import type { Tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';

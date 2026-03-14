@@ -1,7 +1,7 @@
-import { light } from './light.js';
 import { dark } from './dark.js';
+import { light } from './light.js';
 
-export { light } from './light.js';
 export { dark } from './dark.js';
+export { light } from './light.js';
 
-export const tokens = { light, dark };
+export const tokens = { dark, light };

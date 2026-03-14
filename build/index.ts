@@ -22,13 +22,14 @@ const resolved = resolveExtends(doc, doc) as TokenTree;
 
 const primitives = (resolved.primitive ?? {}) as TokenTree;
 
-const brandNames = Object.keys(resolved).filter(
-  (k) => k !== 'global' && k !== 'primitive' && k !== 'semantic',
-);
+const brandNames = Object.keys(resolved)
+  .filter((k) => k !== 'global' && k !== 'primitive' && k !== 'semantic')
+  .sort();
 
 // ── Web build (CSS per brand/theme/mode) ──
 for (const brandName of brandNames) {
   const combos = discoverThemes(resolved[brandName] as TokenTree);
+  combos.sort((a, b) => a.theme.localeCompare(b.theme) || a.mode.localeCompare(b.mode));
 
   for (const { theme, mode } of combos) {
     console.log(`\n==============================================`);
@@ -46,9 +47,10 @@ for (const brandName of brandNames) {
   }
 }
 
-// ── React Native build (combined TS per brand/theme) ──
+// ── React Native build (combined JS per brand/theme) ──
 for (const brandName of brandNames) {
   const combos = discoverThemes(resolved[brandName] as TokenTree);
+  combos.sort((a, b) => a.theme.localeCompare(b.theme) || a.mode.localeCompare(b.mode));
 
   // Group modes by theme
   const themeMap = new Map<string, string[]>();
@@ -57,7 +59,8 @@ for (const brandName of brandNames) {
     themeMap.get(theme)!.push(mode);
   }
 
-  for (const [theme, modes] of themeMap) {
+  for (const theme of Array.from(themeMap.keys()).sort()) {
+    const modes = themeMap.get(theme)!.sort();
     console.log(`\n==============================================`);
     console.log(`\nProcessing react-native: [${brandName}] [${theme}]`);
 
@@ -117,7 +120,7 @@ for (const brandName of brandNames) {
       ...dtsReExports,
       '',
       `export declare const tokens: { ${modes.map((m) => `readonly ${m}: typeof import('./${m}.js').${m}`).join('; ')} };`,
-      `export type Tokens = typeof import('./${modes[0]}.js').${modes[0]};`,
+      `export type Tokens = (typeof tokens)[keyof typeof tokens];`,
       '',
     ].join('\n');
     fs.writeFileSync(path.join(outDir, 'index.d.ts'), indexDts);
