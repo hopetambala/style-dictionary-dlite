@@ -17,7 +17,7 @@ tokens/
 
 ### Token Tiers
 
-**Primitives** — Context-free raw values organized by DTCG type:
+**Primitives** — Context-free raw values organized by DTCG specification type:
 
 | Group | `$type` | Examples |
 |-------|---------|----------|
