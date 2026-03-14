@@ -73,6 +73,7 @@ function resolveReference(doc: TokenTree, refString: string): unknown {
  */
 export function resolveExtends(node: unknown, root: TokenTree): unknown {
   if (!node || typeof node !== 'object' || Array.isArray(node)) return node;
+  if (isToken(node)) return node;
 
   let result: TokenTree = { ...(node as TokenTree) };
 
@@ -128,8 +129,7 @@ export function loadTokenFiles(dir: string): TokenTree {
  * Calling applyInlineModes with mode "dark" will produce:
  * {
  *   "button": {
- *     "$value": "#fff",
- *     "$extensions": {}
+ *     "$value": "#fff"
  *   }
  * }
  * Note that the button token's value has been replaced with the dark mode value, and the mode extension has been removed since it's been applied.

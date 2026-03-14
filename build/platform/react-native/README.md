@@ -14,21 +14,33 @@ npm install style-dictionary-dlite-tokens
 
 ## Output
 
-The build produces a single TypeScript file per brand/theme at:
+The build produces separate TypeScript files per brand/theme/mode at:
 
 ```
-dist/rn/{brand}/{theme}/tokens.ts
+dist/rn/{brand}/{theme}/
+  light.ts     # light mode tokens
+  dark.ts      # dark mode tokens
+  index.ts     # barrel — re-exports both + combined tokens object
 ```
 
-Each file exports:
+Each mode file exports:
 
 ```ts
 export const light = { ... } as const;
-export const dark = { ... } as const;
+export type LightTokens = typeof light;
+```
+
+The barrel `index.ts` re-exports everything:
+
+```ts
+export { light } from './light.ts';
+export { dark } from './dark.ts';
 
 export const tokens = { light, dark } as const;
 export type Tokens = typeof light;
 ```
+
+Dimension values (spacing, radii, font sizes) are converted to numbers (rem → px at base 16) so they can be used directly in React Native styles without parsing.
 
 ## Usage
 
@@ -36,7 +48,7 @@ export type Tokens = typeof light;
 
 ```tsx
 import { useColorScheme, Text, View } from 'react-native';
-import { tokens } from 'style-dictionary-dlite-tokens/dist/rn/puente/default/tokens';
+import { tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';
 
 export default function App() {
   const scheme = useColorScheme() ?? 'light';
@@ -56,7 +68,7 @@ export default function App() {
 
 ```tsx
 import { useColorScheme } from 'react-native';
-import { tokens, type Tokens } from 'style-dictionary-dlite-tokens/dist/rn/puente/default/tokens';
+import { tokens, type Tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';
 
 export function useTokens(): Tokens {
   const scheme = useColorScheme() ?? 'light';
@@ -76,7 +88,7 @@ function MyButton() {
     <Pressable
       style={{
         backgroundColor: t.puenteSemanticColorPrimary,
-        borderRadius: parseInt(t.puenteSemanticBorderRadiusMd),
+        borderRadius: t.puenteSemanticBorderRadiusMd,
         padding: 12,
       }}
     >
@@ -92,9 +104,9 @@ function MyButton() {
 
 ```tsx
 import { StyleSheet } from 'react-native';
-import { tokens } from 'style-dictionary-dlite-tokens/dist/rn/puente/default/tokens';
+import { light } from 'style-dictionary-dlite-tokens/rn/puente/default/light';
 
-const t = tokens.light;
+const t = light;
 
 const styles = StyleSheet.create({
   container: {
@@ -131,7 +143,7 @@ Tokens use camelCase following the pattern `{brand}{Tier}{Category}{Name}`:
 All token objects are typed `as const`, so you get full autocomplete and type-checking. The `Tokens` type is exported for use in function signatures:
 
 ```ts
-import type { Tokens } from 'style-dictionary-dlite-tokens/dist/rn/puente/default/tokens';
+import type { Tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';
 
 function getButtonStyle(t: Tokens) {
   return { backgroundColor: t.puenteSemanticColorPrimary };

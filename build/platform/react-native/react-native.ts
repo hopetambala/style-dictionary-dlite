@@ -2,7 +2,7 @@ export function reactNativePlatform(brandName: string, theme: string, mode: stri
   return {
     rn: {
       brandName,
-      transforms: ['attribute/cti', 'value/dtcg-color', 'value/shadow-css', 'name/brand-tier-camel'],
+      transforms: ['attribute/cti', 'value/dtcg-color', 'value/shadow-css', 'value/dimension-to-number', 'name/brand-tier-camel'],
       buildPath: `dist/rn/${brandName}/${theme}/.tmp/`,
       files: [
         {

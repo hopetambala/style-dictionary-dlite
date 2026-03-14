@@ -20,33 +20,34 @@ dist/web/{brand}/{theme}/variables.dark.css  # dark mode
 ### Import directly
 
 ```css
-@import 'style-dictionary-dlite-tokens/dist/web/puente/default/variables.css';
-@import 'style-dictionary-dlite-tokens/dist/web/puente/default/variables.dark.css';
+@import 'style-dictionary-dlite-tokens/web/puente/default/variables.css';
+@import 'style-dictionary-dlite-tokens/web/puente/default/variables.dark.css';
 ```
 
 ### Dark mode with `prefers-color-scheme`
 
-Wrap the dark-mode import so it applies automatically:
+Use the media query condition on the `@import` itself:
 
 ```css
-@import 'style-dictionary-dlite-tokens/dist/web/puente/default/variables.css';
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    @import 'style-dictionary-dlite-tokens/dist/web/puente/default/variables.dark.css';
-  }
-}
+@import 'style-dictionary-dlite-tokens/web/puente/default/variables.css';
+@import 'style-dictionary-dlite-tokens/web/puente/default/variables.dark.css' (prefers-color-scheme: dark);
 ```
 
-Or load both files and scope dark tokens to a `[data-theme="dark"]` attribute you toggle in JS:
+Or use `<link>` tags in HTML:
 
-```css
-/* light (default) */
-@import 'style-dictionary-dlite-tokens/dist/web/puente/default/variables.css';
+```html
+<link rel="stylesheet" href="node_modules/style-dictionary-dlite-tokens/dist/web/puente/default/variables.css">
+<link rel="stylesheet" href="node_modules/style-dictionary-dlite-tokens/dist/web/puente/default/variables.dark.css" media="(prefers-color-scheme: dark)">
+```
 
-/* dark (scoped) */
-[data-theme='dark'] {
-  @import 'style-dictionary-dlite-tokens/dist/web/puente/default/variables.dark.css';
+To scope dark tokens to a `[data-theme="dark"]` attribute you toggle in JS, use a CSS layer or bundler-based approach:
+
+```js
+// In your JS entry point
+import 'style-dictionary-dlite-tokens/web/puente/default/variables.css';
+
+if (document.documentElement.dataset.theme === 'dark') {
+  import('style-dictionary-dlite-tokens/web/puente/default/variables.dark.css');
 }
 ```
 

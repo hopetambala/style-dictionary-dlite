@@ -12,7 +12,9 @@
   ],
   "exports": {
     "./web/*": "./dist/web/*",
-    "./rn/*/tokens": "./dist/rn/*/tokens.ts"
+    "./rn/*": "./dist/rn/*/index.ts",
+    "./rn/*/light": "./dist/rn/*/light.ts",
+    "./rn/*/dark": "./dist/rn/*/dark.ts"
   },
   "scripts": {
     "build": "tsx ./build/index.ts",
