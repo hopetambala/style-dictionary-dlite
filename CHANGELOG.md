@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.0](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.0.7...v0.1.0) (2026-03-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* create react native output for dlite
+
+### Features
+
+* create react native output for dlite ([7a1764c](https://github.com/hopetambala/style-dictionary-dlite/commit/7a1764c57c94d8a484cc1a403e34b6b9cff6437f))
+
 ## 0.0.7 (2026-03-14)
 
 
