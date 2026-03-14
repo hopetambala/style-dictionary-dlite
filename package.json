@@ -2,6 +2,10 @@
   "name": "style-dictionary-dlite-tokens",
   "version": "0.0.6",
   "description": "Multi-brand, multi-theme design tokens using Style Dictionary",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hopetambala/style-dictionary-dlite"
+  },
   "type": "module",
   "files": [
     "dist"
