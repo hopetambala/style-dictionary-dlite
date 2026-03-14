@@ -87,9 +87,15 @@ for (const brand of rnBrands) {
 
   for (const theme of themes) {
     const themeDir = path.join(brandDir, theme);
-    const files = fs.readdirSync(themeDir).filter((f) => f.endsWith('.js')).sort();
+    const files = fs.readdirSync(themeDir).filter((f) => f.endsWith('.js') || f.endsWith('.d.ts')).sort();
 
     describe(`rn/${brand}/${theme}`, () => {
+      test('file list matches snapshot', async () => {
+        await expect(JSON.stringify(files, null, 2)).toMatchFileSnapshot(
+          `__snapshots__/rn/${brand}/${theme}/file-list.snap`,
+        );
+      });
+
       for (const file of files) {
         test(`${file} matches snapshot`, async () => {
           const content = fs.readFileSync(path.join(themeDir, file), 'utf-8');
