@@ -437,6 +437,11 @@ StyleDictionary.registerFormat({
     }
 
     lines.push('');
-    return lines.join('\n') + '\n';
+
+    // Post-process: prepend brand name to every CSS class selector.
+    // Matches '.' starting a class selector (not preceded by '\' which is an
+    // escaped dot inside a class name like .py-0\.5).
+    const raw = lines.join('\n') + '\n';
+    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.${brand}-`);
   },
 });
