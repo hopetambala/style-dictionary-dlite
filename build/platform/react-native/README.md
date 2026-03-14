@@ -71,9 +71,9 @@ export default function App() {
 
 ```tsx
 import { useColorScheme } from 'react-native';
-import { tokens, type Tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';
+import { tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';
 
-export function useTokens(): Tokens {
+export function useTokens() {
   const scheme = useColorScheme() ?? 'light';
   return tokens[scheme];
 }
