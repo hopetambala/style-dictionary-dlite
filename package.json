@@ -1,6 +1,6 @@
 {
   "name": "style-dictionary-dlite-tokens",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Multi-brand, multi-theme design tokens using Style Dictionary",
   "type": "module",
   "files": [
