@@ -199,6 +199,4 @@ export const light = {
   "puenteSemanticBorderRadiusFull": 9999,
   "puenteSemanticElevationLow": "0px 2px 4px -1px #0000001a",
   "puenteSemanticElevationHigh": "0px 8px 24px -4px #00000033"
-} as const;
-
-export type LightTokens = typeof light;
+};

@@ -199,6 +199,4 @@ export const dark = {
   "survivorSemanticBorderRadiusFull": 9999,
   "survivorSemanticElevationLow": "0px 2px 4px -1px #0000001a",
   "survivorSemanticElevationHigh": "0px 8px 24px -4px #00000033"
-} as const;
-
-export type DarkTokens = typeof dark;
+};

@@ -81,32 +81,54 @@ for (const brandName of brandNames) {
     for (const mode of modes) {
       const jsonPath = path.join(tmpDir, `${mode}.json`);
       const data = fs.readFileSync(jsonPath, 'utf-8');
-      const modeContent = `export const ${mode} = ${data} as const;\n\nexport type ${mode.charAt(0).toUpperCase() + mode.slice(1)}Tokens = typeof ${mode};\n`;
-      fs.writeFileSync(path.join(outDir, `${mode}.ts`), modeContent);
+      const capMode = mode.charAt(0).toUpperCase() + mode.slice(1);
+
+      // .js
+      fs.writeFileSync(
+        path.join(outDir, `${mode}.js`),
+        `export const ${mode} = ${data};\n`,
+      );
+      // .d.ts
+      fs.writeFileSync(
+        path.join(outDir, `${mode}.d.ts`),
+        `export declare const ${mode}: ${data};\nexport type ${capMode}Tokens = typeof ${mode};\n`,
+      );
     }
 
     // Barrel index
-    const imports = modes.map((m) => `import { ${m} } from './${m}.ts';`);
-    const reExports = modes.map((m) => `export { ${m} } from './${m}.ts';`);
+    const imports = modes.map((m) => `import { ${m} } from './${m}.js';`);
+    const reExports = modes.map((m) => `export { ${m} } from './${m}.js';`);
     const modeNames = modes.join(', ');
-    const indexContent = [
+
+    // index.js
+    const indexJs = [
       ...imports,
       '',
       ...reExports,
       '',
-      `export const tokens = { ${modeNames} } as const;`,
-      `export type Tokens = typeof ${modes[0]};`,
+      `export const tokens = { ${modeNames} };`,
       '',
     ].join('\n');
-    fs.writeFileSync(path.join(outDir, 'index.ts'), indexContent);
+    fs.writeFileSync(path.join(outDir, 'index.js'), indexJs);
+
+    // index.d.ts
+    const dtsReExports = modes.map((m) => `export { ${m} } from './${m}.js';`);
+    const indexDts = [
+      ...dtsReExports,
+      '',
+      `export declare const tokens: { ${modes.map((m) => `readonly ${m}: typeof import('./${m}.js').${m}`).join('; ')} };`,
+      `export type Tokens = typeof import('./${modes[0]}.js').${modes[0]};`,
+      '',
+    ].join('\n');
+    fs.writeFileSync(path.join(outDir, 'index.d.ts'), indexDts);
 
     // Clean up temp files
     fs.rmSync(tmpDir, { recursive: true, force: true });
 
     for (const mode of modes) {
-      console.log(`✔︎ dist/rn/${brandName}/${theme}/${mode}.ts`);
+      console.log(`✔︎ dist/rn/${brandName}/${theme}/${mode}.js`);
     }
-    console.log(`✔︎ dist/rn/${brandName}/${theme}/index.ts`);
+    console.log(`✔︎ dist/rn/${brandName}/${theme}/index.js`);
   }
 }
 

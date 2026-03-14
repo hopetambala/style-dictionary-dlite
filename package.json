@@ -12,9 +12,18 @@
   ],
   "exports": {
     "./web/*": "./dist/web/*",
-    "./rn/*": "./dist/rn/*/index.ts",
-    "./rn/*/light": "./dist/rn/*/light.ts",
-    "./rn/*/dark": "./dist/rn/*/dark.ts"
+    "./rn/*": {
+      "types": "./dist/rn/*/index.d.ts",
+      "default": "./dist/rn/*/index.js"
+    },
+    "./rn/*/light": {
+      "types": "./dist/rn/*/light.d.ts",
+      "default": "./dist/rn/*/light.js"
+    },
+    "./rn/*/dark": {
+      "types": "./dist/rn/*/dark.d.ts",
+      "default": "./dist/rn/*/dark.js"
+    }
   },
   "scripts": {
     "build": "tsx ./build/index.ts",

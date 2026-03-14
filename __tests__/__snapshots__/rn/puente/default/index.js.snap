@@ -1,0 +1,7 @@
+import { light } from './light.js';
+import { dark } from './dark.js';
+
+export { light } from './light.js';
+export { dark } from './dark.js';
+
+export const tokens = { light, dark };

@@ -14,31 +14,34 @@ npm install style-dictionary-dlite-tokens
 
 ## Output
 
-The build produces separate TypeScript files per brand/theme/mode at:
+The build produces JavaScript files with TypeScript declarations per brand/theme/mode at:
 
 ```
 dist/rn/{brand}/{theme}/
-  light.ts     # light mode tokens
-  dark.ts      # dark mode tokens
-  index.ts     # barrel — re-exports both + combined tokens object
+  light.js      # light mode tokens
+  light.d.ts    # light mode type declarations
+  dark.js       # dark mode tokens
+  dark.d.ts     # dark mode type declarations
+  index.js      # barrel — re-exports both + combined tokens object
+  index.d.ts    # barrel type declarations
 ```
 
 Each mode file exports:
 
-```ts
-export const light = { ... } as const;
-export type LightTokens = typeof light;
+```js
+export const light = { ... };
 ```
 
-The barrel `index.ts` re-exports everything:
+The barrel `index.js` re-exports everything:
 
-```ts
-export { light } from './light.ts';
-export { dark } from './dark.ts';
+```js
+export { light } from './light.js';
+export { dark } from './dark.js';
 
-export const tokens = { light, dark } as const;
-export type Tokens = typeof light;
+export const tokens = { light, dark };
 ```
+
+Type declarations (`.d.ts`) provide full autocomplete and type-checking in TypeScript projects.
 
 Dimension values (spacing, radii, font sizes) are converted to numbers (rem → px at base 16) so they can be used directly in React Native styles without parsing.
 

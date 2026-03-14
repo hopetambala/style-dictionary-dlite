@@ -87,7 +87,7 @@ for (const brand of rnBrands) {
 
   for (const theme of themes) {
     const themeDir = path.join(brandDir, theme);
-    const files = fs.readdirSync(themeDir).filter((f) => f.endsWith('.ts')).sort();
+    const files = fs.readdirSync(themeDir).filter((f) => f.endsWith('.js')).sort();
 
     describe(`rn/${brand}/${theme}`, () => {
       for (const file of files) {

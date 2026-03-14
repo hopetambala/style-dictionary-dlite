@@ -133,10 +133,10 @@ export const light = {
   "survivorPrimitiveShadow200": "0px 2px 4px -1px #0000001a",
   "survivorPrimitiveShadow300": "0px 4px 8px -2px #00000026",
   "survivorPrimitiveShadow400": "0px 8px 24px -4px #00000033",
-  "survivorSemanticColorPrimary": "#d84215",
-  "survivorSemanticColorPrimaryHover": "#bf3813",
-  "survivorSemanticColorSecondary": "#15701f",
-  "survivorSemanticColorBackground": "#fbe8e1",
+  "survivorSemanticColorPrimary": "#0045cc",
+  "survivorSemanticColorPrimaryHover": "#0045cc",
+  "survivorSemanticColorSecondary": "#c585c0",
+  "survivorSemanticColorBackground": "#f3f3f3",
   "survivorSemanticColorForeground": "#161616",
   "survivorSemanticColorMuted": "#a5a5a5",
   "survivorSemanticColorBorder": "#d4d4d4",
@@ -144,16 +144,16 @@ export const light = {
   "survivorSemanticColorWarning": "#976500",
   "survivorSemanticColorError": "#bf3813",
   "survivorSemanticColorSurfaceBase": "#ffffff",
-  "survivorSemanticColorSurfaceSunken": "#fbe8e1",
+  "survivorSemanticColorSurfaceSunken": "#f3f3f3",
   "survivorSemanticColorSurfaceRaised": "#ffffff",
   "survivorSemanticColorSurfaceOverlay": "#000000",
   "survivorSemanticColorTextPrimary": "#161616",
   "survivorSemanticColorTextSecondary": "#6e6e6e",
   "survivorSemanticColorTextTertiary": "#a5a5a5",
   "survivorSemanticColorTextOnBrand": "#ffffff",
-  "survivorSemanticColorActionPrimary": "#d84215",
-  "survivorSemanticColorActionSecondary": "#e7f1cb",
-  "survivorSemanticColorFeedbackInfo": "#4bb2b2",
+  "survivorSemanticColorActionPrimary": "#1e62e8",
+  "survivorSemanticColorActionSecondary": "#f3f3f3",
+  "survivorSemanticColorFeedbackInfo": "#0045cc",
   "survivorSemanticColorFeedbackSuccess": "#006210",
   "survivorSemanticColorFeedbackWarning": "#976500",
   "survivorSemanticColorFeedbackDanger": "#bf3813",
@@ -199,6 +199,4 @@ export const light = {
   "survivorSemanticBorderRadiusFull": 9999,
   "survivorSemanticElevationLow": "0px 2px 4px -1px #0000001a",
   "survivorSemanticElevationHigh": "0px 8px 24px -4px #00000033"
-} as const;
-
-export type LightTokens = typeof light;
+};
