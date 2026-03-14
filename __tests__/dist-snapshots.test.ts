@@ -54,7 +54,7 @@ for (const brand of brands) {
     describe(`${brand}/${theme}`, () => {
       test('file list matches snapshot', async () => {
         await expect(JSON.stringify(files, null, 2)).toMatchFileSnapshot(
-          `__snapshots__/${brand}/${theme}/file-list.snap`,
+          `__snapshots__/web/${brand}/${theme}/file-list.snap`,
         );
       });
 
@@ -62,7 +62,7 @@ for (const brand of brands) {
         test(`${file} matches snapshot`, async () => {
           const content = fs.readFileSync(path.join(themeDir, file), 'utf-8');
           await expect(content).toMatchFileSnapshot(
-            `__snapshots__/${brand}/${theme}/${file}.snap`,
+            `__snapshots__/web/${brand}/${theme}/${file}.snap`,
           );
         });
       }

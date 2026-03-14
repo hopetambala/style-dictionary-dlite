@@ -150,6 +150,7 @@
     },
     "dimension": {
       "$type": "dimension",
+      "letter-spacing-widest": { "$value": "0.1em" },
       "font-size": {
         "100": { "$value": "0.625rem" },
         "200": { "$value": "0.75rem" },

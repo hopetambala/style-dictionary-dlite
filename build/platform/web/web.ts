@@ -9,6 +9,15 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
           destination: mode === 'light' ? 'variables.css' : `variables.${mode}.css`,
           format: 'css/variables',
         },
+        ...(mode === 'light'
+          ? [
+              {
+                destination: 'utilities.css',
+                format: 'css/utilities',
+                options: { brandName },
+              },
+            ]
+          : []),
       ],
     },
   };
