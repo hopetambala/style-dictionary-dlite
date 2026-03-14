@@ -1,0 +1,5 @@
+export { dark } from './dark.js';
+export { light } from './light.js';
+
+export declare const tokens: { readonly dark: typeof import('./dark.js').dark; readonly light: typeof import('./light.js').light };
+export type Tokens = (typeof tokens)[keyof typeof tokens];
