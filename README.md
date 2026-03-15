@@ -116,25 +116,50 @@ At build time, `build.ts`:
 dist/web/
 ├── puente/
 │   └── default/
-│       ├── variables.css          ← light mode
-│       └── variables.dark.css     ← dark mode
+│       ├── variables.css          ← light mode CSS custom properties
+│       ├── variables.dark.css     ← dark mode
+│       ├── reset.css              ← global CSS reset
+│       ├── utilities.css          ← pure CSS utilities (layout, text)
+│       ├── primitives.css         ← primitive token classes (colors, weights)
+│       ├── semantics.css          ← semantic token classes (spacing, typography)
+│       └── components.css         ← compound component classes (buttons, inputs)
 └── survivor/
     ├── default/
     │   ├── variables.css
-    │   └── variables.dark.css
+    │   ├── variables.dark.css
+    │   ├── reset.css
+    │   ├── utilities.css
+    │   ├── primitives.css
+    │   ├── semantics.css
+    │   └── components.css
     └── winter-holiday/
         ├── variables.css
-        └── variables.dark.css
+        ├── variables.dark.css
+        ├── reset.css
+        ├── utilities.css
+        ├── primitives.css
+        ├── semantics.css
+        └── components.css
 ```
 
-CSS variables follow the naming convention: `--{brand}-{tier}-{category}-{token}`
+### Naming Convention
+
+**CSS variables** use a fixed `tk-dlite` prefix with the token tier:
 
 ```css
---puente-primitive-color-blue-500: #1e62e8;
---puente-semantic-color-primary: #1e62e8;
---puente-semantic-typography-size-base: 1rem;
---survivor-semantic-color-primary: #d84215;  /* winter-holiday theme */
+--tk-dlite-primitive-color-blue-500: #1e62e8;
+--tk-dlite-semantic-color-primary: #1e62e8;
+--tk-dlite-semantic-typography-size-400: 1rem;
 ```
+
+**CSS classes** use prefixes based on their source:
+
+| File | Prefix | Example |
+|------|--------|---------|
+| utilities.css | `cl-dlite-` | `.cl-dlite-flex` |
+| primitives.css | `cl-dlite-prim-` | `.cl-dlite-prim-bg-blue-500` |
+| semantics.css | `cl-dlite-sem-` | `.cl-dlite-sem-p-400` |
+| components.css | `cl-dlite-` | `.cl-dlite-btn-primary` |
 
 ## Usage
 
