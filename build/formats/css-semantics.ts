@@ -2,9 +2,9 @@ import StyleDictionary from 'style-dictionary';
 
 /**
  * Generates semantics.css — semantic token utilities.
- * Covers: reset, spacing (numeric 100-1000 + named xxxs-xxxl), typography
+ * Covers: spacing (numeric 100-1000 + named xxxs-xxxl), typography
  * (font families, font sizes 100-1000), semantic colors, borders, radius,
- * shadows, transitions, interactive states, responsive breakpoints.
+ * shadows, transitions, focus-ring.
  */
 StyleDictionary.registerFormat({
   name: 'css/semantics',

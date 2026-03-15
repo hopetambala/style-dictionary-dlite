@@ -1,8 +1,8 @@
 import StyleDictionary from 'style-dictionary';
 
 /**
- * Generates primitives.css — foundational CSS utilities + primitive token classes.
- * Covers: layout, sizing, text utilities, font weights, letter spacing, opacity,
+ * Generates primitives.css — primitive token classes.
+ * Covers: font weights, letter spacing, opacity,
  * and primitive color classes (text/bg/border for every hue-step).
  */
 StyleDictionary.registerFormat({

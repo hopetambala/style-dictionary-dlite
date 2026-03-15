@@ -409,7 +409,7 @@
       }
     },
     "duration": {
-      "$type": "dimension",
+      "$type": "duration",
       "fast": {
         "$value": "0.15s"
       },
