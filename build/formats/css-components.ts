@@ -38,16 +38,16 @@ StyleDictionary.registerFormat({
     lines.push('.btn:disabled { opacity: 0.5; cursor: not-allowed; }');
 
     lines.push(`.btn-primary { background-color: ${color('action-primary')}; color: ${color('text-on-brand')}; }`);
-    lines.push(`.btn-primary:not(:disabled):active { background-color: ${prim('blue-700')}; }`);
+    lines.push(`.btn-primary:not(:disabled):active { background-color: ${color('action-primary-active')}; }`);
 
     lines.push(`.btn-success { background-color: ${color('feedback-success')}; color: ${color('text-on-brand')}; }`);
-    lines.push(`.btn-success:not(:disabled):active { background-color: ${prim('green-700')}; }`);
+    lines.push(`.btn-success:not(:disabled):active { background-color: ${color('feedback-success-active')}; }`);
 
     lines.push(`.btn-danger { background-color: ${color('feedback-danger')}; color: ${color('text-on-brand')}; }`);
-    lines.push(`.btn-danger:not(:disabled):active { background-color: ${prim('red-800')}; }`);
+    lines.push(`.btn-danger:not(:disabled):active { background-color: ${color('feedback-danger-active')}; }`);
 
     lines.push(`.btn-secondary { background-color: ${color('action-secondary')}; color: ${color('text-primary')}; }`);
-    lines.push(`.btn-secondary:not(:disabled):active { background-color: ${prim('neutral-300')}; }`);
+    lines.push(`.btn-secondary:not(:disabled):active { background-color: ${color('action-secondary-active')}; }`);
 
     lines.push(`.btn-sm { font-size: ${size('300')}; padding: ${spacing('100')} ${spacing('300')}; }`);
     lines.push(`.btn-lg { padding: ${spacing('300')} ${spacing('600')}; }`);

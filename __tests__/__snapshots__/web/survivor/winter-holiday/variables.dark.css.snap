@@ -165,11 +165,15 @@
   --tk-dlite-semantic-color-text-tertiary: #a5a5a5;
   --tk-dlite-semantic-color-text-on-brand: #ffffff;
   --tk-dlite-semantic-color-action-primary: #e9541e;
+  --tk-dlite-semantic-color-action-primary-active: #bf3813;
   --tk-dlite-semantic-color-action-secondary: #0b5223;
+  --tk-dlite-semantic-color-action-secondary-active: #006210;
   --tk-dlite-semantic-color-feedback-info: #90d9d9;
   --tk-dlite-semantic-color-feedback-success: #8fb064;
+  --tk-dlite-semantic-color-feedback-success-active: #c5d8a7;
   --tk-dlite-semantic-color-feedback-warning: #f2c329;
   --tk-dlite-semantic-color-feedback-danger: #e9541e;
+  --tk-dlite-semantic-color-feedback-danger-active: #ec9471;
   --tk-dlite-semantic-typography-font-heading: Inter;
   --tk-dlite-semantic-typography-font-body: Inter;
   --tk-dlite-semantic-typography-font-mono: JetBrains Mono;

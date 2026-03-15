@@ -126,11 +126,27 @@
           }
         }
       },
+      "action-primary-active": {
+        "$value": "{primitive.color.blue.700}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.blue.300}"
+          }
+        }
+      },
       "action-secondary": {
         "$value": "{primitive.color.neutral.100}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.neutral.800}"
+          }
+        }
+      },
+      "action-secondary-active": {
+        "$value": "{primitive.color.neutral.300}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.neutral.700}"
           }
         }
       },
@@ -150,6 +166,14 @@
           }
         }
       },
+      "feedback-success-active": {
+        "$value": "{primitive.color.green.800}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.green.300}"
+          }
+        }
+      },
       "feedback-warning": {
         "$value": "{primitive.color.yellow.800}",
         "$extensions": {
@@ -163,6 +187,14 @@
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.red.500}"
+          }
+        }
+      },
+      "feedback-danger-active": {
+        "$value": "{primitive.color.red.800}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.red.400}"
           }
         }
       }

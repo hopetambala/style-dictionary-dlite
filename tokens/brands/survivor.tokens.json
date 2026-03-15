@@ -28,7 +28,9 @@
               "surface-sunken": { "$value": "{primitive.color.red.100}" },
               "surface-raised": { "$value": "{primitive.color.white}" },
               "action-primary": { "$value": "{primitive.color.red.600}" },
+              "action-primary-active": { "$value": "{primitive.color.red.800}" },
               "action-secondary": { "$value": "{primitive.color.green.100}" },
+              "action-secondary-active": { "$value": "{primitive.color.green.300}" },
               "success": { "$value": "{primitive.color.green.700}" },
               "feedback-success": { "$value": "{primitive.color.green.700}" },
               "feedback-info": { "$value": "{primitive.color.teal.700}" }
@@ -43,7 +45,9 @@
               "surface-sunken": { "$value": "{primitive.color.neutral.800}" },
               "surface-raised": { "$value": "{primitive.color.neutral.800}" },
               "action-primary": { "$value": "{primitive.color.red.500}" },
+              "action-primary-active": { "$value": "{primitive.color.red.700}" },
               "action-secondary": { "$value": "{primitive.color.green.800}" },
+              "action-secondary-active": { "$value": "{primitive.color.green.700}" },
               "feedback-info": { "$value": "{primitive.color.teal.400}" }
             }
           }
