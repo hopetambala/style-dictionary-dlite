@@ -174,9 +174,9 @@
   --tk-dlite-semantic-color-feedback-warning: #f2c329;
   --tk-dlite-semantic-color-feedback-danger: #e9541e;
   --tk-dlite-semantic-color-feedback-danger-active: #ec9471;
-  --tk-dlite-semantic-typography-font-heading: Inter;
-  --tk-dlite-semantic-typography-font-body: Inter;
-  --tk-dlite-semantic-typography-font-mono: JetBrains Mono;
+  --tk-dlite-semantic-typography-font-heading: Plus Jakarta Sans;
+  --tk-dlite-semantic-typography-font-body: Source Serif 4;
+  --tk-dlite-semantic-typography-font-mono: Source Code Pro;
   --tk-dlite-semantic-typography-size-100: 0.625rem;
   --tk-dlite-semantic-typography-size-200: 0.75rem;
   --tk-dlite-semantic-typography-size-300: 0.875rem;

@@ -201,15 +201,15 @@
     },
     "typography": {
       "font-heading": {
-        "$value": "Inter",
+        "$value": "Plus Jakarta Sans",
         "$type": "fontFamily"
       },
       "font-body": {
-        "$value": "Inter",
+        "$value": "Source Serif 4",
         "$type": "fontFamily"
       },
       "font-mono": {
-        "$value": "JetBrains Mono",
+        "$value": "Source Code Pro",
         "$type": "fontFamily"
       },
       "size-100": {

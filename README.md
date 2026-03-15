@@ -163,7 +163,45 @@ dist/web/
 
 ## Usage
 
-```sh
+### Loading fonts
+
+The design system uses three Google Fonts that consumers must load. Add to your HTML `<head>`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Or with a framework like Next.js (using `next/font/google`):
+
+```tsx
+// app/layout.tsx
+import { Plus_Jakarta_Sans, Source_Serif_4, Source_Code_Pro } from 'next/font/google';
+
+const heading = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-heading' });
+const body = Source_Serif_4({ subsets: ['latin'], variable: '--font-body' });
+const mono = Source_Code_Pro({ subsets: ['latin'], variable: '--font-mono' });
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html className={`${heading.variable} ${body.variable} ${mono.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+| Token | Font | Role |
+|-------|------|------|
+| `font-heading` | Plus Jakarta Sans | Headings, labels, UI chrome |
+| `font-body` | Source Serif 4 | Body text, paragraphs |
+| `font-mono` | Source Code Pro | Code, data tables |
+
+### Build commands
 yarn install
 yarn build     # generates dist/
 yarn clean     # removes dist/
