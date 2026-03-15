@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.1](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.0...v0.2.1) (2026-03-15)
+
+
+### Features
+
+* add new types ([5bafd3f](https://github.com/hopetambala/style-dictionary-dlite/commit/5bafd3f980015faa7e5c2adc14dc836ed429742f))
+
 ## [0.2.0](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.1.0...v0.2.0) (2026-03-15)
 
 
