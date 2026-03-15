@@ -2,24 +2,6 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-/* ===== RESET ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
-body {
-  font-family: var(--tk-dlite-semantic-typography-font-body), Arial, Helvetica, sans-serif;
-  font-size: var(--tk-dlite-semantic-typography-type-body-default-size);
-  font-weight: var(--tk-dlite-semantic-typography-type-body-default-weight);
-  line-height: var(--tk-dlite-semantic-typography-type-body-default-line-height);
-  letter-spacing: var(--tk-dlite-semantic-typography-type-body-default-letter-spacing);
-  color: var(--tk-dlite-semantic-color-text-primary);
-  background-color: var(--tk-dlite-semantic-color-background);
-}
-a { color: inherit; text-decoration: inherit; }
-button { font-family: inherit; font-size: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
-input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
-table { border-collapse: collapse; }
-img, svg { display: block; max-width: 100%; }
-
 /* ===== SPACING ===== */
 /* --- numeric scale (100–1000) --- */
 .cl-dlite-sem-gap-100 { gap: var(--tk-dlite-semantic-spacing-100); }
@@ -234,9 +216,6 @@ img, svg { display: block; max-width: 100%; }
 .cl-dlite-sem-ml-xxxl { margin-left: var(--tk-dlite-semantic-spacing-xxxl); }
 .cl-dlite-sem-mr-xxxl { margin-right: var(--tk-dlite-semantic-spacing-xxxl); }
 
-.cl-dlite-sem-pt-0 { padding-top: 0; }
-.cl-dlite-sem-space-y-100 > * + * { margin-top: var(--tk-dlite-semantic-spacing-100); }
-
 /* ===== TYPOGRAPHY ===== */
 .cl-dlite-sem-font-sans { font-family: var(--tk-dlite-semantic-typography-font-body), Arial, Helvetica, sans-serif; }
 .cl-dlite-sem-font-heading { font-family: var(--tk-dlite-semantic-typography-font-heading), Arial, Helvetica, sans-serif; }
@@ -272,7 +251,9 @@ img, svg { display: block; max-width: 100%; }
 /* ===== BORDERS & RADIUS ===== */
 .cl-dlite-sem-border { border: 1px solid var(--tk-dlite-semantic-color-border); }
 .cl-dlite-sem-border-t { border-top: 1px solid var(--tk-dlite-semantic-color-border); }
+.cl-dlite-sem-border-r { border-right: 1px solid var(--tk-dlite-semantic-color-border); }
 .cl-dlite-sem-border-b { border-bottom: 1px solid var(--tk-dlite-semantic-color-border); }
+.cl-dlite-sem-border-l { border-left: 1px solid var(--tk-dlite-semantic-color-border); }
 .cl-dlite-sem-rounded { border-radius: var(--tk-dlite-semantic-border-radius-sm); }
 .cl-dlite-sem-rounded-md { border-radius: var(--tk-dlite-semantic-border-radius-md); }
 .cl-dlite-sem-rounded-lg { border-radius: var(--tk-dlite-semantic-border-radius-lg); }
@@ -287,24 +268,5 @@ img, svg { display: block; max-width: 100%; }
 .cl-dlite-sem-transition-colors { transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease, border-color var(--tk-dlite-semantic-duration-fast) ease; }
 
 /* ===== INTERACTIVE STATES ===== */
-.cl-dlite-sem-disabled-opacity-50:disabled { opacity: 0.5; }
-.cl-dlite-sem-disabled-opacity-25:disabled { opacity: 0.25; }
-.cl-dlite-sem-disabled-cursor-not-allowed:disabled { cursor: not-allowed; }
 .cl-dlite-sem-focus-ring:focus { outline: none; border-color: var(--tk-dlite-semantic-color-action-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--tk-dlite-semantic-color-action-primary) 30%, transparent); }
-
-/* ===== RESPONSIVE ===== */
-@media (min-width: 640px) {
-  .cl-dlite-sem-grid-cols-2-at-sm { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cl-dlite-sem-grid-cols-3-at-sm { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (min-width: 768px) {
-  .cl-dlite-sem-grid-cols-4-at-md { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-@media (min-width: 1024px) {
-  .cl-dlite-sem-flex-row-at-lg { flex-direction: row; }
-  .cl-dlite-sem-w-72-at-lg { width: 18rem; }
-  .cl-dlite-sem-flex-shrink-0-at-lg { flex-shrink: 0; }
-  .cl-dlite-sem-max-h-70vh-at-lg { max-height: 70vh; }
-  .cl-dlite-sem-overflow-y-auto-at-lg { overflow-y: auto; }
-}
 
