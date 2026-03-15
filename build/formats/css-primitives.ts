@@ -168,6 +168,6 @@ StyleDictionary.registerFormat({
 
     // Brand-prefix post-processing
     const raw = lines.join('\n') + '\n';
-    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.cl-dlite-`);
+    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.cl-dlite-prim-`);
   },
 });
