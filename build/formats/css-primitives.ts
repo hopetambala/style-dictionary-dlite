@@ -8,7 +8,6 @@ import StyleDictionary from 'style-dictionary';
 StyleDictionary.registerFormat({
   name: 'css/primitives',
   format: ({ dictionary, options }: any) => {
-    const brand = options.brandName as string;
     const lines: string[] = [
       '/**',
       ' * Do not edit directly, this file was auto-generated.',
@@ -116,23 +115,23 @@ StyleDictionary.registerFormat({
       'normal': 'regular', 'medium': 'medium', 'semibold': 'semibold', 'bold': 'bold',
     };
     for (const [cls, tok] of Object.entries(weights)) {
-      lines.push(`.font-${cls} { font-weight: ${ref(`${brand}-primitive-fontWeight-${tok}`)}; }`);
+      lines.push(`.font-${cls} { font-weight: ${ref(`tk-dlite-primitive-fontWeight-${tok}`)}; }`);
     }
     lines.push('');
 
     // ───────────────────────────── LETTER SPACING ────────────────────
     lines.push('/* ===== LETTER SPACING ===== */');
     for (const name of ['tight', 'wide']) {
-      lines.push(`.tracking-${name} { letter-spacing: ${ref(`${brand}-primitive-dimension-letter-spacing-${name}`)}; }`);
+      lines.push(`.tracking-${name} { letter-spacing: ${ref(`tk-dlite-primitive-dimension-letter-spacing-${name}`)}; }`);
     }
-    lines.push(`.tracking-widest { letter-spacing: ${ref(`${brand}-primitive-dimension-letter-spacing-widest`)}; }`);
+    lines.push(`.tracking-widest { letter-spacing: ${ref(`tk-dlite-primitive-dimension-letter-spacing-widest`)}; }`);
     lines.push('');
 
     // ───────────────────────────── OPACITY ────────────────────────────
     lines.push('/* ===== OPACITY ===== */');
     const opacitySteps = ['0', '5', '10', '20', '40', '60', '80', '100'];
     for (const step of opacitySteps) {
-      const tok = `${brand}-primitive-number-opacity-${step}`;
+      const tok = `tk-dlite-primitive-number-opacity-${step}`;
       if (has(tok)) {
         lines.push(`.opacity-${step} { opacity: ${ref(tok)}; }`);
       }
@@ -143,10 +142,10 @@ StyleDictionary.registerFormat({
     lines.push('/* ===== PRIMITIVE COLORS ===== */');
 
     // White & black
-    lines.push(`.text-white { color: ${ref(`${brand}-primitive-color-white`)}; }`);
-    lines.push(`.bg-white { background-color: ${ref(`${brand}-primitive-color-white`)}; }`);
-    lines.push(`.text-black { color: ${ref(`${brand}-primitive-color-black`)}; }`);
-    lines.push(`.bg-black { background-color: ${ref(`${brand}-primitive-color-black`)}; }`);
+    lines.push(`.text-white { color: ${ref(`tk-dlite-primitive-color-white`)}; }`);
+    lines.push(`.bg-white { background-color: ${ref(`tk-dlite-primitive-color-white`)}; }`);
+    lines.push(`.text-black { color: ${ref(`tk-dlite-primitive-color-black`)}; }`);
+    lines.push(`.bg-black { background-color: ${ref(`tk-dlite-primitive-color-black`)}; }`);
     lines.push('');
 
     const hues = ['neutral', 'blue', 'green', 'yellow', 'orange', 'red', 'mint', 'teal', 'purple', 'pink'];
@@ -157,7 +156,7 @@ StyleDictionary.registerFormat({
       const cls = alias[hue] || hue;
       lines.push(`/* -- ${cls} -- */`);
       for (const step of steps) {
-        const tok = `${brand}-primitive-color-${hue}-${step}`;
+        const tok = `tk-dlite-primitive-color-${hue}-${step}`;
         if (has(tok)) {
           lines.push(`.text-${cls}-${step} { color: ${ref(tok)}; }`);
           lines.push(`.bg-${cls}-${step} { background-color: ${ref(tok)}; }`);
@@ -169,6 +168,6 @@ StyleDictionary.registerFormat({
 
     // Brand-prefix post-processing
     const raw = lines.join('\n') + '\n';
-    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.${brand}-`);
+    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.cl-dlite-`);
   },
 });

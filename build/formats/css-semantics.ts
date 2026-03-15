@@ -9,7 +9,6 @@ import StyleDictionary from 'style-dictionary';
 StyleDictionary.registerFormat({
   name: 'css/semantics',
   format: ({ dictionary, options }: any) => {
-    const brand = options.brandName as string;
     const lines: string[] = [
       '/**',
       ' * Do not edit directly, this file was auto-generated.',
@@ -27,13 +26,13 @@ StyleDictionary.registerFormat({
     lines.push('*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }');
     lines.push('html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }');
     lines.push('body {');
-    lines.push(`  font-family: ${ref(`${brand}-semantic-typography-font-body`)}, Arial, Helvetica, sans-serif;`);
-    lines.push(`  font-size: ${ref(`${brand}-semantic-typography-type-body-default-size`)};`);
-    lines.push(`  font-weight: ${ref(`${brand}-semantic-typography-type-body-default-weight`)};`);
-    lines.push(`  line-height: ${ref(`${brand}-semantic-typography-type-body-default-line-height`)};`);
-    lines.push(`  letter-spacing: ${ref(`${brand}-semantic-typography-type-body-default-letter-spacing`)};`);
-    lines.push(`  color: ${ref(`${brand}-semantic-color-text-primary`)};`);
-    lines.push(`  background-color: ${ref(`${brand}-semantic-color-background`)};`);
+    lines.push(`  font-family: ${ref(`tk-dlite-semantic-typography-font-body`)}, Arial, Helvetica, sans-serif;`);
+    lines.push(`  font-size: ${ref(`tk-dlite-semantic-typography-type-body-default-size`)};`);
+    lines.push(`  font-weight: ${ref(`tk-dlite-semantic-typography-type-body-default-weight`)};`);
+    lines.push(`  line-height: ${ref(`tk-dlite-semantic-typography-type-body-default-line-height`)};`);
+    lines.push(`  letter-spacing: ${ref(`tk-dlite-semantic-typography-type-body-default-letter-spacing`)};`);
+    lines.push(`  color: ${ref(`tk-dlite-semantic-color-text-primary`)};`);
+    lines.push(`  background-color: ${ref(`tk-dlite-semantic-color-background`)};`);
     lines.push('}');
     lines.push('a { color: inherit; text-decoration: inherit; }');
     lines.push('button { font-family: inherit; font-size: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }');
@@ -63,7 +62,7 @@ StyleDictionary.registerFormat({
     // Numeric scale: 100-1000
     lines.push('/* --- numeric scale (100–1000) --- */');
     for (const step of ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000']) {
-      const tok = `${brand}-semantic-spacing-${step}`;
+      const tok = `tk-dlite-semantic-spacing-${step}`;
       if (has(tok)) spacingClasses(step, tok);
     }
 
@@ -71,14 +70,14 @@ StyleDictionary.registerFormat({
     lines.push('');
     lines.push('/* --- named scale --- */');
     for (const name of ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']) {
-      const tok = `${brand}-semantic-spacing-${name}`;
+      const tok = `tk-dlite-semantic-spacing-${name}`;
       if (has(tok)) spacingClasses(name, tok);
     }
 
     // Specials
     lines.push('');
     lines.push('.pt-0 { padding-top: 0; }');
-    const sp100 = `${brand}-semantic-spacing-100`;
+    const sp100 = `tk-dlite-semantic-spacing-100`;
     if (has(sp100)) {
       lines.push(`.space-y-100 > * + * { margin-top: ${ref(sp100)}; }`);
     }
@@ -88,13 +87,13 @@ StyleDictionary.registerFormat({
     lines.push('/* ===== TYPOGRAPHY ===== */');
 
     // Font families
-    lines.push(`.font-sans { font-family: ${ref(`${brand}-semantic-typography-font-body`)}, Arial, Helvetica, sans-serif; }`);
-    lines.push(`.font-heading { font-family: ${ref(`${brand}-semantic-typography-font-heading`)}, Arial, Helvetica, sans-serif; }`);
-    lines.push(`.font-mono { font-family: ${ref(`${brand}-semantic-typography-font-mono`)}, monospace; }`);
+    lines.push(`.font-sans { font-family: ${ref(`tk-dlite-semantic-typography-font-body`)}, Arial, Helvetica, sans-serif; }`);
+    lines.push(`.font-heading { font-family: ${ref(`tk-dlite-semantic-typography-font-heading`)}, Arial, Helvetica, sans-serif; }`);
+    lines.push(`.font-mono { font-family: ${ref(`tk-dlite-semantic-typography-font-mono`)}, monospace; }`);
 
     // Font sizes: 100-1000
     for (const step of ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000']) {
-      const tok = `${brand}-semantic-typography-size-${step}`;
+      const tok = `tk-dlite-semantic-typography-size-${step}`;
       if (has(tok)) {
         lines.push(`.text-${step} { font-size: ${ref(tok)}; }`);
       }
@@ -111,13 +110,13 @@ StyleDictionary.registerFormat({
       'text-tertiary': 'text-tertiary',
       'text-on-brand': 'text-on-brand',
     } as Record<string, string>)) {
-      lines.push(`.${cls} { color: ${ref(`${brand}-semantic-color-${tok}`)}; }`);
+      lines.push(`.${cls} { color: ${ref(`tk-dlite-semantic-color-${tok}`)}; }`);
     }
-    lines.push(`.text-muted { color: ${ref(`${brand}-semantic-color-muted`)}; }`);
+    lines.push(`.text-muted { color: ${ref(`tk-dlite-semantic-color-muted`)}; }`);
 
     // Feedback text colors
     for (const fb of ['success', 'warning', 'danger', 'info']) {
-      lines.push(`.text-${fb} { color: ${ref(`${brand}-semantic-color-feedback-${fb}`)}; }`);
+      lines.push(`.text-${fb} { color: ${ref(`tk-dlite-semantic-color-feedback-${fb}`)}; }`);
     }
 
     // Surface backgrounds
@@ -127,19 +126,19 @@ StyleDictionary.registerFormat({
       'surface-raised': 'bg-raised',
       'surface-overlay': 'bg-overlay',
     } as Record<string, string>)) {
-      lines.push(`.${cls} { background-color: ${ref(`${brand}-semantic-color-${tok}`)}; }`);
+      lines.push(`.${cls} { background-color: ${ref(`tk-dlite-semantic-color-${tok}`)}; }`);
     }
 
     // Action backgrounds
-    lines.push(`.bg-primary { background-color: ${ref(`${brand}-semantic-color-action-primary`)}; }`);
-    lines.push(`.bg-secondary { background-color: ${ref(`${brand}-semantic-color-action-secondary`)}; }`);
+    lines.push(`.bg-primary { background-color: ${ref(`tk-dlite-semantic-color-action-primary`)}; }`);
+    lines.push(`.bg-secondary { background-color: ${ref(`tk-dlite-semantic-color-action-secondary`)}; }`);
     lines.push('');
 
     // ───────────────────────────── BORDERS & RADIUS ──────────────────
     lines.push('/* ===== BORDERS & RADIUS ===== */');
-    lines.push(`.border { border: 1px solid ${ref(`${brand}-semantic-color-border`)}; }`);
-    lines.push(`.border-t { border-top: 1px solid ${ref(`${brand}-semantic-color-border`)}; }`);
-    lines.push(`.border-b { border-bottom: 1px solid ${ref(`${brand}-semantic-color-border`)}; }`);
+    lines.push(`.border { border: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
+    lines.push(`.border-t { border-top: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
+    lines.push(`.border-b { border-bottom: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
 
     for (const [cls, tok] of Object.entries({
       'rounded': 'border-radius-sm',
@@ -147,20 +146,20 @@ StyleDictionary.registerFormat({
       'rounded-lg': 'border-radius-lg',
       'rounded-full': 'border-radius-full',
     } as Record<string, string>)) {
-      lines.push(`.${cls} { border-radius: ${ref(`${brand}-semantic-${tok}`)}; }`);
+      lines.push(`.${cls} { border-radius: ${ref(`tk-dlite-semantic-${tok}`)}; }`);
     }
     lines.push('');
 
     // ───────────────────────────── SHADOWS ────────────────────────────
     lines.push('/* ===== SHADOWS ===== */');
-    lines.push(`.shadow-sm { box-shadow: ${ref(`${brand}-semantic-elevation-low`)}; }`);
-    lines.push(`.shadow-md { box-shadow: ${ref(`${brand}-semantic-elevation-medium`)}; }`);
-    lines.push(`.shadow-lg { box-shadow: ${ref(`${brand}-semantic-elevation-high`)}; }`);
+    lines.push(`.shadow-sm { box-shadow: ${ref(`tk-dlite-semantic-elevation-low`)}; }`);
+    lines.push(`.shadow-md { box-shadow: ${ref(`tk-dlite-semantic-elevation-medium`)}; }`);
+    lines.push(`.shadow-lg { box-shadow: ${ref(`tk-dlite-semantic-elevation-high`)}; }`);
     lines.push('');
 
     // ───────────────────────────── TRANSITIONS ───────────────────────
     lines.push('/* ===== TRANSITIONS ===== */');
-    lines.push(`.transition-colors { transition: background-color ${ref(`${brand}-semantic-duration-fast`)} ease, color ${ref(`${brand}-semantic-duration-fast`)} ease, border-color ${ref(`${brand}-semantic-duration-fast`)} ease; }`);
+    lines.push(`.transition-colors { transition: background-color ${ref(`tk-dlite-semantic-duration-fast`)} ease, color ${ref(`tk-dlite-semantic-duration-fast`)} ease, border-color ${ref(`tk-dlite-semantic-duration-fast`)} ease; }`);
     lines.push('');
 
     // ───────────────────────────── INTERACTIVE STATES ────────────────
@@ -168,14 +167,14 @@ StyleDictionary.registerFormat({
     lines.push('.disabled\\:opacity-50:disabled { opacity: 0.5; }');
     lines.push('.disabled\\:opacity-25:disabled { opacity: 0.25; }');
     lines.push('.disabled\\:cursor-not-allowed:disabled { cursor: not-allowed; }');
-    lines.push(`.focus-ring:focus { outline: none; border-color: ${ref(`${brand}-semantic-color-action-primary`)}; box-shadow: 0 0 0 2px color-mix(in srgb, ${ref(`${brand}-semantic-color-action-primary`)} 30%, transparent); }`);
+    lines.push(`.focus-ring:focus { outline: none; border-color: ${ref(`tk-dlite-semantic-color-action-primary`)}; box-shadow: 0 0 0 2px color-mix(in srgb, ${ref(`tk-dlite-semantic-color-action-primary`)} 30%, transparent); }`);
     lines.push('');
 
     // ───────────────────────────── RESPONSIVE ────────────────────────
     lines.push('/* ===== RESPONSIVE ===== */');
     const breakpoints: Record<string, string> = {};
     for (const bp of ['sm', 'md', 'lg', 'xl']) {
-      const tok = `${brand}-semantic-breakpoint-${bp}`;
+      const tok = `tk-dlite-semantic-breakpoint-${bp}`;
       if (has(tok)) {
         const t = tokensByPath.get(tok);
         breakpoints[bp] = t.$value ?? t.value;
@@ -205,6 +204,6 @@ StyleDictionary.registerFormat({
 
     // Brand-prefix post-processing
     const raw = lines.join('\n') + '\n';
-    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.${brand}-`);
+    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.cl-dlite-`);
   },
 });

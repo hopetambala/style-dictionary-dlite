@@ -7,7 +7,6 @@ import StyleDictionary from 'style-dictionary';
 StyleDictionary.registerFormat({
   name: 'css/components',
   format: ({ dictionary, options }: any) => {
-    const brand = options.brandName as string;
     const lines: string[] = [
       '/**',
       ' * Do not edit directly, this file was auto-generated.',
@@ -18,13 +17,13 @@ StyleDictionary.registerFormat({
     const ref = (n: string) => `var(--${n})`;
 
     // Shorthand helpers for common token paths
-    const color = (n: string) => ref(`${brand}-semantic-color-${n}`);
-    const spacing = (n: string) => ref(`${brand}-semantic-spacing-${n}`);
-    const radius = (n: string) => ref(`${brand}-semantic-border-radius-${n}`);
-    const size = (n: string) => ref(`${brand}-semantic-typography-size-${n}`);
-    const weight = (n: string) => ref(`${brand}-primitive-fontWeight-${n}`);
-    const prim = (n: string) => ref(`${brand}-primitive-color-${n}`);
-    const dur = (n: string) => ref(`${brand}-semantic-duration-${n}`);
+    const color = (n: string) => ref(`tk-dlite-semantic-color-${n}`);
+    const spacing = (n: string) => ref(`tk-dlite-semantic-spacing-${n}`);
+    const radius = (n: string) => ref(`tk-dlite-semantic-border-radius-${n}`);
+    const size = (n: string) => ref(`tk-dlite-semantic-typography-size-${n}`);
+    const weight = (n: string) => ref(`tk-dlite-primitive-fontWeight-${n}`);
+    const prim = (n: string) => ref(`tk-dlite-primitive-color-${n}`);
+    const dur = (n: string) => ref(`tk-dlite-semantic-duration-${n}`);
 
     // ───────────────────────────── BUTTONS ────────────────────────────
     lines.push('/* ===== BUTTONS ===== */');
@@ -126,6 +125,6 @@ StyleDictionary.registerFormat({
 
     // Brand-prefix post-processing
     const raw = lines.join('\n') + '\n';
-    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.${brand}-`);
+    return raw.replace(/(?<!\\)\.(?=[a-zA-Z\-])/g, `.cl-dlite-`);
   },
 });
