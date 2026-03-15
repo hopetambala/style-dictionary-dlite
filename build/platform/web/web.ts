@@ -9,6 +9,35 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
           destination: mode === 'light' ? 'variables.css' : `variables.${mode}.css`,
           format: 'css/variables',
         },
+        ...(mode === 'light'
+          ? [
+              {
+                destination: 'reset.css',
+                format: 'css/reset',
+                options: { brandName },
+              },
+              {
+                destination: 'utilities.css',
+                format: 'css/utilities',
+                options: { brandName },
+              },
+              {
+                destination: 'primitives.css',
+                format: 'css/primitives',
+                options: { brandName },
+              },
+              {
+                destination: 'semantics.css',
+                format: 'css/semantics',
+                options: { brandName },
+              },
+              {
+                destination: 'components.css',
+                format: 'css/components',
+                options: { brandName },
+              },
+            ]
+          : []),
       ],
     },
   };
