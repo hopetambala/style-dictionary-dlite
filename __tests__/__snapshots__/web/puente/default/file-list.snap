@@ -1,5 +1,7 @@
 [
-  "utilities.css",
+  "components.css",
+  "primitives.css",
+  "semantics.css",
   "variables.css",
   "variables.dark.css"
 ]

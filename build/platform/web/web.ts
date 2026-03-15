@@ -12,8 +12,18 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
         ...(mode === 'light'
           ? [
               {
-                destination: 'utilities.css',
-                format: 'css/utilities',
+                destination: 'primitives.css',
+                format: 'css/primitives',
+                options: { brandName },
+              },
+              {
+                destination: 'semantics.css',
+                format: 'css/semantics',
+                options: { brandName },
+              },
+              {
+                destination: 'components.css',
+                format: 'css/components',
                 options: { brandName },
               },
             ]
