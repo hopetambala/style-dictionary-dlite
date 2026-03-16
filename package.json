@@ -28,6 +28,8 @@
   "scripts": {
     "build": "tsx ./build/index.ts",
     "clean": "rm -rf dist",
+    "preview": "npm run build && vite --config preview/vite.config.ts",
+    "build:preview": "npm run build && vite build --config preview/vite.config.ts",
     "test": "vitest run",
     "test:update": "vitest run --update",
     "prepare": "husky"
@@ -41,6 +43,7 @@
     "style-dictionary": "^5.3.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
+    "vite": "^8.0.0",
     "vitest": "^4.1.0"
   }
 }

@@ -1,0 +1,19 @@
+{
+  "brands": [
+    {
+      "name": "puente/default",
+      "path": "puente/default",
+      "label": "Puente"
+    },
+    {
+      "name": "survivor/default",
+      "path": "survivor/default",
+      "label": "Survivor"
+    },
+    {
+      "name": "survivor/winter-holiday",
+      "path": "survivor/winter-holiday",
+      "label": "Survivor Winter Holiday"
+    }
+  ]
+}

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dlite Token Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style id="token-vars"></style>
+  <style id="token-dark"></style>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--tk-dlite-semantic-typography-font-body, 'Source Serif 4', serif);
+      background: var(--tk-dlite-semantic-color-background);
+      color: var(--tk-dlite-semantic-color-foreground);
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+      padding: 1rem 1.5rem;
+      background: var(--tk-dlite-semantic-color-surface-raised);
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      box-shadow: var(--tk-dlite-semantic-elevation-medium);
+      margin-bottom: 2rem;
+    }
+    .toolbar label {
+      font-family: var(--tk-dlite-semantic-typography-font-heading, 'Plus Jakarta Sans', sans-serif);
+      font-weight: 600; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+    }
+    .toolbar select {
+      font-family: inherit; font-size: 0.9rem;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      border-radius: var(--tk-dlite-semantic-border-radius-sm);
+      background: var(--tk-dlite-semantic-color-surface-base);
+      color: var(--tk-dlite-semantic-color-foreground);
+    }
+    .toolbar .sep { width: 1px; height: 2rem; background: var(--tk-dlite-semantic-color-border); }
+    .toolbar .title {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-weight: 700; font-size: 1.1rem; margin-right: auto;
+    }
+
+    /* ── Sections ── */
+    section { margin-bottom: 3rem; }
+    h2 {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;
+      border-bottom: 2px solid var(--tk-dlite-semantic-color-border);
+      padding-bottom: 0.5rem;
+    }
+    h3 {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem;
+      text-transform: capitalize;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+    }
+
+    /* ── Color swatches ── */
+    .swatch-row { display: flex; gap: 4px; margin-bottom: 0.25rem; flex-wrap: wrap; }
+    .swatch {
+      width: 64px; height: 48px;
+      border-radius: var(--tk-dlite-semantic-border-radius-sm);
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      display: flex; align-items: flex-end; justify-content: center;
+      padding: 2px; cursor: pointer; position: relative;
+      transition: transform 0.15s;
+    }
+    .swatch:hover { transform: scale(1.1); z-index: 2; }
+    .swatch span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.55rem; line-height: 1;
+      background: rgba(255,255,255,0.85); color: #000;
+      padding: 1px 3px; border-radius: 2px;
+    }
+
+    /* ── Semantic color grid ── */
+    .semantic-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+    .semantic-card {
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      overflow: hidden;
+    }
+    .semantic-card .color-block {
+      height: 56px; display: flex; align-items: flex-end; padding: 6px;
+    }
+    .semantic-card .color-block span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.65rem; background: rgba(255,255,255,0.85); color: #000;
+      padding: 1px 4px; border-radius: 2px;
+    }
+    .semantic-card .info {
+      padding: 0.5rem 0.75rem;
+      background: var(--tk-dlite-semantic-color-surface-base);
+    }
+    .semantic-card .info .name {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-weight: 600; font-size: 0.75rem;
+    }
+    .semantic-card .info .var-name {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.6rem; color: var(--tk-dlite-semantic-color-text-secondary);
+      word-break: break-all;
+    }
+
+    /* ── Spacing ── */
+    .spacing-list { display: flex; flex-direction: column; gap: 6px; }
+    .spacing-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .spacing-item .label {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.75rem; width: 100px; flex-shrink: 0;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+    }
+    .spacing-item .bar {
+      height: 24px;
+      background: var(--tk-dlite-semantic-color-action-primary);
+      border-radius: var(--tk-dlite-semantic-border-radius-sm);
+      opacity: 0.7;
+      transition: width 0.3s;
+    }
+    .spacing-item .value {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.7rem; flex-shrink: 0; width: 60px;
+    }
+
+    /* ── Typography ── */
+    .type-sample { margin-bottom: 1rem; }
+    .type-sample .meta {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.65rem; color: var(--tk-dlite-semantic-color-text-secondary);
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Radius ── */
+    .radius-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
+    .radius-sample {
+      width: 72px; height: 72px;
+      background: var(--tk-dlite-semantic-color-action-primary);
+      opacity: 0.6;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .radius-sample span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.6rem; color: var(--tk-dlite-semantic-color-text-on-brand);
+    }
+
+    /* ── Elevation ── */
+    .elevation-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .elevation-sample {
+      width: 120px; height: 80px;
+      background: var(--tk-dlite-semantic-color-surface-raised);
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .elevation-sample span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.7rem;
+    }
+
+    /* ── Copied toast ── */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--tk-dlite-semantic-color-foreground);
+      color: var(--tk-dlite-semantic-color-background);
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.8rem; padding: 0.5rem 1rem;
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      opacity: 0; transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">dlite Tokens</span>
+  <div class="sep"></div>
+  <label for="brand-select">Brand</label>
+  <select id="brand-select"></select>
+  <label for="mode-select">Mode</label>
+  <select id="mode-select">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</div>
+
+<section id="sec-semantic-colors">
+  <h2>Semantic Colors</h2>
+  <div class="semantic-grid" id="semantic-grid"></div>
+</section>
+
+<section id="sec-primitives">
+  <h2>Primitive Color Palettes</h2>
+  <div id="primitive-palettes"></div>
+</section>
+
+<section id="sec-spacing">
+  <h2>Spacing Scale</h2>
+  <div class="spacing-list" id="spacing-list"></div>
+</section>
+
+<section id="sec-typography">
+  <h2>Typography</h2>
+  <div id="type-samples"></div>
+</section>
+
+<section id="sec-radii">
+  <h2>Border Radius</h2>
+  <div class="radius-row" id="radius-row"></div>
+</section>
+
+<section id="sec-elevation">
+  <h2>Elevation</h2>
+  <div class="elevation-row" id="elevation-row"></div>
+</section>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script type="module">
+  const base = import.meta.env.BASE_URL ?? '/';
+
+  // ── Load manifest and populate brand dropdown ──
+  const brandSelect = document.getElementById('brand-select');
+  const modeSelect = document.getElementById('mode-select');
+  const tokenStyle = document.getElementById('token-vars');
+  const darkStyle = document.getElementById('token-dark');
+
+  let brands = [];
+  try {
+    const res = await fetch(base + 'web/manifest.json');
+    const manifest = await res.json();
+    brands = manifest.brands;
+  } catch {
+    brands = [{ name: 'puente/default', path: 'puente/default', label: 'Puente' }];
+  }
+  for (const b of brands) {
+    const opt = document.createElement('option');
+    opt.value = b.path;
+    opt.textContent = b.label;
+    brandSelect.appendChild(opt);
+  }
+
+  // ── CSS loading ──
+  const cache = {};
+  async function loadCSS(url) {
+    if (cache[url]) return cache[url];
+    const res = await fetch(url);
+    const text = await res.text();
+    cache[url] = text;
+    return text;
+  }
+
+  // ── Parse all CSS custom properties from loaded CSS text ──
+  function parseVarsFromCSS(cssText) {
+    const vars = {};
+    const re = /--([\w-]+)\s*:\s*([^;]+)/g;
+    let m;
+    while ((m = re.exec(cssText)) !== null) {
+      vars[`--${m[1]}`] = m[2].trim();
+    }
+    return vars;
+  }
+
+  // ── Categorize parsed variables by prefix ──
+  function categorize(vars) {
+    const result = {
+      semanticColors: [],    // --tk-dlite-semantic-color-*
+      primitiveColors: {},   // grouped by palette name
+      spacing: [],           // --tk-dlite-semantic-spacing-*
+      typographySizes: [],   // --tk-dlite-semantic-typography-size-*
+      typographyFonts: [],   // --tk-dlite-semantic-typography-font-*
+      typographyComposites: [], // --tk-dlite-semantic-typography-type-*
+      borderRadii: [],       // --tk-dlite-semantic-border-radius-*
+      elevations: [],        // --tk-dlite-semantic-elevation-*
+    };
+
+    const primColorPrefix = '--tk-dlite-primitive-color-';
+    const semColorPrefix = '--tk-dlite-semantic-color-';
+    const spacingPrefix = '--tk-dlite-semantic-spacing-';
+    const typeSizePrefix = '--tk-dlite-semantic-typography-size-';
+    const typeFontPrefix = '--tk-dlite-semantic-typography-font-';
+    const typeCompositePrefix = '--tk-dlite-semantic-typography-type-';
+    const radiusPrefix = '--tk-dlite-semantic-border-radius-';
+    const elevationPrefix = '--tk-dlite-semantic-elevation-';
+
+    for (const [varName, value] of Object.entries(vars)) {
+      if (varName.startsWith(semColorPrefix)) {
+        const name = varName.slice(semColorPrefix.length);
+        result.semanticColors.push({ name, varName, value });
+      } else if (varName.startsWith(primColorPrefix)) {
+        const rest = varName.slice(primColorPrefix.length);
+        // "blue-500" → palette=blue, shade=500; "white" → palette=_singles, shade=white
+        const lastDash = rest.lastIndexOf('-');
+        const isShade = lastDash > 0 && /^\d+$/.test(rest.slice(lastDash + 1));
+        const palette = isShade ? rest.slice(0, lastDash) : '_singles';
+        const shade = isShade ? rest.slice(lastDash + 1) : rest;
+        if (!result.primitiveColors[palette]) result.primitiveColors[palette] = [];
+        result.primitiveColors[palette].push({ shade, varName, value });
+      } else if (varName.startsWith(spacingPrefix)) {
+        const name = varName.slice(spacingPrefix.length);
+        result.spacing.push({ name, varName, value });
+      } else if (varName.startsWith(typeSizePrefix)) {
+        const name = varName.slice(typeSizePrefix.length);
+        result.typographySizes.push({ name, varName, value });
+      } else if (varName.startsWith(typeFontPrefix)) {
+        const name = varName.slice(typeFontPrefix.length);
+        result.typographyFonts.push({ name, varName, value });
+      } else if (varName.startsWith(typeCompositePrefix)) {
+        const rest = varName.slice(typeCompositePrefix.length);
+        // e.g. "display-l-size" → group=display-l, prop=size
+        // Handle multi-word props like "line-height", "letter-spacing"
+        const knownSuffixes = ['-size', '-weight', '-line-height', '-letter-spacing'];
+        const matched = knownSuffixes.find(s => rest.endsWith(s));
+        let group, prop;
+        if (matched) {
+          group = rest.slice(0, rest.length - matched.length);
+          prop = matched.slice(1);
+        } else {
+          const lastDash = rest.lastIndexOf('-');
+          group = lastDash > -1 ? rest.slice(0, lastDash) : rest;
+          prop = lastDash > -1 ? rest.slice(lastDash + 1) : '';
+        }
+        result.typographyComposites.push({ group, prop, varName, value });
+      } else if (varName.startsWith(radiusPrefix)) {
+        const name = varName.slice(radiusPrefix.length);
+        result.borderRadii.push({ name, varName, value });
+      } else if (varName.startsWith(elevationPrefix)) {
+        const name = varName.slice(elevationPrefix.length);
+        result.elevations.push({ name, varName, value });
+      }
+    }
+
+    // Sort spacing: named first (by a sensible order), then numeric
+    const namedOrder = ['xxxs','xxs','xs','sm','md','lg','xl','xxl','xxxl'];
+    result.spacing.sort((a, b) => {
+      const ai = namedOrder.indexOf(a.name);
+      const bi = namedOrder.indexOf(b.name);
+      if (ai >= 0 && bi >= 0) return ai - bi;
+      if (ai >= 0) return -1;
+      if (bi >= 0) return 1;
+      return parseInt(a.name) - parseInt(b.name);
+    });
+
+    // Sort shade arrays numerically
+    for (const palette of Object.values(result.primitiveColors)) {
+      palette.sort((a, b) => {
+        const an = parseInt(a.shade);
+        const bn = parseInt(b.shade);
+        if (isNaN(an) && isNaN(bn)) return a.shade.localeCompare(b.shade);
+        if (isNaN(an)) return -1;
+        if (isNaN(bn)) return 1;
+        return an - bn;
+      });
+    }
+
+    return result;
+  }
+
+  // ── Theme switching ──
+  let currentData = null;
+
+  async function applyTheme() {
+    try {
+      const brandPath = brandSelect.value;
+      const mode = modeSelect.value;
+      const lightCSS = await loadCSS(base + `web/${brandPath}/variables.css`);
+      tokenStyle.textContent = lightCSS;
+      if (mode === 'dark') {
+        const darkCSS = await loadCSS(base + `web/${brandPath}/variables.dark.css`);
+        darkStyle.textContent = darkCSS;
+        // Merge dark overrides on top of light
+        const allVars = { ...parseVarsFromCSS(lightCSS), ...parseVarsFromCSS(darkCSS) };
+        currentData = categorize(allVars);
+      } else {
+        darkStyle.textContent = '';
+        currentData = categorize(parseVarsFromCSS(lightCSS));
+      }
+      renderAll();
+    } catch (err) {
+      document.querySelector('.grid').innerHTML =
+        `<p style="color:red;grid-column:1/-1">Failed to load tokens: ${err.message}</p>`;
+    }
+  }
+
+  brandSelect.addEventListener('change', applyTheme);
+  modeSelect.addEventListener('change', applyTheme);
+
+  // ── Toast ──
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1500);
+  }
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => showToast(`Copied: ${text}`));
+  }
+  function getVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  // ── Renderers ──
+  function renderSemanticColors() {
+    const grid = document.getElementById('semantic-grid');
+    grid.innerHTML = '';
+    for (const { name, varName } of currentData.semanticColors) {
+      const value = getVar(varName);
+      const card = document.createElement('div');
+      card.className = 'semantic-card';
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => copyToClipboard(varName));
+      card.innerHTML = `
+        <div class="color-block" style="background:${value}">
+          <span>${value}</span>
+        </div>
+        <div class="info">
+          <div class="name">${name}</div>
+          <div class="var-name">${varName}</div>
+        </div>`;
+      grid.appendChild(card);
+    }
+  }
+
+  function renderPrimitivePalettes() {
+    const container = document.getElementById('primitive-palettes');
+    container.innerHTML = '';
+    const palettes = currentData.primitiveColors;
+    // Render singles (white, black) first, then named palettes
+    const order = ['_singles', ...Object.keys(palettes).filter(k => k !== '_singles').sort()];
+    for (const palette of order) {
+      if (!palettes[palette]) continue;
+      const section = document.createElement('div');
+      const title = palette === '_singles' ? 'white & black' : palette;
+      section.innerHTML = `<h3>${title}</h3>`;
+      const row = document.createElement('div');
+      row.className = 'swatch-row';
+      for (const { shade, varName } of palettes[palette]) {
+        const val = getVar(varName);
+        if (!val) continue;
+        const s = document.createElement('div');
+        s.className = 'swatch';
+        s.style.background = val;
+        s.innerHTML = `<span>${shade}</span>`;
+        s.addEventListener('click', () => copyToClipboard(varName));
+        row.appendChild(s);
+      }
+      section.appendChild(row);
+      container.appendChild(section);
+    }
+  }
+
+  function renderSpacing() {
+    const list = document.getElementById('spacing-list');
+    list.innerHTML = '';
+    for (const { name, varName, value } of currentData.spacing) {
+      const val = getVar(varName) || value;
+      const item = document.createElement('div');
+      item.className = 'spacing-item';
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => copyToClipboard(varName));
+      item.innerHTML = `
+        <div class="label">${name}</div>
+        <div class="bar" style="width: calc(${val} * 8)"></div>
+        <div class="value">${val}</div>`;
+      list.appendChild(item);
+    }
+  }
+
+  function renderTypography() {
+    const container = document.getElementById('type-samples');
+    container.innerHTML = '';
+
+    // Font families
+    if (currentData.typographyFonts.length) {
+      const families = document.createElement('div');
+      families.className = 'type-sample';
+      let html = '<div class="meta">Font Families</div>';
+      for (const { name, varName } of currentData.typographyFonts) {
+        const val = getVar(varName);
+        html += `<p style="font-family:var(${varName});font-size:1.1rem;font-weight:${name === 'heading' ? 600 : 400};margin-bottom:0.3rem">${name}: ${val}</p>`;
+      }
+      families.innerHTML = html;
+      container.appendChild(families);
+    }
+
+    // Type scale
+    if (currentData.typographySizes.length) {
+      const scaleDiv = document.createElement('div');
+      scaleDiv.className = 'type-sample';
+      scaleDiv.innerHTML = '<div class="meta">Type Scale</div>';
+      for (const { name, varName } of currentData.typographySizes) {
+        const val = getVar(varName);
+        const line = document.createElement('p');
+        line.style.cssText = `font-size:var(${varName});margin-bottom:0.25rem;font-family:var(--tk-dlite-semantic-typography-font-body, sans-serif)`;
+        line.textContent = `Size ${name} — ${val}`;
+        scaleDiv.appendChild(line);
+      }
+      container.appendChild(scaleDiv);
+    }
+
+    // Composite type samples — group by composite name
+    const composites = {};
+    for (const { group, prop, varName, value } of currentData.typographyComposites) {
+      if (!composites[group]) composites[group] = {};
+      composites[group][prop] = { varName, value };
+    }
+
+    const sampleTexts = {
+      'display': 'The quick brown fox',
+      'heading': 'Jumps over the lazy dog',
+      'body': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'label': 'SUBMIT · CANCEL · EDIT · DELETE',
+      'mono': 'const token = getVar("--tk-dlite-semantic-color-primary");',
+    };
+
+    for (const [group, props] of Object.entries(composites).sort(([a],[b]) => a.localeCompare(b))) {
+      const size = props.size ? getVar(props.size.varName) : '';
+      const weight = props.weight ? getVar(props.weight.varName) : '';
+      const lh = props['line-height'] ? getVar(props['line-height'].varName) : '';
+      const ls = props['letter-spacing'] ? getVar(props['letter-spacing'].varName) : '';
+      if (!size) continue;
+
+      // Detect font based on group name
+      const fontKey = group.startsWith('mono') ? 'mono' : group.startsWith('body') ? 'body' : 'heading';
+      const text = Object.entries(sampleTexts).find(([k]) => group.startsWith(k))?.[1] || 'Sample text for ' + group;
+
+      const div = document.createElement('div');
+      div.className = 'type-sample';
+      div.innerHTML = `
+        <div class="meta">${group} — ${size} / ${weight} / lh ${lh} / ls ${ls}</div>
+        <p style="font-family:var(--tk-dlite-semantic-typography-font-${fontKey}, sans-serif);font-size:${size};font-weight:${weight};line-height:${lh};letter-spacing:${ls}">
+          ${text}
+        </p>`;
+      container.appendChild(div);
+    }
+  }
+
+  function renderRadii() {
+    const row = document.getElementById('radius-row');
+    row.innerHTML = '';
+    for (const { name, varName } of currentData.borderRadii) {
+      const val = getVar(varName);
+      const div = document.createElement('div');
+      div.className = 'radius-sample';
+      div.style.borderRadius = `var(${varName})`;
+      div.style.cursor = 'pointer';
+      div.addEventListener('click', () => copyToClipboard(varName));
+      div.innerHTML = `<span>${name}<br/>${val}</span>`;
+      row.appendChild(div);
+    }
+  }
+
+  function renderElevation() {
+    const row = document.getElementById('elevation-row');
+    row.innerHTML = '';
+    for (const { name, varName } of currentData.elevations) {
+      const div = document.createElement('div');
+      div.className = 'elevation-sample';
+      div.style.boxShadow = `var(${varName})`;
+      div.innerHTML = `<span>${name}</span>`;
+      row.appendChild(div);
+    }
+  }
+
+  function renderAll() {
+    requestAnimationFrame(() => {
+      renderSemanticColors();
+      renderPrimitivePalettes();
+      renderSpacing();
+      renderTypography();
+      renderRadii();
+      renderElevation();
+    });
+  }
+
+  // ── Init ──
+  applyTheme();
+</script>
+</body>
+</html>

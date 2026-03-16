@@ -6,6 +6,7 @@ import { loadTokenFiles, resolveExtends, extractTokens, discoverThemes } from '.
 import './transforms/index.ts';
 import './formats/index.ts';
 import { webPlatform, reactNativePlatform } from './platform/index.ts';
+import { generateManifest } from './manifest/index.ts';
 
 console.log('Build started...');
 
@@ -137,3 +138,6 @@ for (const brandName of brandNames) {
 
 console.log('\n==============================================');
 console.log('\nBuild completed!');
+
+// Generate preview manifest (brand/theme discovery for the preview app)
+generateManifest();
