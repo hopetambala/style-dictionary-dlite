@@ -191,11 +191,7 @@
   <span class="title">dlite Tokens</span>
   <div class="sep"></div>
   <label for="brand-select">Brand</label>
-  <select id="brand-select">
-    <option value="puente/default">Puente</option>
-    <option value="survivor/default">Survivor</option>
-    <option value="survivor/winter-holiday">Survivor Winter Holiday</option>
-  </select>
+  <select id="brand-select"></select>
   <label for="mode-select">Mode</label>
   <select id="mode-select">
     <option value="light">Light</option>
@@ -236,24 +232,30 @@
 <div class="toast" id="toast">Copied!</div>
 
 <script type="module">
-  // ── CSS file map ──
-  // Files are served from publicDir (../dist) — use relative paths for base support
   const base = import.meta.env.BASE_URL ?? '/';
-  const cssFiles = {
-    'puente/default': {
-      light: base + 'web/puente/default/variables.css',
-      dark: base + 'web/puente/default/variables.dark.css',
-    },
-    'survivor/default': {
-      light: base + 'web/survivor/default/variables.css',
-      dark: base + 'web/survivor/default/variables.dark.css',
-    },
-    'survivor/winter-holiday': {
-      light: base + 'web/survivor/winter-holiday/variables.css',
-      dark: base + 'web/survivor/winter-holiday/variables.dark.css',
-    },
-  };
 
+  // ── Load manifest and populate brand dropdown ──
+  const brandSelect = document.getElementById('brand-select');
+  const modeSelect = document.getElementById('mode-select');
+  const tokenStyle = document.getElementById('token-vars');
+  const darkStyle = document.getElementById('token-dark');
+
+  let brands = [];
+  try {
+    const res = await fetch(base + 'web/manifest.json');
+    const manifest = await res.json();
+    brands = manifest.brands;
+  } catch {
+    brands = [{ name: 'puente/default', path: 'puente/default', label: 'Puente' }];
+  }
+  for (const b of brands) {
+    const opt = document.createElement('option');
+    opt.value = b.path;
+    opt.textContent = b.label;
+    brandSelect.appendChild(opt);
+  }
+
+  // ── CSS loading ──
   const cache = {};
   async function loadCSS(url) {
     if (cache[url]) return cache[url];
@@ -263,21 +265,120 @@
     return text;
   }
 
-  const brandSelect = document.getElementById('brand-select');
-  const modeSelect = document.getElementById('mode-select');
-  const tokenStyle = document.getElementById('token-vars');
-  const darkStyle = document.getElementById('token-dark');
+  // ── Parse all CSS custom properties from loaded CSS text ──
+  function parseVarsFromCSS(cssText) {
+    const vars = {};
+    const re = /--([\w-]+)\s*:\s*([^;]+)/g;
+    let m;
+    while ((m = re.exec(cssText)) !== null) {
+      vars[`--${m[1]}`] = m[2].trim();
+    }
+    return vars;
+  }
+
+  // ── Categorize parsed variables by prefix ──
+  function categorize(vars) {
+    const result = {
+      semanticColors: [],    // --tk-dlite-semantic-color-*
+      primitiveColors: {},   // grouped by palette name
+      spacing: [],           // --tk-dlite-semantic-spacing-*
+      typographySizes: [],   // --tk-dlite-semantic-typography-size-*
+      typographyFonts: [],   // --tk-dlite-semantic-typography-font-*
+      typographyComposites: [], // --tk-dlite-semantic-typography-type-*
+      borderRadii: [],       // --tk-dlite-semantic-border-radius-*
+      elevations: [],        // --tk-dlite-semantic-elevation-*
+    };
+
+    const primColorPrefix = '--tk-dlite-primitive-color-';
+    const semColorPrefix = '--tk-dlite-semantic-color-';
+    const spacingPrefix = '--tk-dlite-semantic-spacing-';
+    const typeSizePrefix = '--tk-dlite-semantic-typography-size-';
+    const typeFontPrefix = '--tk-dlite-semantic-typography-font-';
+    const typeCompositePrefix = '--tk-dlite-semantic-typography-type-';
+    const radiusPrefix = '--tk-dlite-semantic-border-radius-';
+    const elevationPrefix = '--tk-dlite-semantic-elevation-';
+
+    for (const [varName, value] of Object.entries(vars)) {
+      if (varName.startsWith(semColorPrefix)) {
+        const name = varName.slice(semColorPrefix.length);
+        result.semanticColors.push({ name, varName, value });
+      } else if (varName.startsWith(primColorPrefix)) {
+        const rest = varName.slice(primColorPrefix.length);
+        // "blue-500" → palette=blue, shade=500; "white" → palette=_singles, shade=white
+        const lastDash = rest.lastIndexOf('-');
+        const isShade = lastDash > 0 && /^\d+$/.test(rest.slice(lastDash + 1));
+        const palette = isShade ? rest.slice(0, lastDash) : '_singles';
+        const shade = isShade ? rest.slice(lastDash + 1) : rest;
+        if (!result.primitiveColors[palette]) result.primitiveColors[palette] = [];
+        result.primitiveColors[palette].push({ shade, varName, value });
+      } else if (varName.startsWith(spacingPrefix)) {
+        const name = varName.slice(spacingPrefix.length);
+        result.spacing.push({ name, varName, value });
+      } else if (varName.startsWith(typeSizePrefix)) {
+        const name = varName.slice(typeSizePrefix.length);
+        result.typographySizes.push({ name, varName, value });
+      } else if (varName.startsWith(typeFontPrefix)) {
+        const name = varName.slice(typeFontPrefix.length);
+        result.typographyFonts.push({ name, varName, value });
+      } else if (varName.startsWith(typeCompositePrefix)) {
+        const rest = varName.slice(typeCompositePrefix.length);
+        // e.g. "display-l-size" → group=display-l, prop=size
+        const lastDash = rest.lastIndexOf('-');
+        const group = rest.slice(0, lastDash);
+        const prop = rest.slice(lastDash + 1);
+        result.typographyComposites.push({ group, prop, varName, value });
+      } else if (varName.startsWith(radiusPrefix)) {
+        const name = varName.slice(radiusPrefix.length);
+        result.borderRadii.push({ name, varName, value });
+      } else if (varName.startsWith(elevationPrefix)) {
+        const name = varName.slice(elevationPrefix.length);
+        result.elevations.push({ name, varName, value });
+      }
+    }
+
+    // Sort spacing: named first (by a sensible order), then numeric
+    const namedOrder = ['xxxs','xxs','xs','sm','md','lg','xl','xxl','xxxl'];
+    result.spacing.sort((a, b) => {
+      const ai = namedOrder.indexOf(a.name);
+      const bi = namedOrder.indexOf(b.name);
+      if (ai >= 0 && bi >= 0) return ai - bi;
+      if (ai >= 0) return -1;
+      if (bi >= 0) return 1;
+      return parseInt(a.name) - parseInt(b.name);
+    });
+
+    // Sort shade arrays numerically
+    for (const palette of Object.values(result.primitiveColors)) {
+      palette.sort((a, b) => {
+        const an = parseInt(a.shade);
+        const bn = parseInt(b.shade);
+        if (isNaN(an) && isNaN(bn)) return a.shade.localeCompare(b.shade);
+        if (isNaN(an)) return -1;
+        if (isNaN(bn)) return 1;
+        return an - bn;
+      });
+    }
+
+    return result;
+  }
+
+  // ── Theme switching ──
+  let currentData = null;
 
   async function applyTheme() {
-    const brand = brandSelect.value;
+    const brandPath = brandSelect.value;
     const mode = modeSelect.value;
-    const lightCSS = await loadCSS(cssFiles[brand].light);
+    const lightCSS = await loadCSS(base + `web/${brandPath}/variables.css`);
     tokenStyle.textContent = lightCSS;
     if (mode === 'dark') {
-      const darkCSS = await loadCSS(cssFiles[brand].dark);
+      const darkCSS = await loadCSS(base + `web/${brandPath}/variables.dark.css`);
       darkStyle.textContent = darkCSS;
+      // Merge dark overrides on top of light
+      const allVars = { ...parseVarsFromCSS(lightCSS), ...parseVarsFromCSS(darkCSS) };
+      currentData = categorize(allVars);
     } else {
       darkStyle.textContent = '';
+      currentData = categorize(parseVarsFromCSS(lightCSS));
     }
     renderAll();
   }
@@ -285,59 +386,25 @@
   brandSelect.addEventListener('change', applyTheme);
   modeSelect.addEventListener('change', applyTheme);
 
-  // ── Toast for copy ──
+  // ── Toast ──
   const toast = document.getElementById('toast');
   function showToast(msg) {
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 1500);
   }
-
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => showToast(`Copied: ${text}`));
   }
-
-  // ── Get computed value of a CSS custom property ──
   function getVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   }
-
-  // ── Data ──
-  const semanticColors = [
-    'primary', 'secondary', 'background', 'foreground', 'muted', 'border',
-    'success', 'warning', 'error',
-    'surface-base', 'surface-sunken', 'surface-raised', 'surface-overlay',
-    'text-primary', 'text-secondary', 'text-tertiary', 'text-on-brand',
-    'action-primary', 'action-primary-active', 'action-secondary', 'action-secondary-active',
-    'feedback-info', 'feedback-success', 'feedback-success-active',
-    'feedback-warning', 'feedback-danger', 'feedback-danger-active',
-  ];
-
-  const palettes = ['neutral', 'blue', 'green', 'yellow', 'orange', 'red', 'mint', 'teal', 'purple', 'pink', 'sand'];
-  const shades = ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'];
-
-  const spacingScale = [
-    'xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl',
-    '100', '200', '300', '400', '500', '600', '700', '800', '900', '1000',
-  ];
-
-  const typeSamples = [
-    { label: 'Display L', font: 'heading', vars: 'type-display-l', text: 'The quick brown fox' },
-    { label: 'Heading M', font: 'heading', vars: 'type-heading-m', text: 'Jumps over the lazy dog' },
-    { label: 'Body Default', font: 'body', vars: 'type-body-default', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { label: 'Label S', font: 'heading', vars: 'type-label-s', text: 'SUBMIT  ·  CANCEL  ·  EDIT  ·  DELETE' },
-    { label: 'Mono M', font: 'mono', vars: 'type-mono-m', text: 'const token = getVar("--tk-dlite-semantic-color-primary");' },
-  ];
-
-  const radii = ['none', 'sm', 'md', 'lg', 'full'];
-  const elevations = ['low', 'medium', 'high'];
 
   // ── Renderers ──
   function renderSemanticColors() {
     const grid = document.getElementById('semantic-grid');
     grid.innerHTML = '';
-    for (const name of semanticColors) {
-      const varName = `--tk-dlite-semantic-color-${name}`;
+    for (const { name, varName } of currentData.semanticColors) {
       const value = getVar(varName);
       const card = document.createElement('div');
       card.className = 'semantic-card';
@@ -350,8 +417,7 @@
         <div class="info">
           <div class="name">${name}</div>
           <div class="var-name">${varName}</div>
-        </div>
-      `;
+        </div>`;
       grid.appendChild(card);
     }
   }
@@ -359,31 +425,17 @@
   function renderPrimitivePalettes() {
     const container = document.getElementById('primitive-palettes');
     container.innerHTML = '';
-    // white + black
-    const wb = document.createElement('div');
-    wb.innerHTML = '<h3>white &amp; black</h3>';
-    const wbRow = document.createElement('div');
-    wbRow.className = 'swatch-row';
-    for (const c of ['white', 'black']) {
-      const varName = `--tk-dlite-primitive-color-${c}`;
-      const val = getVar(varName);
-      const s = document.createElement('div');
-      s.className = 'swatch';
-      s.style.background = val;
-      s.innerHTML = `<span>${c}</span>`;
-      s.addEventListener('click', () => copyToClipboard(varName));
-      wbRow.appendChild(s);
-    }
-    wb.appendChild(wbRow);
-    container.appendChild(wb);
-
-    for (const palette of palettes) {
+    const palettes = currentData.primitiveColors;
+    // Render singles (white, black) first, then named palettes
+    const order = ['_singles', ...Object.keys(palettes).filter(k => k !== '_singles').sort()];
+    for (const palette of order) {
+      if (!palettes[palette]) continue;
       const section = document.createElement('div');
-      section.innerHTML = `<h3>${palette}</h3>`;
+      const title = palette === '_singles' ? 'white & black' : palette;
+      section.innerHTML = `<h3>${title}</h3>`;
       const row = document.createElement('div');
       row.className = 'swatch-row';
-      for (const shade of shades) {
-        const varName = `--tk-dlite-primitive-color-${palette}-${shade}`;
+      for (const { shade, varName } of palettes[palette]) {
         const val = getVar(varName);
         if (!val) continue;
         const s = document.createElement('div');
@@ -401,19 +453,16 @@
   function renderSpacing() {
     const list = document.getElementById('spacing-list');
     list.innerHTML = '';
-    for (const s of spacingScale) {
-      const varName = `--tk-dlite-semantic-spacing-${s}`;
-      const val = getVar(varName);
-      if (!val) continue;
+    for (const { name, varName, value } of currentData.spacing) {
+      const val = getVar(varName) || value;
       const item = document.createElement('div');
       item.className = 'spacing-item';
       item.style.cursor = 'pointer';
       item.addEventListener('click', () => copyToClipboard(varName));
       item.innerHTML = `
-        <div class="label">${s}</div>
+        <div class="label">${name}</div>
         <div class="bar" style="width: calc(${val} * 8)"></div>
-        <div class="value">${val}</div>
-      `;
+        <div class="value">${val}</div>`;
       list.appendChild(item);
     }
   }
@@ -423,51 +472,66 @@
     container.innerHTML = '';
 
     // Font families
-    const families = document.createElement('div');
-    families.className = 'type-sample';
-    families.innerHTML = `
-      <div class="meta">Font Families</div>
-      <p style="font-family:var(--tk-dlite-semantic-typography-font-heading);font-size:1.1rem;font-weight:600;margin-bottom:0.3rem">
-        Heading: ${getVar('--tk-dlite-semantic-typography-font-heading')}
-      </p>
-      <p style="font-family:var(--tk-dlite-semantic-typography-font-body);font-size:1.1rem;margin-bottom:0.3rem">
-        Body: ${getVar('--tk-dlite-semantic-typography-font-body')}
-      </p>
-      <p style="font-family:var(--tk-dlite-semantic-typography-font-mono);font-size:1rem">
-        Mono: ${getVar('--tk-dlite-semantic-typography-font-mono')}
-      </p>
-    `;
-    container.appendChild(families);
+    if (currentData.typographyFonts.length) {
+      const families = document.createElement('div');
+      families.className = 'type-sample';
+      let html = '<div class="meta">Font Families</div>';
+      for (const { name, varName } of currentData.typographyFonts) {
+        const val = getVar(varName);
+        html += `<p style="font-family:var(${varName});font-size:1.1rem;font-weight:${name === 'heading' ? 600 : 400};margin-bottom:0.3rem">${name}: ${val}</p>`;
+      }
+      families.innerHTML = html;
+      container.appendChild(families);
+    }
 
     // Type scale
-    const scaleDiv = document.createElement('div');
-    scaleDiv.className = 'type-sample';
-    scaleDiv.innerHTML = '<div class="meta">Type Scale</div>';
-    for (const size of ['100','200','300','400','500','600','700','800','900','1000']) {
-      const varName = `--tk-dlite-semantic-typography-size-${size}`;
-      const val = getVar(varName);
-      const line = document.createElement('p');
-      line.style.cssText = `font-size:var(${varName});margin-bottom:0.25rem;font-family:var(--tk-dlite-semantic-typography-font-body)`;
-      line.textContent = `Size ${size} — ${val}`;
-      scaleDiv.appendChild(line);
+    if (currentData.typographySizes.length) {
+      const scaleDiv = document.createElement('div');
+      scaleDiv.className = 'type-sample';
+      scaleDiv.innerHTML = '<div class="meta">Type Scale</div>';
+      for (const { name, varName } of currentData.typographySizes) {
+        const val = getVar(varName);
+        const line = document.createElement('p');
+        line.style.cssText = `font-size:var(${varName});margin-bottom:0.25rem;font-family:var(--tk-dlite-semantic-typography-font-body, sans-serif)`;
+        line.textContent = `Size ${name} — ${val}`;
+        scaleDiv.appendChild(line);
+      }
+      container.appendChild(scaleDiv);
     }
-    container.appendChild(scaleDiv);
 
-    // Composite type samples
-    for (const sample of typeSamples) {
+    // Composite type samples — group by composite name
+    const composites = {};
+    for (const { group, prop, varName, value } of currentData.typographyComposites) {
+      if (!composites[group]) composites[group] = {};
+      composites[group][prop] = { varName, value };
+    }
+
+    const sampleTexts = {
+      'display': 'The quick brown fox',
+      'heading': 'Jumps over the lazy dog',
+      'body': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'label': 'SUBMIT · CANCEL · EDIT · DELETE',
+      'mono': 'const token = getVar("--tk-dlite-semantic-color-primary");',
+    };
+
+    for (const [group, props] of Object.entries(composites).sort(([a],[b]) => a.localeCompare(b))) {
+      const size = props.size ? getVar(props.size.varName) : '';
+      const weight = props.weight ? getVar(props.weight.varName) : '';
+      const lh = props['line-height'] ? getVar(props['line-height'].varName) : '';
+      const ls = props['letter-spacing'] ? getVar(props['letter-spacing'].varName) : '';
+      if (!size) continue;
+
+      // Detect font based on group name
+      const fontKey = group.startsWith('mono') ? 'mono' : group.startsWith('body') ? 'body' : 'heading';
+      const text = Object.entries(sampleTexts).find(([k]) => group.startsWith(k))?.[1] || 'Sample text for ' + group;
+
       const div = document.createElement('div');
       div.className = 'type-sample';
-      const prefix = `--tk-dlite-semantic-typography-${sample.vars}`;
-      const size = getVar(`${prefix}-size`);
-      const weight = getVar(`${prefix}-weight`);
-      const lh = getVar(`${prefix}-line-height`);
-      const ls = getVar(`${prefix}-letter-spacing`);
       div.innerHTML = `
-        <div class="meta">${sample.label} — ${size} / ${weight} / lh ${lh} / ls ${ls}</div>
-        <p style="font-family:var(--tk-dlite-semantic-typography-font-${sample.font});font-size:${size};font-weight:${weight};line-height:${lh};letter-spacing:${ls}">
-          ${sample.text}
-        </p>
-      `;
+        <div class="meta">${group} — ${size} / ${weight} / lh ${lh} / ls ${ls}</div>
+        <p style="font-family:var(--tk-dlite-semantic-typography-font-${fontKey}, sans-serif);font-size:${size};font-weight:${weight};line-height:${lh};letter-spacing:${ls}">
+          ${text}
+        </p>`;
       container.appendChild(div);
     }
   }
@@ -475,15 +539,14 @@
   function renderRadii() {
     const row = document.getElementById('radius-row');
     row.innerHTML = '';
-    for (const r of radii) {
-      const varName = `--tk-dlite-semantic-border-radius-${r}`;
+    for (const { name, varName } of currentData.borderRadii) {
       const val = getVar(varName);
       const div = document.createElement('div');
       div.className = 'radius-sample';
       div.style.borderRadius = `var(${varName})`;
       div.style.cursor = 'pointer';
       div.addEventListener('click', () => copyToClipboard(varName));
-      div.innerHTML = `<span>${r}<br/>${val}</span>`;
+      div.innerHTML = `<span>${name}<br/>${val}</span>`;
       row.appendChild(div);
     }
   }
@@ -491,19 +554,16 @@
   function renderElevation() {
     const row = document.getElementById('elevation-row');
     row.innerHTML = '';
-    for (const e of elevations) {
-      const varName = `--tk-dlite-semantic-elevation-${e}`;
-      const val = getVar(varName);
+    for (const { name, varName } of currentData.elevations) {
       const div = document.createElement('div');
       div.className = 'elevation-sample';
       div.style.boxShadow = `var(${varName})`;
-      div.innerHTML = `<span>${e}</span>`;
+      div.innerHTML = `<span>${name}</span>`;
       row.appendChild(div);
     }
   }
 
   function renderAll() {
-    // Small delay so computed styles settle after CSS injection
     requestAnimationFrame(() => {
       renderSemanticColors();
       renderPrimitivePalettes();
