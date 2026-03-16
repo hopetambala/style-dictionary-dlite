@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
     environment: release
     permissions:
       contents: write
@@ -38,18 +39,14 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Release (bump version, changelog, tag)
-        run: npx commit-and-tag-version --skip.tag
+        run: npx commit-and-tag-version
 
-      - name: Push release commit
-        run: git push origin main
+      - name: Push release commit and tag
+        run: |
+          git push origin main
+          git push origin --tags
 
       - name: Publish to npm
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Tag and push tag
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          git tag -a "v${VERSION}" -m "chore(release): ${VERSION}"
-          git push origin "v${VERSION}"
