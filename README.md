@@ -216,10 +216,11 @@ npm run test:update    # updates snapshots after intentional changes
 Preview all tokens (colors, spacing, typography, radii, elevation) across every brand, theme, and mode in the browser:
 
 ```sh
-npm run preview
+npm run build          # build tokens into dist/ (required before first preview)
+npm run preview        # start Vite dev server
 ```
 
-This starts a Vite dev server at `http://localhost:5173` with a toolbar to switch between brands (Puente, Survivor, Survivor Winter Holiday) and modes (Light, Dark). Token changes rebuild automatically.
+This starts a Vite dev server at `http://localhost:5173` with a toolbar to switch between brands and modes (Light, Dark). The preview reads from `dist/`, so re-run `npm run build` after changing any token files.
 
 To build the static preview site (same page deployed to GitHub Pages):
 

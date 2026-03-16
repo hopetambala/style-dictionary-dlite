@@ -70,6 +70,17 @@ for (const brand of brands) {
   }
 }
 
+// ── Manifest snapshot ──
+describe('manifest', () => {
+  test('manifest.json matches snapshot', async () => {
+    const manifestPath = path.join(DIST_WEB, 'manifest.json');
+    const content = fs.readFileSync(manifestPath, 'utf-8');
+    await expect(content).toMatchFileSnapshot(
+      '__snapshots__/web/manifest.json.snap',
+    );
+  });
+});
+
 // ── React Native snapshots ──
 const rnBrands = fs.existsSync(DIST_RN)
   ? fs.readdirSync(DIST_RN, { withFileTypes: true })

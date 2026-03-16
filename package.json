@@ -28,7 +28,7 @@
   "scripts": {
     "build": "tsx ./build/index.ts",
     "clean": "rm -rf dist",
-    "preview": "vite --config preview/vite.config.ts",
+    "preview": "npm run build && vite --config preview/vite.config.ts",
     "build:preview": "npm run build && vite build --config preview/vite.config.ts",
     "test": "vitest run",
     "test:update": "vitest run --update",

@@ -16,10 +16,14 @@ export function generateManifest(webDir = 'dist/web'): void {
         const themeDir = path.join(brandDir, theme);
         if (!fs.statSync(themeDir).isDirectory()) continue;
         const p = `${brand}/${theme}`;
-        const label = `${brand.charAt(0).toUpperCase() + brand.slice(1)}${theme === 'default' ? '' : ` ${theme.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`}`;
+        const label = `${brand.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}${theme === 'default' ? '' : ` ${theme.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`}`;
         manifest.brands.push({ name: p, path: p, label });
       }
     }
+  }
+
+  if (!fs.existsSync(webDir)) {
+    fs.mkdirSync(webDir, { recursive: true });
   }
 
   fs.writeFileSync(path.join(webDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');

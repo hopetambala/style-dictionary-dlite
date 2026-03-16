@@ -323,9 +323,18 @@
       } else if (varName.startsWith(typeCompositePrefix)) {
         const rest = varName.slice(typeCompositePrefix.length);
         // e.g. "display-l-size" → group=display-l, prop=size
-        const lastDash = rest.lastIndexOf('-');
-        const group = rest.slice(0, lastDash);
-        const prop = rest.slice(lastDash + 1);
+        // Handle multi-word props like "line-height", "letter-spacing"
+        const knownSuffixes = ['-size', '-weight', '-line-height', '-letter-spacing'];
+        const matched = knownSuffixes.find(s => rest.endsWith(s));
+        let group, prop;
+        if (matched) {
+          group = rest.slice(0, rest.length - matched.length);
+          prop = matched.slice(1);
+        } else {
+          const lastDash = rest.lastIndexOf('-');
+          group = lastDash > -1 ? rest.slice(0, lastDash) : rest;
+          prop = lastDash > -1 ? rest.slice(lastDash + 1) : '';
+        }
         result.typographyComposites.push({ group, prop, varName, value });
       } else if (varName.startsWith(radiusPrefix)) {
         const name = varName.slice(radiusPrefix.length);
@@ -366,21 +375,26 @@
   let currentData = null;
 
   async function applyTheme() {
-    const brandPath = brandSelect.value;
-    const mode = modeSelect.value;
-    const lightCSS = await loadCSS(base + `web/${brandPath}/variables.css`);
-    tokenStyle.textContent = lightCSS;
-    if (mode === 'dark') {
-      const darkCSS = await loadCSS(base + `web/${brandPath}/variables.dark.css`);
-      darkStyle.textContent = darkCSS;
-      // Merge dark overrides on top of light
-      const allVars = { ...parseVarsFromCSS(lightCSS), ...parseVarsFromCSS(darkCSS) };
-      currentData = categorize(allVars);
-    } else {
-      darkStyle.textContent = '';
-      currentData = categorize(parseVarsFromCSS(lightCSS));
+    try {
+      const brandPath = brandSelect.value;
+      const mode = modeSelect.value;
+      const lightCSS = await loadCSS(base + `web/${brandPath}/variables.css`);
+      tokenStyle.textContent = lightCSS;
+      if (mode === 'dark') {
+        const darkCSS = await loadCSS(base + `web/${brandPath}/variables.dark.css`);
+        darkStyle.textContent = darkCSS;
+        // Merge dark overrides on top of light
+        const allVars = { ...parseVarsFromCSS(lightCSS), ...parseVarsFromCSS(darkCSS) };
+        currentData = categorize(allVars);
+      } else {
+        darkStyle.textContent = '';
+        currentData = categorize(parseVarsFromCSS(lightCSS));
+      }
+      renderAll();
+    } catch (err) {
+      document.querySelector('.grid').innerHTML =
+        `<p style="color:red;grid-column:1/-1">Failed to load tokens: ${err.message}</p>`;
     }
-    renderAll();
   }
 
   brandSelect.addEventListener('change', applyTheme);
