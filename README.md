@@ -1,5 +1,7 @@
 # Style Dictionary — Multi-Brand, Multi-Theme Design Tokens
 
+[Head to this page to checkout what's available!](https://hopetambala.github.io/style-dictionary-dlite/)
+
 Design tokens built with [Style Dictionary v5](https://styledictionary.com/) following the [W3C Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) spec, including the [DTCG 2025.10 Color Module](https://www.designtokens.org/tr/2025.10/color/) (sRGB object format).
 
 ## Architecture
