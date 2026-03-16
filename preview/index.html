@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dlite Token Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style id="token-vars"></style>
+  <style id="token-dark"></style>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--tk-dlite-semantic-typography-font-body, 'Source Serif 4', serif);
+      background: var(--tk-dlite-semantic-color-background);
+      color: var(--tk-dlite-semantic-color-foreground);
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+      padding: 1rem 1.5rem;
+      background: var(--tk-dlite-semantic-color-surface-raised);
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      box-shadow: var(--tk-dlite-semantic-elevation-medium);
+      margin-bottom: 2rem;
+    }
+    .toolbar label {
+      font-family: var(--tk-dlite-semantic-typography-font-heading, 'Plus Jakarta Sans', sans-serif);
+      font-weight: 600; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+    }
+    .toolbar select {
+      font-family: inherit; font-size: 0.9rem;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      border-radius: var(--tk-dlite-semantic-border-radius-sm);
+      background: var(--tk-dlite-semantic-color-surface-base);
+      color: var(--tk-dlite-semantic-color-foreground);
+    }
+    .toolbar .sep { width: 1px; height: 2rem; background: var(--tk-dlite-semantic-color-border); }
+    .toolbar .title {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-weight: 700; font-size: 1.1rem; margin-right: auto;
+    }
+
+    /* ── Sections ── */
+    section { margin-bottom: 3rem; }
+    h2 {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;
+      border-bottom: 2px solid var(--tk-dlite-semantic-color-border);
+      padding-bottom: 0.5rem;
+    }
+    h3 {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem;
+      text-transform: capitalize;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+    }
+
+    /* ── Color swatches ── */
+    .swatch-row { display: flex; gap: 4px; margin-bottom: 0.25rem; flex-wrap: wrap; }
+    .swatch {
+      width: 64px; height: 48px;
+      border-radius: var(--tk-dlite-semantic-border-radius-sm);
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      display: flex; align-items: flex-end; justify-content: center;
+      padding: 2px; cursor: pointer; position: relative;
+      transition: transform 0.15s;
+    }
+    .swatch:hover { transform: scale(1.1); z-index: 2; }
+    .swatch span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.55rem; line-height: 1;
+      background: rgba(255,255,255,0.85); color: #000;
+      padding: 1px 3px; border-radius: 2px;
+    }
+
+    /* ── Semantic color grid ── */
+    .semantic-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+    .semantic-card {
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      overflow: hidden;
+    }
+    .semantic-card .color-block {
+      height: 56px; display: flex; align-items: flex-end; padding: 6px;
+    }
+    .semantic-card .color-block span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.65rem; background: rgba(255,255,255,0.85); color: #000;
+      padding: 1px 4px; border-radius: 2px;
+    }
+    .semantic-card .info {
+      padding: 0.5rem 0.75rem;
+      background: var(--tk-dlite-semantic-color-surface-base);
+    }
+    .semantic-card .info .name {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-weight: 600; font-size: 0.75rem;
+    }
+    .semantic-card .info .var-name {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.6rem; color: var(--tk-dlite-semantic-color-text-secondary);
+      word-break: break-all;
+    }
+
+    /* ── Spacing ── */
+    .spacing-list { display: flex; flex-direction: column; gap: 6px; }
+    .spacing-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .spacing-item .label {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.75rem; width: 100px; flex-shrink: 0;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+    }
+    .spacing-item .bar {
+      height: 24px;
+      background: var(--tk-dlite-semantic-color-action-primary);
+      border-radius: var(--tk-dlite-semantic-border-radius-sm);
+      opacity: 0.7;
+      transition: width 0.3s;
+    }
+    .spacing-item .value {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.7rem; flex-shrink: 0; width: 60px;
+    }
+
+    /* ── Typography ── */
+    .type-sample { margin-bottom: 1rem; }
+    .type-sample .meta {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.65rem; color: var(--tk-dlite-semantic-color-text-secondary);
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Radius ── */
+    .radius-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
+    .radius-sample {
+      width: 72px; height: 72px;
+      background: var(--tk-dlite-semantic-color-action-primary);
+      opacity: 0.6;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .radius-sample span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.6rem; color: var(--tk-dlite-semantic-color-text-on-brand);
+    }
+
+    /* ── Elevation ── */
+    .elevation-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .elevation-sample {
+      width: 120px; height: 80px;
+      background: var(--tk-dlite-semantic-color-surface-raised);
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .elevation-sample span {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.7rem;
+    }
+
+    /* ── Copied toast ── */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--tk-dlite-semantic-color-foreground);
+      color: var(--tk-dlite-semantic-color-background);
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.8rem; padding: 0.5rem 1rem;
+      border-radius: var(--tk-dlite-semantic-border-radius-md);
+      opacity: 0; transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">dlite Tokens</span>
+  <div class="sep"></div>
+  <label for="brand-select">Brand</label>
+  <select id="brand-select">
+    <option value="puente/default">Puente</option>
+    <option value="survivor/default">Survivor</option>
+    <option value="survivor/winter-holiday">Survivor Winter Holiday</option>
+  </select>
+  <label for="mode-select">Mode</label>
+  <select id="mode-select">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</div>
+
+<section id="sec-semantic-colors">
+  <h2>Semantic Colors</h2>
+  <div class="semantic-grid" id="semantic-grid"></div>
+</section>
+
+<section id="sec-primitives">
+  <h2>Primitive Color Palettes</h2>
+  <div id="primitive-palettes"></div>
+</section>
+
+<section id="sec-spacing">
+  <h2>Spacing Scale</h2>
+  <div class="spacing-list" id="spacing-list"></div>
+</section>
+
+<section id="sec-typography">
+  <h2>Typography</h2>
+  <div id="type-samples"></div>
+</section>
+
+<section id="sec-radii">
+  <h2>Border Radius</h2>
+  <div class="radius-row" id="radius-row"></div>
+</section>
+
+<section id="sec-elevation">
+  <h2>Elevation</h2>
+  <div class="elevation-row" id="elevation-row"></div>
+</section>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script type="module">
+  // ── CSS file map ──
+  // Files are served from publicDir (../dist) — use relative paths for base support
+  const base = import.meta.env.BASE_URL ?? '/';
+  const cssFiles = {
+    'puente/default': {
+      light: base + 'web/puente/default/variables.css',
+      dark: base + 'web/puente/default/variables.dark.css',
+    },
+    'survivor/default': {
+      light: base + 'web/survivor/default/variables.css',
+      dark: base + 'web/survivor/default/variables.dark.css',
+    },
+    'survivor/winter-holiday': {
+      light: base + 'web/survivor/winter-holiday/variables.css',
+      dark: base + 'web/survivor/winter-holiday/variables.dark.css',
+    },
+  };
+
+  const cache = {};
+  async function loadCSS(url) {
+    if (cache[url]) return cache[url];
+    const res = await fetch(url);
+    const text = await res.text();
+    cache[url] = text;
+    return text;
+  }
+
+  const brandSelect = document.getElementById('brand-select');
+  const modeSelect = document.getElementById('mode-select');
+  const tokenStyle = document.getElementById('token-vars');
+  const darkStyle = document.getElementById('token-dark');
+
+  async function applyTheme() {
+    const brand = brandSelect.value;
+    const mode = modeSelect.value;
+    const lightCSS = await loadCSS(cssFiles[brand].light);
+    tokenStyle.textContent = lightCSS;
+    if (mode === 'dark') {
+      const darkCSS = await loadCSS(cssFiles[brand].dark);
+      darkStyle.textContent = darkCSS;
+    } else {
+      darkStyle.textContent = '';
+    }
+    renderAll();
+  }
+
+  brandSelect.addEventListener('change', applyTheme);
+  modeSelect.addEventListener('change', applyTheme);
+
+  // ── Toast for copy ──
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1500);
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => showToast(`Copied: ${text}`));
+  }
+
+  // ── Get computed value of a CSS custom property ──
+  function getVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  // ── Data ──
+  const semanticColors = [
+    'primary', 'secondary', 'background', 'foreground', 'muted', 'border',
+    'success', 'warning', 'error',
+    'surface-base', 'surface-sunken', 'surface-raised', 'surface-overlay',
+    'text-primary', 'text-secondary', 'text-tertiary', 'text-on-brand',
+    'action-primary', 'action-primary-active', 'action-secondary', 'action-secondary-active',
+    'feedback-info', 'feedback-success', 'feedback-success-active',
+    'feedback-warning', 'feedback-danger', 'feedback-danger-active',
+  ];
+
+  const palettes = ['neutral', 'blue', 'green', 'yellow', 'orange', 'red', 'mint', 'teal', 'purple', 'pink', 'sand'];
+  const shades = ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'];
+
+  const spacingScale = [
+    'xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl',
+    '100', '200', '300', '400', '500', '600', '700', '800', '900', '1000',
+  ];
+
+  const typeSamples = [
+    { label: 'Display L', font: 'heading', vars: 'type-display-l', text: 'The quick brown fox' },
+    { label: 'Heading M', font: 'heading', vars: 'type-heading-m', text: 'Jumps over the lazy dog' },
+    { label: 'Body Default', font: 'body', vars: 'type-body-default', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { label: 'Label S', font: 'heading', vars: 'type-label-s', text: 'SUBMIT  ·  CANCEL  ·  EDIT  ·  DELETE' },
+    { label: 'Mono M', font: 'mono', vars: 'type-mono-m', text: 'const token = getVar("--tk-dlite-semantic-color-primary");' },
+  ];
+
+  const radii = ['none', 'sm', 'md', 'lg', 'full'];
+  const elevations = ['low', 'medium', 'high'];
+
+  // ── Renderers ──
+  function renderSemanticColors() {
+    const grid = document.getElementById('semantic-grid');
+    grid.innerHTML = '';
+    for (const name of semanticColors) {
+      const varName = `--tk-dlite-semantic-color-${name}`;
+      const value = getVar(varName);
+      const card = document.createElement('div');
+      card.className = 'semantic-card';
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => copyToClipboard(varName));
+      card.innerHTML = `
+        <div class="color-block" style="background:${value}">
+          <span>${value}</span>
+        </div>
+        <div class="info">
+          <div class="name">${name}</div>
+          <div class="var-name">${varName}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  }
+
+  function renderPrimitivePalettes() {
+    const container = document.getElementById('primitive-palettes');
+    container.innerHTML = '';
+    // white + black
+    const wb = document.createElement('div');
+    wb.innerHTML = '<h3>white &amp; black</h3>';
+    const wbRow = document.createElement('div');
+    wbRow.className = 'swatch-row';
+    for (const c of ['white', 'black']) {
+      const varName = `--tk-dlite-primitive-color-${c}`;
+      const val = getVar(varName);
+      const s = document.createElement('div');
+      s.className = 'swatch';
+      s.style.background = val;
+      s.innerHTML = `<span>${c}</span>`;
+      s.addEventListener('click', () => copyToClipboard(varName));
+      wbRow.appendChild(s);
+    }
+    wb.appendChild(wbRow);
+    container.appendChild(wb);
+
+    for (const palette of palettes) {
+      const section = document.createElement('div');
+      section.innerHTML = `<h3>${palette}</h3>`;
+      const row = document.createElement('div');
+      row.className = 'swatch-row';
+      for (const shade of shades) {
+        const varName = `--tk-dlite-primitive-color-${palette}-${shade}`;
+        const val = getVar(varName);
+        if (!val) continue;
+        const s = document.createElement('div');
+        s.className = 'swatch';
+        s.style.background = val;
+        s.innerHTML = `<span>${shade}</span>`;
+        s.addEventListener('click', () => copyToClipboard(varName));
+        row.appendChild(s);
+      }
+      section.appendChild(row);
+      container.appendChild(section);
+    }
+  }
+
+  function renderSpacing() {
+    const list = document.getElementById('spacing-list');
+    list.innerHTML = '';
+    for (const s of spacingScale) {
+      const varName = `--tk-dlite-semantic-spacing-${s}`;
+      const val = getVar(varName);
+      if (!val) continue;
+      const item = document.createElement('div');
+      item.className = 'spacing-item';
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => copyToClipboard(varName));
+      item.innerHTML = `
+        <div class="label">${s}</div>
+        <div class="bar" style="width: calc(${val} * 8)"></div>
+        <div class="value">${val}</div>
+      `;
+      list.appendChild(item);
+    }
+  }
+
+  function renderTypography() {
+    const container = document.getElementById('type-samples');
+    container.innerHTML = '';
+
+    // Font families
+    const families = document.createElement('div');
+    families.className = 'type-sample';
+    families.innerHTML = `
+      <div class="meta">Font Families</div>
+      <p style="font-family:var(--tk-dlite-semantic-typography-font-heading);font-size:1.1rem;font-weight:600;margin-bottom:0.3rem">
+        Heading: ${getVar('--tk-dlite-semantic-typography-font-heading')}
+      </p>
+      <p style="font-family:var(--tk-dlite-semantic-typography-font-body);font-size:1.1rem;margin-bottom:0.3rem">
+        Body: ${getVar('--tk-dlite-semantic-typography-font-body')}
+      </p>
+      <p style="font-family:var(--tk-dlite-semantic-typography-font-mono);font-size:1rem">
+        Mono: ${getVar('--tk-dlite-semantic-typography-font-mono')}
+      </p>
+    `;
+    container.appendChild(families);
+
+    // Type scale
+    const scaleDiv = document.createElement('div');
+    scaleDiv.className = 'type-sample';
+    scaleDiv.innerHTML = '<div class="meta">Type Scale</div>';
+    for (const size of ['100','200','300','400','500','600','700','800','900','1000']) {
+      const varName = `--tk-dlite-semantic-typography-size-${size}`;
+      const val = getVar(varName);
+      const line = document.createElement('p');
+      line.style.cssText = `font-size:var(${varName});margin-bottom:0.25rem;font-family:var(--tk-dlite-semantic-typography-font-body)`;
+      line.textContent = `Size ${size} — ${val}`;
+      scaleDiv.appendChild(line);
+    }
+    container.appendChild(scaleDiv);
+
+    // Composite type samples
+    for (const sample of typeSamples) {
+      const div = document.createElement('div');
+      div.className = 'type-sample';
+      const prefix = `--tk-dlite-semantic-typography-${sample.vars}`;
+      const size = getVar(`${prefix}-size`);
+      const weight = getVar(`${prefix}-weight`);
+      const lh = getVar(`${prefix}-line-height`);
+      const ls = getVar(`${prefix}-letter-spacing`);
+      div.innerHTML = `
+        <div class="meta">${sample.label} — ${size} / ${weight} / lh ${lh} / ls ${ls}</div>
+        <p style="font-family:var(--tk-dlite-semantic-typography-font-${sample.font});font-size:${size};font-weight:${weight};line-height:${lh};letter-spacing:${ls}">
+          ${sample.text}
+        </p>
+      `;
+      container.appendChild(div);
+    }
+  }
+
+  function renderRadii() {
+    const row = document.getElementById('radius-row');
+    row.innerHTML = '';
+    for (const r of radii) {
+      const varName = `--tk-dlite-semantic-border-radius-${r}`;
+      const val = getVar(varName);
+      const div = document.createElement('div');
+      div.className = 'radius-sample';
+      div.style.borderRadius = `var(${varName})`;
+      div.style.cursor = 'pointer';
+      div.addEventListener('click', () => copyToClipboard(varName));
+      div.innerHTML = `<span>${r}<br/>${val}</span>`;
+      row.appendChild(div);
+    }
+  }
+
+  function renderElevation() {
+    const row = document.getElementById('elevation-row');
+    row.innerHTML = '';
+    for (const e of elevations) {
+      const varName = `--tk-dlite-semantic-elevation-${e}`;
+      const val = getVar(varName);
+      const div = document.createElement('div');
+      div.className = 'elevation-sample';
+      div.style.boxShadow = `var(${varName})`;
+      div.innerHTML = `<span>${e}</span>`;
+      row.appendChild(div);
+    }
+  }
+
+  function renderAll() {
+    // Small delay so computed styles settle after CSS injection
+    requestAnimationFrame(() => {
+      renderSemanticColors();
+      renderPrimitivePalettes();
+      renderSpacing();
+      renderTypography();
+      renderRadii();
+      renderElevation();
+    });
+  }
+
+  // ── Init ──
+  applyTheme();
+</script>
+</body>
+</html>

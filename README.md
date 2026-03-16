@@ -202,12 +202,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 | `font-mono` | Source Code Pro | Code, data tables |
 
 ### Build commands
-yarn install
-yarn build     # generates dist/
-yarn clean     # removes dist/
-yarn test      # runs snapshot tests against dist/
-yarn test:update  # updates snapshots after intentional changes
+
+```sh
+npm install
+npm run build          # generates dist/
+npm run clean          # removes dist/
+npm run test           # runs snapshot tests against dist/
+npm run test:update    # updates snapshots after intentional changes
 ```
+
+### Local development
+
+Preview all tokens (colors, spacing, typography, radii, elevation) across every brand, theme, and mode in the browser:
+
+```sh
+npm run preview
+```
+
+This starts a Vite dev server at `http://localhost:5173` with a toolbar to switch between brands (Puente, Survivor, Survivor Winter Holiday) and modes (Light, Dark). Token changes rebuild automatically.
+
+To build the static preview site (same page deployed to GitHub Pages):
+
+```sh
+npm run build:preview
+```
+
+The live preview is available at **https://hopetambala.github.io/style-dictionary-dlite/**.
 
 ## Adding a new brand
 
