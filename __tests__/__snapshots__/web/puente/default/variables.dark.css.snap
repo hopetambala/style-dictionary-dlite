@@ -105,6 +105,16 @@
   --tk-dlite-primitive-color-pink-800: #a83b67;
   --tk-dlite-primitive-color-pink-900: #831540;
   --tk-dlite-primitive-color-pink-1000: #621030;
+  --tk-dlite-primitive-color-sand-100: #faf6f0;
+  --tk-dlite-primitive-color-sand-200: #f0e8dc;
+  --tk-dlite-primitive-color-sand-300: #e0d4c0;
+  --tk-dlite-primitive-color-sand-400: #d0c4a8;
+  --tk-dlite-primitive-color-sand-500: #b8a888;
+  --tk-dlite-primitive-color-sand-600: #8c7a5c;
+  --tk-dlite-primitive-color-sand-700: #6b5c42;
+  --tk-dlite-primitive-color-sand-800: #4d4230;
+  --tk-dlite-primitive-color-sand-900: #362e22;
+  --tk-dlite-primitive-color-sand-1000: #28221a;
   --tk-dlite-primitive-dimension-letter-spacing-widest: 0.1em;
   --tk-dlite-primitive-dimension-font-size-100: 0.625rem;
   --tk-dlite-primitive-dimension-font-size-200: 0.75rem;
