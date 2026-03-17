@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.6](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.5...v0.2.6) (2026-03-17)
+
+
+### Features
+
+* add puente's true brand ([db79ccb](https://github.com/hopetambala/style-dictionary-dlite/commit/db79ccbb7525cd079893b70364b01be47d135100))
+
 ## [0.2.5](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.4...v0.2.5) (2026-03-16)
 
 ## [0.2.4](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.3...v0.2.4) (2026-03-16)
