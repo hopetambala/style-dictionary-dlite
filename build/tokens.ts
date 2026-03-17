@@ -183,15 +183,17 @@ export function extractTokens(
   const base = structuredClone(brand) as TokenTree;
 
   const themes = base.themes as TokenTree | undefined;
-  const brandModeOverrides = (
-    (themes?.[theme] as TokenTree | undefined)?.modes as TokenTree | undefined
-  )?.[mode] as TokenTree ?? {};
+  const modes = (themes?.[theme] as TokenTree | undefined)?.modes as TokenTree | undefined;
+  const lightOverrides = modes?.light as TokenTree ?? {};
+  const explicitModeOverrides = modes?.[mode] as TokenTree ?? {};
 
   delete base.themes;
   delete base.modes;
 
   const modeApplied = applyInlineModes(base, mode) as TokenTree;
-  const merged = deepMerge(modeApplied, brandModeOverrides);
+  const modeAppliedOverrides = applyInlineModes(lightOverrides, mode) as TokenTree;
+  // Merge: base (with inline modes applied) → light overrides (with inline modes applied) → explicit mode overrides
+  const merged = deepMerge(deepMerge(modeApplied, modeAppliedOverrides), explicitModeOverrides);
 
   return { primitive: structuredClone(primitives), ...merged };
 }

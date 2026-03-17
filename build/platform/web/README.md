@@ -57,9 +57,9 @@ Once imported, reference tokens as CSS custom properties:
 
 ```css
 .button {
-  background-color: var(--puente-semantic-color-primary);
-  border-radius: var(--puente-semantic-border-radius-md);
-  color: var(--puente-semantic-color-on-primary);
+  background-color: var(--tk-dlite-semantic-color-primary);
+  border-radius: var(--tk-dlite-semantic-border-radius-md);
+  color: var(--tk-dlite-semantic-color-text-on-brand);
 }
 ```
 
@@ -69,11 +69,12 @@ Once imported, reference tokens as CSS custom properties:
 | ---------- | ---------------- |
 | `puente`   | `default`        |
 | `survivor` | `default`        |
+| `survivor` | `jungle`         |
 | `survivor` | `winter-holiday` |
 
 ## Naming convention
 
-Tokens follow the pattern `--{brand}-{tier}-{category}-{name}` in kebab-case:
+Tokens follow the pattern `--tk-dlite-{tier}-{category}-{name}` in kebab-case:
 
-- `--puente-semantic-color-primary`
-- `--puente-primitive-color-blue-500`
+- `--tk-dlite-semantic-color-primary`
+- `--tk-dlite-primitive-color-blue-500`
