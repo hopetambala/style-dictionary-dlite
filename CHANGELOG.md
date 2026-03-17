@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.7](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.6...v0.2.7) (2026-03-17)
+
+
+### Bug Fixes
+
+* fix a11y contrast issue for brand colors ([d910b3f](https://github.com/hopetambala/style-dictionary-dlite/commit/d910b3f3ce2989a4c898ef461124602403c5de21))
+
 ## [0.2.6](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.5...v0.2.6) (2026-03-17)
 
 
