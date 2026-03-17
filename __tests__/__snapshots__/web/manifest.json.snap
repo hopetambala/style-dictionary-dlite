@@ -11,6 +11,11 @@
       "label": "Survivor"
     },
     {
+      "name": "survivor/jungle",
+      "path": "survivor/jungle",
+      "label": "Survivor Jungle"
+    },
+    {
       "name": "survivor/winter-holiday",
       "path": "survivor/winter-holiday",
       "label": "Survivor Winter Holiday"
