@@ -171,6 +171,7 @@ export const light = {
   "tkDliteSemanticColorTextSecondary": "#8e280e",
   "tkDliteSemanticColorTextTertiary": "#b8a888",
   "tkDliteSemanticColorTextOnBrand": "#ffffff",
+  "tkDliteSemanticColorTextOnPrimary": "#ffffff",
   "tkDliteSemanticColorActionPrimary": "#bf3813",
   "tkDliteSemanticColorActionPrimaryActive": "#8e280e",
   "tkDliteSemanticColorActionSecondary": "#e7f1cb",

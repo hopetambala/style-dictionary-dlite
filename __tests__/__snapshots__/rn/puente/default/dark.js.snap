@@ -171,6 +171,7 @@ export const dark = {
   "tkDliteSemanticColorTextSecondary": "#d4d4d4",
   "tkDliteSemanticColorTextTertiary": "#a5a5a5",
   "tkDliteSemanticColorTextOnBrand": "#161616",
+  "tkDliteSemanticColorTextOnPrimary": "#ffffff",
   "tkDliteSemanticColorActionPrimary": "#70a1fc",
   "tkDliteSemanticColorActionPrimaryActive": "#a3c3fd",
   "tkDliteSemanticColorActionSecondary": "#202020",

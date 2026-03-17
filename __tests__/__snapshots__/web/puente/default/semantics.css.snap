@@ -236,6 +236,7 @@
 .cl-dlite-sem-text-secondary { color: var(--tk-dlite-semantic-color-text-secondary); }
 .cl-dlite-sem-text-tertiary { color: var(--tk-dlite-semantic-color-text-tertiary); }
 .cl-dlite-sem-text-on-brand { color: var(--tk-dlite-semantic-color-text-on-brand); }
+.cl-dlite-sem-text-on-primary { color: var(--tk-dlite-semantic-color-text-on-primary); }
 .cl-dlite-sem-text-muted { color: var(--tk-dlite-semantic-color-muted); }
 .cl-dlite-sem-text-success { color: var(--tk-dlite-semantic-color-feedback-success); }
 .cl-dlite-sem-text-warning { color: var(--tk-dlite-semantic-color-feedback-warning); }

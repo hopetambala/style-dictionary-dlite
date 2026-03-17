@@ -126,6 +126,14 @@
           }
         }
       },
+      "text-on-primary": {
+        "$value": "{primitive.color.white}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.white}"
+          }
+        }
+      },
       "action-primary": {
         "$value": "{primitive.color.blue.500}",
         "$extensions": {

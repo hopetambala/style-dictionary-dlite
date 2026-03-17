@@ -81,6 +81,7 @@ StyleDictionary.registerFormat({
       'text-secondary': 'text-secondary',
       'text-tertiary': 'text-tertiary',
       'text-on-brand': 'text-on-brand',
+      'text-on-primary': 'text-on-primary',
     } as Record<string, string>)) {
       lines.push(`.${cls} { color: ${ref(`tk-dlite-semantic-color-${tok}`)}; }`);
     }

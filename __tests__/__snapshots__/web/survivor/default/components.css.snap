@@ -12,11 +12,11 @@
   cursor: pointer; white-space: nowrap;
 }
 .cl-dlite-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.cl-dlite-btn-primary { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-brand); }
+.cl-dlite-btn-primary { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-primary); }
 .cl-dlite-btn-primary:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-action-primary-active); }
-.cl-dlite-btn-success { background-color: var(--tk-dlite-semantic-color-feedback-success); color: var(--tk-dlite-semantic-color-text-on-brand); }
+.cl-dlite-btn-success { background-color: var(--tk-dlite-semantic-color-feedback-success); color: var(--tk-dlite-semantic-color-text-on-primary); }
 .cl-dlite-btn-success:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-feedback-success-active); }
-.cl-dlite-btn-danger { background-color: var(--tk-dlite-semantic-color-feedback-danger); color: var(--tk-dlite-semantic-color-text-on-brand); }
+.cl-dlite-btn-danger { background-color: var(--tk-dlite-semantic-color-feedback-danger); color: var(--tk-dlite-semantic-color-text-on-primary); }
 .cl-dlite-btn-danger:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-feedback-danger-active); }
 .cl-dlite-btn-secondary { background-color: var(--tk-dlite-semantic-color-action-secondary); color: var(--tk-dlite-semantic-color-text-primary); }
 .cl-dlite-btn-secondary:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-action-secondary-active); }
@@ -75,6 +75,6 @@
   transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease;
   display: inline-flex; align-items: center; justify-content: center;
 }
-.cl-dlite-toggle-btn-on { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-brand); }
+.cl-dlite-toggle-btn-on { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-primary); }
 .cl-dlite-toggle-btn-off { background-color: var(--tk-dlite-primitive-color-neutral-200); color: var(--tk-dlite-primitive-color-neutral-400); }
 
