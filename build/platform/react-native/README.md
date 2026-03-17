@@ -58,8 +58,8 @@ export default function App() {
   const t = tokens[scheme];
 
   return (
-    <View style={{ backgroundColor: t.puenteSemanticColorBackground, flex: 1 }}>
-      <Text style={{ color: t.puenteSemanticColorOnBackground }}>
+    <View style={{ backgroundColor: t.tkDliteSemanticColorBackground, flex: 1 }}>
+      <Text style={{ color: t.tkDliteSemanticColorTextPrimary }}>
         Hello World
       </Text>
     </View>
@@ -90,12 +90,12 @@ function MyButton() {
   return (
     <Pressable
       style={{
-        backgroundColor: t.puenteSemanticColorPrimary,
-        borderRadius: t.puenteSemanticBorderRadiusMd,
+        backgroundColor: t.tkDliteSemanticColorPrimary,
+        borderRadius: t.tkDliteSemanticBorderRadiusMd,
         padding: 12,
       }}
     >
-      <Text style={{ color: t.puenteSemanticColorOnPrimary }}>
+      <Text style={{ color: t.tkDliteSemanticColorTextOnBrand }}>
         Press me
       </Text>
     </Pressable>
@@ -113,11 +113,11 @@ const t = light;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: t.puenteSemanticColorBackground,
+    backgroundColor: t.tkDliteSemanticColorBackground,
     flex: 1,
   },
   heading: {
-    color: t.puenteSemanticColorOnBackground,
+    color: t.tkDliteSemanticColorTextPrimary,
     fontSize: 24,
   },
 });
@@ -132,14 +132,15 @@ const styles = StyleSheet.create({
 | ---------- | ---------------- |
 | `puente`   | `default`        |
 | `survivor` | `default`        |
+| `survivor` | `jungle`         |
 | `survivor` | `winter-holiday` |
 
 ## Naming convention
 
-Tokens use camelCase following the pattern `{brand}{Tier}{Category}{Name}`:
+Tokens use camelCase following the pattern `tkDlite{Tier}{Category}{Name}`:
 
-- `puenteSemanticColorPrimary`
-- `puentePrimitiveColorBlue500`
+- `tkDliteSemanticColorPrimary`
+- `tkDlitePrimitiveColorBlue500`
 
 ## TypeScript
 
@@ -149,6 +150,6 @@ All token objects are fully typed in the generated `.d.ts` files, so you get aut
 import type { Tokens } from 'style-dictionary-dlite-tokens/rn/puente/default';
 
 function getButtonStyle(t: Tokens) {
-  return { backgroundColor: t.puenteSemanticColorPrimary };
+  return { backgroundColor: t.tkDliteSemanticColorPrimary };
 }
 ```

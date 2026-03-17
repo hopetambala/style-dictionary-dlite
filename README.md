@@ -83,17 +83,17 @@ The `$value` is the default (light). `$extensions.mode.dark` only appears when t
           "light": {
             "color": {
               "$type": "color",
-              "primary": { "$value": "{primitive.color.red.600}" },
-              "secondary": { "$value": "{primitive.color.green.600}" }
+              "primary": {
+                "$value": "{primitive.color.green.600}",
+                "$extensions": { "mode": { "dark": "{primitive.color.green.400}" } }
+              },
+              "secondary": {
+                "$value": "{primitive.color.yellow.600}",
+                "$extensions": { "mode": { "dark": "{primitive.color.yellow.400}" } }
+              }
             }
           },
-          "dark": {
-            "color": {
-              "$type": "color",
-              "primary": { "$value": "{primitive.color.red.500}" },
-              "secondary": { "$value": "{primitive.color.green.400}" }
-            }
-          }
+          "dark": {}
         }
       }
     }
@@ -108,9 +108,9 @@ At build time, `build.ts`:
 1. Loads all `.tokens.json` files into a single document
 2. Resolves chained `$extends` references (deep merge per W3C spec §6.4)
 3. For each brand, discovers all theme × mode combinations
-4. Applies inline `$extensions.mode` overrides for the current mode
-5. Merges brand theme+mode overrides on top
-6. Feeds the resolved token set to Style Dictionary for CSS output
+4. Applies inline `$extensions.mode` overrides for the current mode (both on global tokens and brand theme overrides)
+5. Merges brand theme overrides on top of the resolved globals
+6. Feeds the resolved token set to Style Dictionary for platform output (CSS, React Native)
 
 ### Output
 
@@ -134,6 +134,14 @@ dist/web/
     │   ├── primitives.css
     │   ├── semantics.css
     │   └── components.css
+    ├── jungle/
+    │   ├── variables.css
+    │   ├── variables.dark.css
+    │   ├── reset.css
+    │   ├── utilities.css
+    │   ├── primitives.css
+    │   ├── semantics.css
+    │   └── components.css
     └── winter-holiday/
         ├── variables.css
         ├── variables.dark.css
@@ -149,8 +157,8 @@ dist/web/
 **CSS variables** use a fixed `tk-dlite` prefix with the token tier:
 
 ```css
---tk-dlite-primitive-color-blue-500: #1e62e8;
---tk-dlite-semantic-color-primary: #1e62e8;
+--tk-dlite-primitive-color-blue-500: #3d80fc;
+--tk-dlite-semantic-color-primary: #3d80fc;
 --tk-dlite-semantic-typography-size-400: 1rem;
 ```
 
@@ -246,7 +254,10 @@ Create `tokens/brands/my-brand.tokens.json`:
           "light": {
             "color": {
               "$type": "color",
-              "primary": { "$value": "{primitive.color.purple.600}" }
+              "primary": {
+                "$value": "{primitive.color.purple.600}",
+                "$extensions": { "mode": { "dark": "{primitive.color.purple.400}" } }
+              }
             }
           },
           "dark": {}
@@ -257,7 +268,7 @@ Create `tokens/brands/my-brand.tokens.json`:
 }
 ```
 
-Run `yarn build` — it auto-discovers new brands and their themes.
+Run `npm run build` — it auto-discovers new brands and their themes.
 
 ## Adding a new theme
 
@@ -272,16 +283,13 @@ Add a new key under `themes` in any brand file:
         "color": {
           "$type": "color",
           "foreground": { "$value": "{primitive.color.black}" },
-          "background": { "$value": "{primitive.color.white}" }
+          "background": {
+            "$value": "{primitive.color.white}",
+            "$extensions": { "mode": { "dark": "{primitive.color.black}" } }
+          }
         }
       },
-      "dark": {
-        "color": {
-          "$type": "color",
-          "foreground": { "$value": "{primitive.color.white}" },
-          "background": { "$value": "{primitive.color.black}" }
-        }
-      }
+      "dark": {}
     }
   }
 }
