@@ -119,7 +119,12 @@
         "$value": "{primitive.color.neutral.500}"
       },
       "text-on-brand": {
-        "$value": "{primitive.color.white}"
+        "$value": "{primitive.color.neutral.900}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.neutral.900}"
+          }
+        }
       },
       "action-primary": {
         "$value": "{primitive.color.blue.500}",
