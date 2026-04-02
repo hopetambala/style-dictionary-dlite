@@ -1,0 +1,24 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+@import './fonts/fonts.css';
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body {
+  font-family: var(--tk-dlite-semantic-typography-font-body), Arial, Helvetica, sans-serif;
+  font-size: var(--tk-dlite-semantic-typography-type-body-default-size);
+  font-weight: var(--tk-dlite-semantic-typography-type-body-default-weight);
+  line-height: var(--tk-dlite-semantic-typography-type-body-default-line-height);
+  letter-spacing: var(--tk-dlite-semantic-typography-type-body-default-letter-spacing);
+  color: var(--tk-dlite-semantic-color-text-primary);
+  background-color: var(--tk-dlite-semantic-color-background);
+}
+a { color: inherit; text-decoration: inherit; }
+button { font-family: inherit; font-size: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+table { border-collapse: collapse; }
+img, svg { display: block; max-width: 100%; }
+

@@ -5,6 +5,8 @@ import path from 'node:path';
 const DIST_WEB = path.resolve('dist/web');
 const DIST_RN = path.resolve('dist/rn');
 
+const BINARY_EXTENSIONS = new Set(['.ttf', '.woff', '.woff2', '.eot', '.otf', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico']);
+
 function collectFiles(dir: string, base: string = dir): string[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const files: string[] = [];
@@ -17,6 +19,11 @@ function collectFiles(dir: string, base: string = dir): string[] {
     }
   }
   return files.sort();
+}
+
+function isTextFile(file: string): boolean {
+  const ext = path.extname(file).toLowerCase();
+  return !BINARY_EXTENSIONS.has(ext);
 }
 
 beforeAll(() => {
@@ -59,6 +66,7 @@ for (const brand of brands) {
       });
 
       for (const file of files) {
+        if (!isTextFile(file)) continue;
         test(`${file} matches snapshot`, async () => {
           const content = fs.readFileSync(path.join(themeDir, file), 'utf-8');
           await expect(content).toMatchFileSnapshot(

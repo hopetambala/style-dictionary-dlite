@@ -14,7 +14,7 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
               {
                 destination: 'reset.css',
                 format: 'css/reset',
-                options: { brandName },
+                options: { brandName, includeFontsImport: brandName === 'kooky' },
               },
               {
                 destination: 'utilities.css',

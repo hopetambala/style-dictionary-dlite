@@ -1,0 +1,80 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+/* ===== BUTTONS ===== */
+.cl-dlite-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: var(--tk-dlite-primitive-fontWeight-medium);
+  border-radius: var(--tk-dlite-semantic-border-radius-lg);
+  padding: var(--tk-dlite-semantic-spacing-200) var(--tk-dlite-semantic-spacing-400);
+  transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease, opacity var(--tk-dlite-semantic-duration-fast) ease;
+  cursor: pointer; white-space: nowrap;
+}
+.cl-dlite-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cl-dlite-btn-primary { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-primary); }
+.cl-dlite-btn-primary:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-action-primary-active); }
+.cl-dlite-btn-success { background-color: var(--tk-dlite-semantic-color-feedback-success); color: var(--tk-dlite-semantic-color-text-on-primary); }
+.cl-dlite-btn-success:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-feedback-success-active); }
+.cl-dlite-btn-danger { background-color: var(--tk-dlite-semantic-color-feedback-danger); color: var(--tk-dlite-semantic-color-text-on-primary); }
+.cl-dlite-btn-danger:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-feedback-danger-active); }
+.cl-dlite-btn-secondary { background-color: var(--tk-dlite-semantic-color-action-secondary); color: var(--tk-dlite-semantic-color-text-primary); }
+.cl-dlite-btn-secondary:not(:disabled):active { background-color: var(--tk-dlite-semantic-color-action-secondary-active); }
+.cl-dlite-btn-sm { font-size: var(--tk-dlite-semantic-typography-size-300); padding: var(--tk-dlite-semantic-spacing-100) var(--tk-dlite-semantic-spacing-300); }
+.cl-dlite-btn-lg { padding: var(--tk-dlite-semantic-spacing-300) var(--tk-dlite-semantic-spacing-600); }
+.cl-dlite-btn-link { background: none; padding: 0; text-decoration: underline; }
+
+/* ===== INPUTS ===== */
+.cl-dlite-input {
+  border: 1px solid var(--tk-dlite-semantic-color-border);
+  border-radius: var(--tk-dlite-semantic-border-radius-lg);
+  padding: var(--tk-dlite-semantic-spacing-200) var(--tk-dlite-semantic-spacing-300);
+  background-color: var(--tk-dlite-semantic-color-surface-base);
+  color: var(--tk-dlite-semantic-color-text-primary);
+  width: 100%;
+  transition: border-color var(--tk-dlite-semantic-duration-fast) ease, box-shadow var(--tk-dlite-semantic-duration-fast) ease;
+}
+.cl-dlite-input:focus { outline: none; border-color: var(--tk-dlite-semantic-color-action-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--tk-dlite-semantic-color-action-primary) 30%, transparent); }
+.cl-dlite-input-lg { padding: var(--tk-dlite-semantic-spacing-300) var(--tk-dlite-semantic-spacing-400); }
+
+/* ===== BADGES ===== */
+.cl-dlite-badge {
+  display: inline-flex; align-items: center;
+  font-size: var(--tk-dlite-semantic-typography-size-200);
+  font-weight: var(--tk-dlite-primitive-fontWeight-medium);
+  padding: var(--tk-dlite-semantic-spacing-xxs) var(--tk-dlite-semantic-spacing-200);
+  border-radius: var(--tk-dlite-semantic-border-radius-full);
+}
+.cl-dlite-badge-success { background-color: var(--tk-dlite-primitive-color-green-200); color: var(--tk-dlite-primitive-color-green-800); }
+.cl-dlite-badge-warning { background-color: var(--tk-dlite-primitive-color-yellow-200); color: var(--tk-dlite-primitive-color-yellow-800); }
+.cl-dlite-badge-danger { background-color: var(--tk-dlite-primitive-color-red-200); color: var(--tk-dlite-primitive-color-red-800); }
+.cl-dlite-badge-neutral { background-color: var(--tk-dlite-primitive-color-neutral-200); color: var(--tk-dlite-primitive-color-neutral-600); }
+.cl-dlite-badge-info { background-color: var(--tk-dlite-primitive-color-blue-200); color: var(--tk-dlite-primitive-color-blue-800); }
+
+/* ===== CARDS ===== */
+.cl-dlite-card {
+  border: 1px solid var(--tk-dlite-semantic-color-border);
+  border-radius: var(--tk-dlite-semantic-border-radius-lg);
+  padding: var(--tk-dlite-semantic-spacing-md);
+  background-color: var(--tk-dlite-semantic-color-surface-base);
+  transition: background-color var(--tk-dlite-semantic-duration-fast) ease;
+}
+
+/* ===== TABLES ===== */
+.cl-dlite-table { width: 100%; font-size: var(--tk-dlite-semantic-typography-size-300); border-collapse: collapse; }
+.cl-dlite-table th, .cl-dlite-table td { border: 1px solid var(--tk-dlite-semantic-color-border); padding: var(--tk-dlite-semantic-spacing-200); }
+.cl-dlite-table th { background-color: var(--tk-dlite-semantic-color-surface-sunken); text-align: left; font-weight: var(--tk-dlite-primitive-fontWeight-semibold); }
+.cl-dlite-table th.cl-dlite-text-center, .cl-dlite-table td.cl-dlite-text-center { text-align: center; }
+
+/* ===== TOGGLE BUTTONS ===== */
+.cl-dlite-toggle-btn {
+  width: 2rem; height: 2rem;
+  border-radius: var(--tk-dlite-semantic-border-radius-sm);
+  font-size: var(--tk-dlite-semantic-typography-size-300);
+  font-weight: var(--tk-dlite-primitive-fontWeight-medium);
+  transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.cl-dlite-toggle-btn-on { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-primary); }
+.cl-dlite-toggle-btn-off { background-color: var(--tk-dlite-primitive-color-neutral-200); color: var(--tk-dlite-primitive-color-neutral-400); }
+
