@@ -440,28 +440,53 @@
     const container = document.getElementById('primitive-palettes');
     container.innerHTML = '';
     const palettes = currentData.primitiveColors;
-    // Render singles (white, black) first, then named palettes
-    const order = ['_singles', ...Object.keys(palettes).filter(k => k !== '_singles').sort()];
-    for (const palette of order) {
-      if (!palettes[palette]) continue;
-      const section = document.createElement('div');
-      const title = palette === '_singles' ? 'white & black' : palette;
-      section.innerHTML = `<h3>${title}</h3>`;
-      const row = document.createElement('div');
-      row.className = 'swatch-row';
-      for (const { shade, varName } of palettes[palette]) {
-        const val = getVar(varName);
-        if (!val) continue;
-        const s = document.createElement('div');
-        s.className = 'swatch';
-        s.style.background = val;
-        s.innerHTML = `<span>${shade}</span>`;
-        s.addEventListener('click', () => copyToClipboard(varName));
-        row.appendChild(s);
+    
+    // Separate saturated and base color palettes
+    const saturatedPalettes = {};
+    const basePalettes = {};
+    
+    for (const [palette, colors] of Object.entries(palettes)) {
+      if (palette.startsWith('saturated-')) {
+        saturatedPalettes[palette] = colors;
+      } else {
+        basePalettes[palette] = colors;
       }
-      section.appendChild(row);
-      container.appendChild(section);
     }
+    
+    // Helper function to render a group of palettes
+    const renderGroup = (groupPalettes, groupTitle) => {
+      if (Object.keys(groupPalettes).length === 0) return;
+      
+      const groupSection = document.createElement('div');
+      groupSection.innerHTML = `<h2 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.2rem; border-bottom: 1px solid var(--tk-dlite-semantic-color-border); padding-bottom: 0.5rem;">${groupTitle}</h2>`;
+      container.appendChild(groupSection);
+      
+      const order = ['_singles', ...Object.keys(groupPalettes).filter(k => k !== '_singles').sort()];
+      for (const palette of order) {
+        if (!groupPalettes[palette]) continue;
+        const section = document.createElement('div');
+        const title = palette === '_singles' ? 'white & black' : palette;
+        section.innerHTML = `<h3>${title}</h3>`;
+        const row = document.createElement('div');
+        row.className = 'swatch-row';
+        for (const { shade, varName } of groupPalettes[palette]) {
+          const val = getVar(varName);
+          if (!val) continue;
+          const s = document.createElement('div');
+          s.className = 'swatch';
+          s.style.background = val;
+          s.innerHTML = `<span>${shade}</span>`;
+          s.addEventListener('click', () => copyToClipboard(varName));
+          row.appendChild(s);
+        }
+        section.appendChild(row);
+        container.appendChild(section);
+      }
+    };
+    
+    // Render saturated colors first, then base colors
+    renderGroup(saturatedPalettes, 'Saturated Colors');
+    renderGroup(basePalettes, 'Base Colors');
   }
 
   function renderSpacing() {

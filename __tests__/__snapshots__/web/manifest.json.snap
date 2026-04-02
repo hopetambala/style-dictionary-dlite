@@ -1,6 +1,11 @@
 {
   "brands": [
     {
+      "name": "kooky/default",
+      "path": "kooky/default",
+      "label": "Kooky"
+    },
+    {
       "name": "puente/default",
       "path": "puente/default",
       "label": "Puente"

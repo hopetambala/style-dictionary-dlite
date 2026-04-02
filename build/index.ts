@@ -137,6 +137,48 @@ for (const brandName of brandNames) {
 }
 
 console.log('\n==============================================');
+
+// ── Font distribution for Kooky brand ──
+console.log('\nHandling font distribution...');
+const fontSourceDir = path.resolve('../portfolio/src/assets/fonts');
+const fontDistDir = 'dist/web/kooky/default/fonts';
+
+if (fs.existsSync(fontSourceDir)) {
+  fs.mkdirSync(fontDistDir, { recursive: true });
+  
+  // Copy Recoleta font files
+  const fontFiles = fs.readdirSync(fontSourceDir).filter(f => f.startsWith('Recoleta'));
+  for (const fontFile of fontFiles) {
+    const src = path.join(fontSourceDir, fontFile);
+    const dest = path.join(fontDistDir, fontFile);
+    fs.copyFileSync(src, dest);
+    console.log(`✔︎ Copied font: ${fontFile}`);
+  }
+
+  // Generate @font-face CSS
+  const fontFaceCSS = `/* Recoleta font faces for Kooky brand */
+@font-face {
+  font-family: 'Recoleta';
+  src: url('./Recoleta-Regular.woff2') format('woff2'),
+       url('./Recoleta-Black.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('./Recoleta-Black.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+`;
+  fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), fontFaceCSS);
+  console.log('✔︎ Generated: fonts.css');
+} else {
+  console.warn('⚠︎ Portfolio font directory not found at:', fontSourceDir);
+}
+
+console.log('\n==============================================');
 console.log('\nBuild completed!');
 
 // Generate preview manifest (brand/theme discovery for the preview app)
