@@ -140,24 +140,28 @@ console.log('\n==============================================');
 
 // ── Font distribution for Kooky brand ──
 console.log('\nHandling font distribution...');
-const fontSourceDir = path.resolve('../portfolio/src/assets/fonts');
-const fontDistDir = 'dist/web/kooky/default/fonts';
-let fontsAvailable = false;
+const fontSourceDir = path.resolve('assets/fonts');
 
-if (fs.existsSync(fontSourceDir)) {
-  fs.mkdirSync(fontDistDir, { recursive: true });
-  
-  // Copy Recoleta font files
-  const fontFiles = fs.readdirSync(fontSourceDir).filter(f => f.startsWith('Recoleta'));
-  for (const fontFile of fontFiles) {
-    const src = path.join(fontSourceDir, fontFile);
-    const dest = path.join(fontDistDir, fontFile);
-    fs.copyFileSync(src, dest);
-    console.log(`✔︎ Copied font: ${fontFile}`);
-  }
+if (resolved.kooky) {
+  const kookyThemes = discoverThemes(resolved.kooky as TokenTree)
+    .map(combo => combo.theme)
+    .filter((theme, idx, arr) => arr.indexOf(theme) === idx); // unique themes
 
-  // Generate @font-face CSS
-  const fontFaceCSS = `/* Recoleta font faces for Kooky brand */
+  for (const theme of kookyThemes) {
+    const fontDistDir = `dist/web/kooky/${theme}/fonts`;
+    fs.mkdirSync(fontDistDir, { recursive: true });
+
+    // Copy Recoleta font files
+    const fontFiles = fs.readdirSync(fontSourceDir).filter(f => f.startsWith('Recoleta'));
+    for (const fontFile of fontFiles) {
+      const src = path.join(fontSourceDir, fontFile);
+      const dest = path.join(fontDistDir, fontFile);
+      fs.copyFileSync(src, dest);
+      console.log(`✔︎ Copied font: ${fontFile} to dist/web/kooky/${theme}/fonts`);
+    }
+
+    // Generate @font-face CSS
+    const fontFaceCSS = `/* Recoleta font faces for Kooky brand */
 @font-face {
   font-family: 'Recoleta';
   src: url('./Recoleta-Regular.woff2') format('woff2'),
@@ -173,14 +177,9 @@ if (fs.existsSync(fontSourceDir)) {
   font-style: normal;
 }
 `;
-  fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), fontFaceCSS);
-  console.log('✔︎ Generated: fonts.css');
-  fontsAvailable = true;
-  // Write marker file for format detection
-  fs.writeFileSync('.fonts-available', 'true');
-} else {
-  console.warn('⚠︎ Portfolio font directory not found at:', fontSourceDir);
-  fs.rmSync('.fonts-available', { force: true });
+    fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), fontFaceCSS);
+    console.log(`✔︎ Generated: fonts.css for theme ${theme}`);
+  }
 }
 
 console.log('\n==============================================');
