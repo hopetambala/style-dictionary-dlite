@@ -103,11 +103,11 @@
                 "$value": "{primitive.color.saturated-orange.700}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-orange.400}" } }
               },
-              "feedback-error": {
+              "feedback-danger": {
                 "$value": "{primitive.color.saturated-orange.600}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-orange.500}" } }
               },
-              "feedback-error-active": {
+              "feedback-danger-active": {
                 "$value": "{primitive.color.saturated-orange.700}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-orange.400}" } }
               }

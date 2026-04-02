@@ -144,9 +144,19 @@ const fontSourceDir = path.resolve('assets/fonts');
 const fontBrandDir = 'dist/web/kooky/fonts'; // Shared brand-level fonts directory
 
 if (resolved.kooky) {
+  // Guard: ensure font assets exist before attempting to copy
+  if (!fs.existsSync(fontSourceDir)) {
+    throw new Error(
+      `Kooky brand requires Recoleta font assets at ${fontSourceDir}, but directory does not exist.\n` +
+      'Please ensure Recoleta fonts are present in assets/fonts/ (Regular, Bold, Black in ttf & woff2 formats).'
+    );
+  }
+
   // Copy fonts once to shared brand directory (deduplicated across themes)
+  // Only include weights used in @font-face declarations: Regular (400), Bold (700), Black (900)
   fs.mkdirSync(fontBrandDir, { recursive: true });
-  const fontFiles = fs.readdirSync(fontSourceDir).filter(f => f.startsWith('Recoleta'));
+  const fontFiles = fs.readdirSync(fontSourceDir)
+    .filter(f => f.startsWith('Recoleta') && !f.includes('Medium'));
   for (const fontFile of fontFiles) {
     const src = path.join(fontSourceDir, fontFile);
     const dest = path.join(fontBrandDir, fontFile);

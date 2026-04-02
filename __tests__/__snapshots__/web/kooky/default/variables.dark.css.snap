@@ -264,11 +264,9 @@
   --tk-dlite-semantic-color-feedback-success: #b4eff0;
   --tk-dlite-semantic-color-feedback-success-active: #cdf5f5;
   --tk-dlite-semantic-color-feedback-warning: #ffef00;
-  --tk-dlite-semantic-color-feedback-danger: #e9541e;
-  --tk-dlite-semantic-color-feedback-danger-active: #ec9471;
+  --tk-dlite-semantic-color-feedback-danger: #ffc100;
+  --tk-dlite-semantic-color-feedback-danger-active: #ffd164;
   --tk-dlite-semantic-color-feedback-warning-active: #ffd164;
-  --tk-dlite-semantic-color-feedback-error: #ffc100;
-  --tk-dlite-semantic-color-feedback-error-active: #ffd164;
   --tk-dlite-semantic-typography-font-heading: Recoleta;
   --tk-dlite-semantic-typography-font-body: Source Serif 4;
   --tk-dlite-semantic-typography-font-mono: Source Code Pro;

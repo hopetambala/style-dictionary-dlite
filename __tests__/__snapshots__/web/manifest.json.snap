@@ -6,11 +6,6 @@
       "label": "Kooky"
     },
     {
-      "name": "kooky/fonts",
-      "path": "kooky/fonts",
-      "label": "Kooky Fonts"
-    },
-    {
       "name": "puente/default",
       "path": "puente/default",
       "label": "Puente"
