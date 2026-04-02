@@ -141,8 +141,21 @@ console.log('\n==============================================');
 // ── Font distribution for Kooky brand ──
 console.log('\nHandling font distribution...');
 const fontSourceDir = path.resolve('assets/fonts');
+const fontBrandDir = 'dist/web/kooky/fonts'; // Shared brand-level fonts directory
 
 if (resolved.kooky) {
+  // Copy fonts once to shared brand directory (deduplicated across themes)
+  fs.mkdirSync(fontBrandDir, { recursive: true });
+  const fontFiles = fs.readdirSync(fontSourceDir).filter(f => f.startsWith('Recoleta'));
+  for (const fontFile of fontFiles) {
+    const src = path.join(fontSourceDir, fontFile);
+    const dest = path.join(fontBrandDir, fontFile);
+    if (!fs.existsSync(dest)) {
+      fs.copyFileSync(src, dest);
+      console.log(`✔︎ Copied font: ${fontFile} to ${fontBrandDir}`);
+    }
+  }
+
   const kookyThemes = discoverThemes(resolved.kooky as TokenTree)
     .map(combo => combo.theme)
     .filter((theme, idx, arr) => arr.indexOf(theme) === idx); // unique themes
@@ -151,29 +164,29 @@ if (resolved.kooky) {
     const fontDistDir = `dist/web/kooky/${theme}/fonts`;
     fs.mkdirSync(fontDistDir, { recursive: true });
 
-    // Copy Recoleta font files
-    const fontFiles = fs.readdirSync(fontSourceDir).filter(f => f.startsWith('Recoleta'));
-    for (const fontFile of fontFiles) {
-      const src = path.join(fontSourceDir, fontFile);
-      const dest = path.join(fontDistDir, fontFile);
-      fs.copyFileSync(src, dest);
-      console.log(`✔︎ Copied font: ${fontFile} to dist/web/kooky/${theme}/fonts`);
-    }
-
-    // Generate @font-face CSS
+    // Generate @font-face CSS with relative paths to shared brand-level fonts
     const fontFaceCSS = `/* Recoleta font faces for Kooky brand */
 @font-face {
   font-family: 'Recoleta';
-  src: url('./Recoleta-Regular.woff2') format('woff2'),
-       url('./Recoleta-Black.ttf') format('truetype');
+  src: url('../../fonts/Recoleta-Regular.woff2') format('woff2'),
+       url('../../fonts/Recoleta-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Recoleta';
-  src: url('./Recoleta-Black.ttf') format('truetype');
+  src: url('../../fonts/Recoleta-Bold.woff2') format('woff2'),
+       url('../../fonts/Recoleta-Bold.ttf') format('truetype');
   font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('../../fonts/Recoleta-Black.woff2') format('woff2'),
+       url('../../fonts/Recoleta-Black.ttf') format('truetype');
+  font-weight: 900;
   font-style: normal;
 }
 `;

@@ -1,13 +1,5 @@
 [
   "components.css",
-  "fonts/Recoleta-Black.ttf",
-  "fonts/Recoleta-Black.woff2",
-  "fonts/Recoleta-Bold.ttf",
-  "fonts/Recoleta-Bold.woff2",
-  "fonts/Recoleta-Medium.ttf",
-  "fonts/Recoleta-Medium.woff2",
-  "fonts/Recoleta-Regular.ttf",
-  "fonts/Recoleta-Regular.woff2",
   "fonts/fonts.css",
   "primitives.css",
   "reset.css",

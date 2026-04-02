@@ -16,8 +16,8 @@ StyleDictionary.registerFormat({
       '',
     ];
 
-    // Include fonts.css for Kooky brand
-    if (options?.brandName === 'kooky') {
+    // Include fonts import if requested by build config
+    if (options?.includeFontsImport) {
       lines.push(`@import './fonts/fonts.css';`, '');
     }
 
