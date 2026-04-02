@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.8](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.7...v0.2.8) (2026-04-02)
+
+
+### Features
+
+* add playful saturated colors to ramp ([1d2d0d0](https://github.com/hopetambala/style-dictionary-dlite/commit/1d2d0d011e068aa4741cd15c5b4b256c0958f570))
+
 ## [0.2.7](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.6...v0.2.7) (2026-03-17)
 
 
