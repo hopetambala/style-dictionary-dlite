@@ -1,4 +1,5 @@
 import StyleDictionary from 'style-dictionary';
+import fs from 'node:fs';
 
 /**
  * Generates reset.css — global CSS reset referencing semantic tokens
@@ -16,8 +17,8 @@ StyleDictionary.registerFormat({
       '',
     ];
 
-    // Include fonts.css for Kooky brand
-    if (options?.brandName === 'kooky') {
+    // Include fonts.css for Kooky brand (only if fonts are available)
+    if (options?.brandName === 'kooky' && fs.existsSync('.fonts-available')) {
       lines.push(`@import './fonts/fonts.css';`, '');
     }
 

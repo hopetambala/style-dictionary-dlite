@@ -142,6 +142,7 @@ console.log('\n==============================================');
 console.log('\nHandling font distribution...');
 const fontSourceDir = path.resolve('../portfolio/src/assets/fonts');
 const fontDistDir = 'dist/web/kooky/default/fonts';
+let fontsAvailable = false;
 
 if (fs.existsSync(fontSourceDir)) {
   fs.mkdirSync(fontDistDir, { recursive: true });
@@ -174,8 +175,12 @@ if (fs.existsSync(fontSourceDir)) {
 `;
   fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), fontFaceCSS);
   console.log('✔︎ Generated: fonts.css');
+  fontsAvailable = true;
+  // Write marker file for format detection
+  fs.writeFileSync('.fonts-available', 'true');
 } else {
   console.warn('⚠︎ Portfolio font directory not found at:', fontSourceDir);
+  fs.rmSync('.fonts-available', { force: true });
 }
 
 console.log('\n==============================================');
