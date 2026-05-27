@@ -1,4 +1,4 @@
-# Style Dictionary — Multi-Brand, Multi-Theme Design Tokens
+# dLite Tokens and CSS classes — Multi-Brand, Multi-Theme Design Tokens
 
 [Head to this page to checkout what's available!](https://hopetambala.github.io/style-dictionary-dlite/)
 
