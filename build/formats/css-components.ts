@@ -23,7 +23,7 @@ StyleDictionary.registerFormat({
     const size = (n: string) => ref(`tk-dlite-semantic-typography-size-${n}`);
     const weight = (n: string) => ref(`tk-dlite-primitive-fontWeight-${n}`);
     const prim = (n: string) => ref(`tk-dlite-primitive-color-${n}`);
-    const dur = (n: string) => ref(`tk-dlite-semantic-duration-${n}`);
+    const dur = (n: string) => ref(`tk-dlite-semantic-motion-duration-${n}`);
 
     // ───────────────────────────── BUTTONS ────────────────────────────
     lines.push('/* ===== BUTTONS ===== */');
@@ -32,7 +32,7 @@ StyleDictionary.registerFormat({
     lines.push(`  font-weight: ${weight('medium')};`);
     lines.push(`  border-radius: ${radius('lg')};`);
     lines.push(`  padding: ${spacing('200')} ${spacing('400')};`);
-    lines.push(`  transition: background-color ${dur('fast')} ease, color ${dur('fast')} ease, opacity ${dur('fast')} ease;`);
+    lines.push(`  transition: background-color ${dur('quick')} ease, color ${dur('quick')} ease, opacity ${dur('quick')} ease;`);
     lines.push('  cursor: pointer; white-space: nowrap;');
     lines.push('}');
     lines.push('.btn:disabled { opacity: 0.5; cursor: not-allowed; }');
@@ -63,7 +63,7 @@ StyleDictionary.registerFormat({
     lines.push(`  background-color: ${color('surface-base')};`);
     lines.push(`  color: ${color('text-primary')};`);
     lines.push('  width: 100%;');
-    lines.push(`  transition: border-color ${dur('fast')} ease, box-shadow ${dur('fast')} ease;`);
+    lines.push(`  transition: border-color ${dur('quick')} ease, box-shadow ${dur('quick')} ease;`);
     lines.push('}');
     lines.push(`.input:focus { outline: none; border-color: ${color('action-primary')}; box-shadow: 0 0 0 2px color-mix(in srgb, ${color('action-primary')} 30%, transparent); }`);
     lines.push(`.input-lg { padding: ${spacing('300')} ${spacing('400')}; }`);
@@ -97,7 +97,7 @@ StyleDictionary.registerFormat({
     lines.push(`  border-radius: ${radius('lg')};`);
     lines.push(`  padding: ${spacing('md')};`);
     lines.push(`  background-color: ${color('surface-base')};`);
-    lines.push(`  transition: background-color ${dur('fast')} ease;`);
+    lines.push(`  transition: background-color ${dur('quick')} ease;`);
     lines.push('}');
     lines.push('');
 
@@ -116,7 +116,7 @@ StyleDictionary.registerFormat({
     lines.push(`  border-radius: ${radius('sm')};`);
     lines.push(`  font-size: ${size('300')};`);
     lines.push(`  font-weight: ${weight('medium')};`);
-    lines.push(`  transition: background-color ${dur('fast')} ease, color ${dur('fast')} ease;`);
+    lines.push(`  transition: background-color ${dur('quick')} ease, color ${dur('quick')} ease;`);
     lines.push('  display: inline-flex; align-items: center; justify-content: center;');
     lines.push('}');
     lines.push(`.toggle-btn-on { background-color: ${color('action-primary')}; color: ${color('text-on-primary')}; }`);

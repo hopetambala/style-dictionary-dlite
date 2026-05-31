@@ -487,18 +487,6 @@
         "$value": "1280px"
       }
     },
-    "duration": {
-      "$type": "duration",
-      "fast": {
-        "$value": "0.15s"
-      },
-      "normal": {
-        "$value": "0.3s"
-      },
-      "slow": {
-        "$value": "0.5s"
-      }
-    },
     "border": {
       "$type": "dimension",
       "radius-none": {
@@ -547,22 +535,66 @@
         "$value": "60rem"
       }
     },
-    "transform": {
-      "$type": "number",
-      "scale-hover": {
-        "$value": 1.05
+    "motion": {
+      "duration": {
+        "$type": "duration",
+        "instant": { "$value": "0s" },
+        "micro": { "$value": "0.08s" },
+        "quick": { "$value": "0.15s" },
+        "snappy": { "$value": "0.2s" },
+        "base": { "$value": "0.3s" },
+        "substantial": { "$value": "0.4s" },
+        "slow": { "$value": "0.5s" },
+        "xslow": { "$value": "0.7s" },
+        "pulse": { "$value": "1s" },
+        "toast": { "$value": "3s" },
+        "dismiss": { "$value": "4s" }
       },
-      "scale-active": {
-        "$value": 0.95
-      }
-    },
-    "opacity": {
-      "$type": "number",
-      "disabled": {
-        "$value": 0.6
+      "spring": {
+        "$type": "number",
+        "tight": {
+          "damping": { "$value": 20 },
+          "stiffness": { "$value": 250 },
+          "mass": { "$value": 0.6 }
+        },
+        "snappy": {
+          "damping": { "$value": 14 },
+          "stiffness": { "$value": 180 },
+          "mass": { "$value": 0.8 }
+        },
+        "smooth": {
+          "damping": { "$value": 18 },
+          "stiffness": { "$value": 120 },
+          "mass": { "$value": 1 }
+        },
+        "playful": {
+          "damping": { "$value": 8 },
+          "stiffness": { "$value": 60 },
+          "mass": { "$value": 1 }
+        }
       },
-      "hover": {
-        "$value": 0.8
+      "easing": {
+        "$type": "cubicBezier",
+        "standard": { "$value": [0.42, 0, 0.58, 1] },
+        "entrance": { "$value": [0, 0, 0.58, 1] },
+        "exit": { "$value": [0.42, 0, 1, 1] },
+        "linear": { "$value": [0, 0, 1, 1] }
+      },
+      "scale": {
+        "$type": "number",
+        "press": { "$value": 0.95 },
+        "micro": { "$value": 0.98 },
+        "entrance": { "$value": 0.98 },
+        "celebrate": { "$value": 1.2 },
+        "hover": { "$value": 1.05 },
+        "active": { "$value": 0.95 }
+      },
+      "opacity": {
+        "$type": "number",
+        "interactive": { "$value": 0.8 },
+        "disabled": { "$value": 0.5 },
+        "backdrop": { "$value": 0.5 },
+        "entrance": { "$value": 0 }
       }
     },
     "elevation": {

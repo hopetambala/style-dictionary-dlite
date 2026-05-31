@@ -300,15 +300,29 @@
 .cl-dlite-sem-max-w-modal-normal { max-width: var(--tk-dlite-semantic-sizing-modal-width-normal); }
 .cl-dlite-sem-max-w-modal-wide { max-width: var(--tk-dlite-semantic-sizing-modal-width-wide); }
 
+/* ===== MOTION: DURATION ===== */
+.cl-dlite-sem-duration-quick { transition-duration: var(--tk-dlite-semantic-motion-duration-quick); }
+.cl-dlite-sem-duration-snappy { transition-duration: var(--tk-dlite-semantic-motion-duration-snappy); }
+.cl-dlite-sem-duration-base { transition-duration: var(--tk-dlite-semantic-motion-duration-base); }
+.cl-dlite-sem-duration-substantial { transition-duration: var(--tk-dlite-semantic-motion-duration-substantial); }
+.cl-dlite-sem-duration-slow { transition-duration: var(--tk-dlite-semantic-motion-duration-slow); }
+.cl-dlite-sem-duration-xslow { transition-duration: var(--tk-dlite-semantic-motion-duration-xslow); }
+
+/* ===== MOTION: EASING ===== */
+.cl-dlite-sem-ease-standard { transition-timing-function: var(--tk-dlite-semantic-motion-easing-standard); }
+.cl-dlite-sem-ease-entrance { transition-timing-function: var(--tk-dlite-semantic-motion-easing-entrance); }
+.cl-dlite-sem-ease-exit { transition-timing-function: var(--tk-dlite-semantic-motion-easing-exit); }
+.cl-dlite-sem-ease-linear { transition-timing-function: var(--tk-dlite-semantic-motion-easing-linear); }
+
 /* ===== TRANSITIONS ===== */
-.cl-dlite-sem-transition-colors { transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease, border-color var(--tk-dlite-semantic-duration-fast) ease; }
-.cl-dlite-sem-transition-transform { transition: transform var(--tk-dlite-semantic-duration-normal) ease; }
-.cl-dlite-sem-transition-opacity { transition: opacity var(--tk-dlite-semantic-duration-normal) ease; }
-.cl-dlite-sem-transition-all { transition: all var(--tk-dlite-semantic-duration-normal) ease; }
+.cl-dlite-sem-transition-colors { transition: background-color var(--tk-dlite-semantic-motion-duration-quick) var(--tk-dlite-semantic-motion-easing-standard), color var(--tk-dlite-semantic-motion-duration-quick) var(--tk-dlite-semantic-motion-easing-standard), border-color var(--tk-dlite-semantic-motion-duration-quick) var(--tk-dlite-semantic-motion-easing-standard); }
+.cl-dlite-sem-transition-transform { transition: transform var(--tk-dlite-semantic-motion-duration-base) var(--tk-dlite-semantic-motion-easing-standard); }
+.cl-dlite-sem-transition-opacity { transition: opacity var(--tk-dlite-semantic-motion-duration-base) var(--tk-dlite-semantic-motion-easing-standard); }
+.cl-dlite-sem-transition-all { transition: all var(--tk-dlite-semantic-motion-duration-base) var(--tk-dlite-semantic-motion-easing-standard); }
 
 /* ===== TRANSFORMS ===== */
-.cl-dlite-sem-scale-hover:hover { transform: scale(var(--tk-dlite-semantic-transform-scale-hover)); }
-.cl-dlite-sem-scale-active:active { transform: scale(var(--tk-dlite-semantic-transform-scale-active)); }
+.cl-dlite-sem-scale-hover:hover { transform: scale(var(--tk-dlite-semantic-motion-scale-hover)); }
+.cl-dlite-sem-scale-active:active { transform: scale(var(--tk-dlite-semantic-motion-scale-active)); }
 
 /* ===== INTERACTIVE STATES ===== */
 .cl-dlite-sem-focus-ring:focus { outline: none; border-color: var(--tk-dlite-semantic-color-action-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--tk-dlite-semantic-color-action-primary) 30%, transparent); }

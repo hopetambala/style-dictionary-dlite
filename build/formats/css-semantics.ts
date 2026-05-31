@@ -179,19 +179,34 @@ StyleDictionary.registerFormat({
       lines.push('');
     }
 
+    // ───────────────────────────── MOTION ─────────────────────────────
+    // Duration + easing utilities, sourced from semantic.motion.* tokens.
+    if (has('tk-dlite-semantic-motion-duration-base')) {
+      lines.push('/* ===== MOTION: DURATION ===== */');
+      for (const d of ['quick', 'snappy', 'base', 'substantial', 'slow', 'xslow']) {
+        lines.push(`.duration-${d} { transition-duration: ${ref(`tk-dlite-semantic-motion-duration-${d}`)}; }`);
+      }
+      lines.push('');
+      lines.push('/* ===== MOTION: EASING ===== */');
+      for (const e of ['standard', 'entrance', 'exit', 'linear']) {
+        lines.push(`.ease-${e} { transition-timing-function: ${ref(`tk-dlite-semantic-motion-easing-${e}`)}; }`);
+      }
+      lines.push('');
+    }
+
     // ───────────────────────────── TRANSITIONS ───────────────────────
     lines.push('/* ===== TRANSITIONS ===== */');
-    lines.push(`.transition-colors { transition: background-color ${ref(`tk-dlite-semantic-duration-fast`)} ease, color ${ref(`tk-dlite-semantic-duration-fast`)} ease, border-color ${ref(`tk-dlite-semantic-duration-fast`)} ease; }`);
-    lines.push(`.transition-transform { transition: transform ${ref(`tk-dlite-semantic-duration-normal`)} ease; }`);
-    lines.push(`.transition-opacity { transition: opacity ${ref(`tk-dlite-semantic-duration-normal`)} ease; }`);
-    lines.push(`.transition-all { transition: all ${ref(`tk-dlite-semantic-duration-normal`)} ease; }`);
+    lines.push(`.transition-colors { transition: background-color ${ref(`tk-dlite-semantic-motion-duration-quick`)} ${ref(`tk-dlite-semantic-motion-easing-standard`)}, color ${ref(`tk-dlite-semantic-motion-duration-quick`)} ${ref(`tk-dlite-semantic-motion-easing-standard`)}, border-color ${ref(`tk-dlite-semantic-motion-duration-quick`)} ${ref(`tk-dlite-semantic-motion-easing-standard`)}; }`);
+    lines.push(`.transition-transform { transition: transform ${ref(`tk-dlite-semantic-motion-duration-base`)} ${ref(`tk-dlite-semantic-motion-easing-standard`)}; }`);
+    lines.push(`.transition-opacity { transition: opacity ${ref(`tk-dlite-semantic-motion-duration-base`)} ${ref(`tk-dlite-semantic-motion-easing-standard`)}; }`);
+    lines.push(`.transition-all { transition: all ${ref(`tk-dlite-semantic-motion-duration-base`)} ${ref(`tk-dlite-semantic-motion-easing-standard`)}; }`);
     lines.push('');
 
     // ───────────────────────────── TRANSFORMS ────────────────────────
-    if (has('tk-dlite-semantic-transform-scale-hover')) {
+    if (has('tk-dlite-semantic-motion-scale-hover')) {
       lines.push('/* ===== TRANSFORMS ===== */');
-      lines.push(`.scale-hover:hover { transform: scale(${ref(`tk-dlite-semantic-transform-scale-hover`)}); }`);
-      lines.push(`.scale-active:active { transform: scale(${ref(`tk-dlite-semantic-transform-scale-active`)}); }`);
+      lines.push(`.scale-hover:hover { transform: scale(${ref(`tk-dlite-semantic-motion-scale-hover`)}); }`);
+      lines.push(`.scale-active:active { transform: scale(${ref(`tk-dlite-semantic-motion-scale-active`)}); }`);
       lines.push('');
     }
 

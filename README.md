@@ -211,6 +211,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 | `font-body` | Source Serif 4 | Body text, paragraphs |
 | `font-mono` | Source Code Pro | Code, data tables |
 
+### Motion
+
+Animation values (durations, spring presets, easing, scale, opacity) ship under the
+`semantic.motion.*` tokens — as `--tk-dlite-semantic-motion-*` CSS vars on web and
+`tkDliteSemanticMotion*` keys in the React Native output. Platform-specific usage guides:
+
+- [Motion usage — Web (pure CSS)](docs/MOTION_USAGE_WEB.md)
+- [Motion usage — React Native (Reanimated)](docs/MOTION_USAGE_REACT_NATIVE.md)
+
 ### Build commands
 
 ```sh

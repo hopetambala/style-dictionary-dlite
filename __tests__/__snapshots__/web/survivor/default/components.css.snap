@@ -8,7 +8,7 @@
   font-weight: var(--tk-dlite-primitive-fontWeight-medium);
   border-radius: var(--tk-dlite-semantic-border-radius-lg);
   padding: var(--tk-dlite-semantic-spacing-200) var(--tk-dlite-semantic-spacing-400);
-  transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease, opacity var(--tk-dlite-semantic-duration-fast) ease;
+  transition: background-color var(--tk-dlite-semantic-motion-duration-quick) ease, color var(--tk-dlite-semantic-motion-duration-quick) ease, opacity var(--tk-dlite-semantic-motion-duration-quick) ease;
   cursor: pointer; white-space: nowrap;
 }
 .cl-dlite-btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -32,7 +32,7 @@
   background-color: var(--tk-dlite-semantic-color-surface-base);
   color: var(--tk-dlite-semantic-color-text-primary);
   width: 100%;
-  transition: border-color var(--tk-dlite-semantic-duration-fast) ease, box-shadow var(--tk-dlite-semantic-duration-fast) ease;
+  transition: border-color var(--tk-dlite-semantic-motion-duration-quick) ease, box-shadow var(--tk-dlite-semantic-motion-duration-quick) ease;
 }
 .cl-dlite-input:focus { outline: none; border-color: var(--tk-dlite-semantic-color-action-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--tk-dlite-semantic-color-action-primary) 30%, transparent); }
 .cl-dlite-input-lg { padding: var(--tk-dlite-semantic-spacing-300) var(--tk-dlite-semantic-spacing-400); }
@@ -57,7 +57,7 @@
   border-radius: var(--tk-dlite-semantic-border-radius-lg);
   padding: var(--tk-dlite-semantic-spacing-md);
   background-color: var(--tk-dlite-semantic-color-surface-base);
-  transition: background-color var(--tk-dlite-semantic-duration-fast) ease;
+  transition: background-color var(--tk-dlite-semantic-motion-duration-quick) ease;
 }
 
 /* ===== TABLES ===== */
@@ -72,7 +72,7 @@
   border-radius: var(--tk-dlite-semantic-border-radius-sm);
   font-size: var(--tk-dlite-semantic-typography-size-300);
   font-weight: var(--tk-dlite-primitive-fontWeight-medium);
-  transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease;
+  transition: background-color var(--tk-dlite-semantic-motion-duration-quick) ease, color var(--tk-dlite-semantic-motion-duration-quick) ease;
   display: inline-flex; align-items: center; justify-content: center;
 }
 .cl-dlite-toggle-btn-on { background-color: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-primary); }
