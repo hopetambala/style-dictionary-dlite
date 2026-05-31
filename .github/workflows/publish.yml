@@ -41,12 +41,10 @@ jobs:
       - name: Release (bump version, changelog, tag)
         run: npx commit-and-tag-version
 
-      - name: Push release commit and tag
-        run: |
-          git push origin main
-          git push origin --tags
-
       - name: Publish to npm
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push release commit and tag
+        run: git push origin main --follow-tags
