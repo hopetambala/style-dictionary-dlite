@@ -24,6 +24,10 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
+      # OIDC trusted publishing requires npm >= 11.5.1; Node 22 ships npm 10.x.
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: rm -f package-lock.json && npm install
 
@@ -41,12 +45,11 @@ jobs:
       - name: Release (bump version, changelog, tag)
         run: npx commit-and-tag-version
 
-      - name: Push release commit and tag
-        run: |
-          git push origin main
-          git push origin --tags
-
+      # Authenticates via OIDC trusted publishing (no token). Requires the
+      # id-token: write permission above and the trusted publisher configured on
+      # npmjs.com for this repo + workflow (publish.yml) + environment (release).
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push release commit and tag
+        run: git push origin main --follow-tags

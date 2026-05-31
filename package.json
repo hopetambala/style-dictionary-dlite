@@ -4,7 +4,7 @@
   "description": "Multi-brand, multi-theme design tokens using Style Dictionary",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hopetambala/style-dictionary-dlite"
+    "url": "git+https://github.com/hopetambala/style-dictionary-dlite.git"
   },
   "type": "module",
   "files": [
