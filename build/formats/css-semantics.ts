@@ -118,9 +118,30 @@ StyleDictionary.registerFormat({
       lines.push('');
     }
 
+    // Feedback bg/fg pairs — for badges, status cards, alerts
+    if (has('tk-dlite-semantic-color-feedback-success-bg')) {
+      lines.push('/* feedback surfaces (bg + fg pairs) */');
+      for (const fb of ['success', 'danger', 'warning', 'info']) {
+        lines.push(`.bg-${fb}-subtle { background-color: ${ref(`tk-dlite-semantic-color-feedback-${fb}-bg`)}; }`);
+        lines.push(`.text-${fb}-strong { color: ${ref(`tk-dlite-semantic-color-feedback-${fb}-fg`)}; }`);
+      }
+      lines.push('');
+    }
+
+    // ───────────────────────────── Z-INDEX LAYERS ─────────────────────
+    if (has('tk-dlite-semantic-z-index-modal')) {
+      lines.push('/* ===== Z-INDEX LAYERS ===== */');
+      for (const layer of ['default', 'sticky', 'dropdown', 'overlay', 'modal']) {
+        lines.push(`.z-${layer} { z-index: ${ref(`tk-dlite-semantic-z-index-${layer}`)}; }`);
+      }
+      lines.push('');
+    }
+
     // ───────────────────────────── BORDERS & RADIUS ──────────────────
     lines.push('/* ===== BORDERS & RADIUS ===== */');
     lines.push(`.border { border: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
+    lines.push(`.border-subtle { border: 1px solid ${ref(`tk-dlite-semantic-color-border-subtle`)}; }`);
+    lines.push(`.border-emphasis { border: 1px solid ${ref(`tk-dlite-semantic-color-border-emphasis`)}; }`);
     lines.push(`.border-t { border-top: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
     lines.push(`.border-r { border-right: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
     lines.push(`.border-b { border-bottom: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
@@ -145,10 +166,34 @@ StyleDictionary.registerFormat({
     lines.push(`.shadow-focus { box-shadow: 0 0 0 3px color-mix(in srgb, ${ref(`tk-dlite-semantic-color-action-primary`)} 15%, transparent); }`);
     lines.push('');
 
+    // ───────────────────────────── SIZING ─────────────────────────────
+    if (has('tk-dlite-semantic-sizing-icon-md')) {
+      lines.push('/* ===== SIZING ===== */');
+      for (const s of ['sm', 'md', 'lg']) {
+        const tok = `tk-dlite-semantic-sizing-icon-${s}`;
+        lines.push(`.icon-${s} { width: ${ref(tok)}; height: ${ref(tok)}; }`);
+      }
+      for (const w of ['narrow', 'normal', 'wide']) {
+        lines.push(`.max-w-modal-${w} { max-width: ${ref(`tk-dlite-semantic-sizing-modal-width-${w}`)}; }`);
+      }
+      lines.push('');
+    }
+
     // ───────────────────────────── TRANSITIONS ───────────────────────
     lines.push('/* ===== TRANSITIONS ===== */');
     lines.push(`.transition-colors { transition: background-color ${ref(`tk-dlite-semantic-duration-fast`)} ease, color ${ref(`tk-dlite-semantic-duration-fast`)} ease, border-color ${ref(`tk-dlite-semantic-duration-fast`)} ease; }`);
+    lines.push(`.transition-transform { transition: transform ${ref(`tk-dlite-semantic-duration-normal`)} ease; }`);
+    lines.push(`.transition-opacity { transition: opacity ${ref(`tk-dlite-semantic-duration-normal`)} ease; }`);
+    lines.push(`.transition-all { transition: all ${ref(`tk-dlite-semantic-duration-normal`)} ease; }`);
     lines.push('');
+
+    // ───────────────────────────── TRANSFORMS ────────────────────────
+    if (has('tk-dlite-semantic-transform-scale-hover')) {
+      lines.push('/* ===== TRANSFORMS ===== */');
+      lines.push(`.scale-hover:hover { transform: scale(${ref(`tk-dlite-semantic-transform-scale-hover`)}); }`);
+      lines.push(`.scale-active:active { transform: scale(${ref(`tk-dlite-semantic-transform-scale-active`)}); }`);
+      lines.push('');
+    }
 
     // ───────────────────────────── INTERACTIVE STATES ────────────────
     lines.push('/* ===== INTERACTIVE STATES ===== */');
