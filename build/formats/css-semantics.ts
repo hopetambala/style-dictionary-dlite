@@ -107,6 +107,17 @@ StyleDictionary.registerFormat({
     lines.push(`.bg-secondary { background-color: ${ref(`tk-dlite-semantic-color-action-secondary`)}; }`);
     lines.push('');
 
+    // On-dark overlays — translucent white for text/fills/borders on dark surfaces
+    if (has('tk-dlite-semantic-color-text-on-dark')) {
+      lines.push('/* on dark surfaces */');
+      lines.push(`.text-on-dark { color: ${ref(`tk-dlite-semantic-color-text-on-dark`)}; }`);
+      lines.push(`.text-on-dark-muted { color: ${ref(`tk-dlite-semantic-color-text-on-dark-muted`)}; }`);
+      lines.push(`.text-on-dark-subtle { color: ${ref(`tk-dlite-semantic-color-text-on-dark-subtle`)}; }`);
+      lines.push(`.bg-on-dark { background-color: ${ref(`tk-dlite-semantic-color-surface-on-dark`)}; }`);
+      lines.push(`.border-on-dark { border: 1px solid ${ref(`tk-dlite-semantic-color-border-on-dark`)}; }`);
+      lines.push('');
+    }
+
     // ───────────────────────────── BORDERS & RADIUS ──────────────────
     lines.push('/* ===== BORDERS & RADIUS ===== */');
     lines.push(`.border { border: 1px solid ${ref(`tk-dlite-semantic-color-border`)}; }`);
@@ -130,6 +141,8 @@ StyleDictionary.registerFormat({
     lines.push(`.shadow-sm { box-shadow: ${ref(`tk-dlite-semantic-elevation-low`)}; }`);
     lines.push(`.shadow-md { box-shadow: ${ref(`tk-dlite-semantic-elevation-medium`)}; }`);
     lines.push(`.shadow-lg { box-shadow: ${ref(`tk-dlite-semantic-elevation-high`)}; }`);
+    // Brand-aware focus glow — use on :focus-visible for inputs/controls
+    lines.push(`.shadow-focus { box-shadow: 0 0 0 3px color-mix(in srgb, ${ref(`tk-dlite-semantic-color-action-primary`)} 15%, transparent); }`);
     lines.push('');
 
     // ───────────────────────────── TRANSITIONS ───────────────────────

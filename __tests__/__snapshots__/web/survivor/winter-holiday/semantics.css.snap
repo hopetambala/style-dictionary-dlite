@@ -249,6 +249,13 @@
 .cl-dlite-sem-bg-primary { background-color: var(--tk-dlite-semantic-color-action-primary); }
 .cl-dlite-sem-bg-secondary { background-color: var(--tk-dlite-semantic-color-action-secondary); }
 
+/* on dark surfaces */
+.cl-dlite-sem-text-on-dark { color: var(--tk-dlite-semantic-color-text-on-dark); }
+.cl-dlite-sem-text-on-dark-muted { color: var(--tk-dlite-semantic-color-text-on-dark-muted); }
+.cl-dlite-sem-text-on-dark-subtle { color: var(--tk-dlite-semantic-color-text-on-dark-subtle); }
+.cl-dlite-sem-bg-on-dark { background-color: var(--tk-dlite-semantic-color-surface-on-dark); }
+.cl-dlite-sem-border-on-dark { border: 1px solid var(--tk-dlite-semantic-color-border-on-dark); }
+
 /* ===== BORDERS & RADIUS ===== */
 .cl-dlite-sem-border { border: 1px solid var(--tk-dlite-semantic-color-border); }
 .cl-dlite-sem-border-t { border-top: 1px solid var(--tk-dlite-semantic-color-border); }
@@ -264,6 +271,7 @@
 .cl-dlite-sem-shadow-sm { box-shadow: var(--tk-dlite-semantic-elevation-low); }
 .cl-dlite-sem-shadow-md { box-shadow: var(--tk-dlite-semantic-elevation-medium); }
 .cl-dlite-sem-shadow-lg { box-shadow: var(--tk-dlite-semantic-elevation-high); }
+.cl-dlite-sem-shadow-focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--tk-dlite-semantic-color-action-primary) 15%, transparent); }
 
 /* ===== TRANSITIONS ===== */
 .cl-dlite-sem-transition-colors { transition: background-color var(--tk-dlite-semantic-duration-fast) ease, color var(--tk-dlite-semantic-duration-fast) ease, border-color var(--tk-dlite-semantic-duration-fast) ease; }

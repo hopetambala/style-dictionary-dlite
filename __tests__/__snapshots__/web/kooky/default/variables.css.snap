@@ -266,6 +266,11 @@
   --tk-dlite-semantic-color-feedback-warning: #ffdd00;
   --tk-dlite-semantic-color-feedback-danger: #ffaa00;
   --tk-dlite-semantic-color-feedback-danger-active: #ff8800;
+  --tk-dlite-semantic-color-text-on-dark: #ffffffeb;
+  --tk-dlite-semantic-color-text-on-dark-muted: #ffffff99;
+  --tk-dlite-semantic-color-text-on-dark-subtle: #ffffff66;
+  --tk-dlite-semantic-color-border-on-dark: #ffffff26;
+  --tk-dlite-semantic-color-surface-on-dark: #ffffff14;
   --tk-dlite-semantic-color-feedback-warning-active: #ff8800;
   --tk-dlite-semantic-typography-font-heading: Recoleta;
   --tk-dlite-semantic-typography-font-body: Source Serif 4;

@@ -213,6 +213,21 @@
             "dark": "{primitive.color.red.400}"
           }
         }
+      },
+      "text-on-dark": {
+        "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "alpha": 0.92, "hex": "#ffffffeb" }
+      },
+      "text-on-dark-muted": {
+        "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "alpha": 0.6, "hex": "#ffffff99" }
+      },
+      "text-on-dark-subtle": {
+        "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "alpha": 0.4, "hex": "#ffffff66" }
+      },
+      "border-on-dark": {
+        "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "alpha": 0.15, "hex": "#ffffff26" }
+      },
+      "surface-on-dark": {
+        "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "alpha": 0.08, "hex": "#ffffff14" }
       }
     },
     "typography": {
