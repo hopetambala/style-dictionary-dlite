@@ -2,7 +2,7 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
   return {
     web: {
       brandName,
-      transforms: ['attribute/cti', 'value/dtcg-color', 'value/shadow-css', 'name/brand-tier-kebab'],
+      transforms: ['attribute/cti', 'value/dtcg-color', 'value/shadow-css', 'value/cubic-bezier-css', 'name/brand-tier-kebab'],
       buildPath: `dist/web/${brandName}/${theme}/`,
       files: [
         {
