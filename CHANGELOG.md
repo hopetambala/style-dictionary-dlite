@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.0](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.8...v0.3.0) (2026-05-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* add motion tokens
+
+### Features
+
+* add feedback/z-index/sizing/effect tokens + utilities ([c6a1d63](https://github.com/hopetambala/style-dictionary-dlite/commit/c6a1d63f4e686c57774a9ebbb3badaa88bc3ecbb))
+* add motion tokens ([caa45c8](https://github.com/hopetambala/style-dictionary-dlite/commit/caa45c8b2d27ac76588745346e1c83cb0e28b142))
+
+
+### Bug Fixes
+
+* add on dark tokens ([14592bf](https://github.com/hopetambala/style-dictionary-dlite/commit/14592bfce4a8386a86101470858c07d1b57d4337))
+
 ## [0.2.8](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.2.7...v0.2.8) (2026-04-02)
 
 
