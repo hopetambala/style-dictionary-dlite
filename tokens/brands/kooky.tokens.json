@@ -116,6 +116,9 @@
               "$type": "fontFamily",
               "font-heading": {
                 "$value": "Recoleta"
+              },
+              "font-body": {
+                "$value": "Recoleta"
               }
             }
           },

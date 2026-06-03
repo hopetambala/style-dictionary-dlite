@@ -282,7 +282,7 @@ export const dark = {
   "tkDliteSemanticZIndexDropdown": 100,
   "tkDliteSemanticZIndexOverlay": 999,
   "tkDliteSemanticZIndexModal": 1000,
-  "tkDliteSemanticTypographyFontHeading": "Plus Jakarta Sans",
+  "tkDliteSemanticTypographyFontHeading": "Fraunces",
   "tkDliteSemanticTypographyFontBody": "Source Serif 4",
   "tkDliteSemanticTypographyFontMono": "Source Code Pro",
   "tkDliteSemanticTypographySize100": 10,

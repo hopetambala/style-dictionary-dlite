@@ -288,7 +288,7 @@
   --tk-dlite-semantic-z-index-overlay: 999;
   --tk-dlite-semantic-z-index-modal: 1000;
   --tk-dlite-semantic-typography-font-heading: Recoleta;
-  --tk-dlite-semantic-typography-font-body: Source Serif 4;
+  --tk-dlite-semantic-typography-font-body: Recoleta;
   --tk-dlite-semantic-typography-font-mono: Source Code Pro;
   --tk-dlite-semantic-typography-size-100: 0.625rem;
   --tk-dlite-semantic-typography-size-200: 0.75rem;

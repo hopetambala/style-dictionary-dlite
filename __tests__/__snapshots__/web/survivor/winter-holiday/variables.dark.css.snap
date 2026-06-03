@@ -286,7 +286,7 @@
   --tk-dlite-semantic-z-index-dropdown: 100;
   --tk-dlite-semantic-z-index-overlay: 999;
   --tk-dlite-semantic-z-index-modal: 1000;
-  --tk-dlite-semantic-typography-font-heading: Plus Jakarta Sans;
+  --tk-dlite-semantic-typography-font-heading: Fraunces;
   --tk-dlite-semantic-typography-font-body: Source Serif 4;
   --tk-dlite-semantic-typography-font-mono: Source Code Pro;
   --tk-dlite-semantic-typography-size-100: 0.625rem;

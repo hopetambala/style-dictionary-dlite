@@ -6,7 +6,8 @@
   <title>dlite Token Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style id="token-fonts"></style>
   <style id="token-vars"></style>
   <style id="token-dark"></style>
   <style>
@@ -47,14 +48,56 @@
     .toolbar .sep { width: 1px; height: 2rem; background: var(--tk-dlite-semantic-color-border); }
     .toolbar .title {
       font-family: var(--tk-dlite-semantic-typography-font-heading);
-      font-weight: 700; font-size: 1.1rem; margin-right: auto;
+      font-weight: 900; font-size: 1.1rem; margin-right: auto;
     }
 
     /* ── Sections ── */
     section { margin-bottom: 3rem; }
+
+    /* ── Brand signature ── */
+    .brand-signature {
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      border-radius: var(--tk-dlite-semantic-border-radius-lg);
+      padding: 1.25rem;
+      background:
+        radial-gradient(circle at top right, color-mix(in oklab, var(--tk-dlite-semantic-color-primary) 18%, transparent), transparent 45%),
+        radial-gradient(circle at bottom left, color-mix(in oklab, var(--tk-dlite-semantic-color-secondary) 18%, transparent), transparent 40%),
+        var(--tk-dlite-semantic-color-surface-base);
+      box-shadow: var(--tk-dlite-semantic-elevation-low);
+    }
+    .brand-signature .chip {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--tk-dlite-semantic-color-border);
+      color: var(--tk-dlite-semantic-color-text-secondary);
+      background: var(--tk-dlite-semantic-color-surface-raised);
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.65rem;
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .brand-signature .hero {
+      font-family: var(--tk-dlite-semantic-typography-font-heading);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.65rem;
+      color: var(--tk-dlite-semantic-color-foreground);
+    }
+    .brand-signature .lede {
+      max-width: 70ch;
+      color: var(--tk-dlite-semantic-color-text-secondary);
+      line-height: 1.45;
+      margin-bottom: 0.85rem;
+    }
+    .brand-signature .meta {
+      font-family: var(--tk-dlite-semantic-typography-font-mono);
+      font-size: 0.7rem;
+      color: var(--tk-dlite-semantic-color-muted);
+    }
     h2 {
       font-family: var(--tk-dlite-semantic-typography-font-heading);
-      font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;
+      font-size: 1.4rem; font-weight: 900; margin-bottom: 1rem;
       border-bottom: 2px solid var(--tk-dlite-semantic-color-border);
       padding-bottom: 0.5rem;
     }
@@ -204,6 +247,11 @@
   <div class="semantic-grid" id="semantic-grid"></div>
 </section>
 
+<section id="sec-brand-signature">
+  <h2>Brand Signature</h2>
+  <div class="brand-signature" id="brand-signature"></div>
+</section>
+
 <section id="sec-primitives">
   <h2>Primitive Color Palettes</h2>
   <div id="primitive-palettes"></div>
@@ -239,6 +287,7 @@
   const modeSelect = document.getElementById('mode-select');
   const tokenStyle = document.getElementById('token-vars');
   const darkStyle = document.getElementById('token-dark');
+  const tokenFonts = document.getElementById('token-fonts');
 
   let brands = [];
   try {
@@ -380,6 +429,14 @@
       const mode = modeSelect.value;
       const lightCSS = await loadCSS(base + `web/${brandPath}/variables.css`);
       tokenStyle.textContent = lightCSS;
+
+      // Load brand font-face CSS via fetch and resolve relative font URLs to absolute
+      try {
+        const brandName = brandPath.split('/')[0];
+        let fontsCSS = await loadCSS(base + `web/${brandPath}/fonts/fonts.css`);
+        fontsCSS = fontsCSS.replaceAll('../../fonts/', base + `web/${brandName}/fonts/`);
+        tokenFonts.textContent = fontsCSS;
+      } catch { tokenFonts.textContent = ''; }
       if (mode === 'dark') {
         const darkCSS = await loadCSS(base + `web/${brandPath}/variables.dark.css`);
         darkStyle.textContent = darkCSS;
@@ -434,6 +491,19 @@
         </div>`;
       grid.appendChild(card);
     }
+  }
+
+  function renderBrandSignature() {
+    const container = document.getElementById('brand-signature');
+    const [brandName, themeName] = brandSelect.value.split('/');
+    const heading = getVar('--tk-dlite-semantic-typography-font-heading');
+    const body = getVar('--tk-dlite-semantic-typography-font-body');
+    container.innerHTML = `
+      <div class="chip">${brandName} / ${themeName} / ${modeSelect.value}</div>
+      <div class="hero">A Distinct Voice For ${brandName}</div>
+      <p class="lede">The heading style here should look clearly different per brand. Kooky should feel playful with Recoleta, while Survivor should feel editorial and earthy with Fraunces.</p>
+      <div class="meta">heading: ${heading} | body: ${body}</div>
+    `;
   }
 
   function renderPrimitivePalettes() {
@@ -517,7 +587,7 @@
       let html = '<div class="meta">Font Families</div>';
       for (const { name, varName } of currentData.typographyFonts) {
         const val = getVar(varName);
-        html += `<p style="font-family:var(${varName});font-size:1.1rem;font-weight:${name === 'heading' ? 600 : 400};margin-bottom:0.3rem">${name}: ${val}</p>`;
+        html += `<p style="font-family:var(${varName});font-size:1.1rem;font-weight:${name === 'heading' ? 900 : 400};margin-bottom:0.3rem">${name}: ${val}</p>`;
       }
       families.innerHTML = html;
       container.appendChild(families);
@@ -604,6 +674,7 @@
 
   function renderAll() {
     requestAnimationFrame(() => {
+      renderBrandSignature();
       renderSemanticColors();
       renderPrimitivePalettes();
       renderSpacing();
