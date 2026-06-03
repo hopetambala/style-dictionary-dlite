@@ -218,7 +218,7 @@
 
 /* ===== TYPOGRAPHY ===== */
 .cl-dlite-sem-font-sans { font-family: var(--tk-dlite-semantic-typography-font-body), Arial, Helvetica, sans-serif; }
-.cl-dlite-sem-font-heading { font-family: var(--tk-dlite-semantic-typography-font-heading), Arial, Helvetica, sans-serif; font-weight: 900; }
+.cl-dlite-sem-font-heading { font-family: var(--tk-dlite-semantic-typography-font-heading), Arial, Helvetica, sans-serif; }
 .cl-dlite-sem-font-mono { font-family: var(--tk-dlite-semantic-typography-font-mono), monospace; }
 .cl-dlite-sem-text-100 { font-size: var(--tk-dlite-semantic-typography-size-100); }
 .cl-dlite-sem-text-200 { font-size: var(--tk-dlite-semantic-typography-size-200); }

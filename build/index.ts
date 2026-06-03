@@ -224,7 +224,10 @@ function buildFontFaceCss(config: BrandFontConfig): string {
 // ── Font distribution for configured web brands ──
 console.log('\nHandling font distribution...');
 const fontSourceDir = path.resolve('assets/fonts');
-if (!fs.existsSync(fontSourceDir)) {
+
+// Only require assets/fonts if at least one font-packaged brand is being built
+const builtFontBrands = Object.keys(BRAND_FONT_CONFIGS).filter((b) => resolved[b]);
+if (builtFontBrands.length > 0 && !fs.existsSync(fontSourceDir)) {
   throw new Error(
     `Font packaging requires assets at ${fontSourceDir}, but directory does not exist.\n` +
       'Please add the configured brand font files in assets/fonts/.',

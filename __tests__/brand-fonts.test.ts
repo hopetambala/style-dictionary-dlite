@@ -205,9 +205,9 @@ describe('Web: reset.css imports fonts', () => {
 });
 
 // ────────────────────────────────────────────────
-// 4b. .font-heading class includes font-weight: 900
+// 4b. .font-heading is a family-only utility (no font-weight)
 // ────────────────────────────────────────────────
-describe('Web: .font-heading sets font-weight 900', () => {
+describe('Web: .font-heading does NOT set font-weight', () => {
   for (const brand of Object.keys(BRAND_HEADING_FONTS)) {
     const brandDir = path.join(DIST_WEB, brand);
     if (!fs.existsSync(brandDir)) continue;
@@ -220,11 +220,11 @@ describe('Web: .font-heading sets font-weight 900', () => {
       const semPath = path.join(brandDir, theme, 'semantics.css');
       if (!fs.existsSync(semPath)) continue;
 
-      test(`${brand}/${theme}/semantics.css .font-heading includes font-weight: 900`, () => {
+      test(`${brand}/${theme}/semantics.css .font-heading has no font-weight`, () => {
         const css = fs.readFileSync(semPath, 'utf-8');
         const rule = css.match(/font-heading\s*\{[^}]+\}/);
         expect(rule).not.toBeNull();
-        expect(rule![0]).toContain('font-weight: 900');
+        expect(rule![0]).not.toContain('font-weight');
       });
     }
   }
