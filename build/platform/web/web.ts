@@ -1,4 +1,6 @@
 export function webPlatform(brandName: string, theme: string, mode: string) {
+  const brandsWithPackagedFonts = new Set(['kooky', 'puente', 'survivor']);
+
   return {
     web: {
       brandName,
@@ -14,7 +16,7 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
               {
                 destination: 'reset.css',
                 format: 'css/reset',
-                options: { brandName, includeFontsImport: brandName === 'kooky' },
+                options: { brandName, includeFontsImport: brandsWithPackagedFonts.has(brandName) },
               },
               {
                 destination: 'utilities.css',

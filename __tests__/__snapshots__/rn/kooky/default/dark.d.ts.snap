@@ -284,7 +284,7 @@ export declare const dark: {
   "tkDliteSemanticZIndexOverlay": 999,
   "tkDliteSemanticZIndexModal": 1000,
   "tkDliteSemanticTypographyFontHeading": "Recoleta",
-  "tkDliteSemanticTypographyFontBody": "Source Serif 4",
+  "tkDliteSemanticTypographyFontBody": "Recoleta",
   "tkDliteSemanticTypographyFontMono": "Source Code Pro",
   "tkDliteSemanticTypographySize100": 10,
   "tkDliteSemanticTypographySize200": 12,

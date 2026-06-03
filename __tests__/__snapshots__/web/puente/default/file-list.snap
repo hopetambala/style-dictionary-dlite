@@ -1,5 +1,6 @@
 [
   "components.css",
+  "fonts/fonts.css",
   "primitives.css",
   "reset.css",
   "semantics.css",

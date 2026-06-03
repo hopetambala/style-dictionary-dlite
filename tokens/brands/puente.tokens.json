@@ -1,6 +1,12 @@
 {
   "puente": {
     "$extends": "{global}",
+    "typography": {
+      "$type": "fontFamily",
+      "font-heading": {
+        "$value": "Plus Jakarta Sans"
+      }
+    },
     "themes": {
       "default": {
         "modes": {

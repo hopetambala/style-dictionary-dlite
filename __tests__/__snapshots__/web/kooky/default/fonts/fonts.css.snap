@@ -1,9 +1,17 @@
-/* Recoleta font faces for Kooky brand */
+/* Recoleta font faces */
 @font-face {
   font-family: 'Recoleta';
   src: url('../../fonts/Recoleta-Regular.woff2') format('woff2'),
        url('../../fonts/Recoleta-Regular.ttf') format('truetype');
   font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('../../fonts/Recoleta-Medium.woff2') format('woff2'),
+       url('../../fonts/Recoleta-Medium.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
 }
 

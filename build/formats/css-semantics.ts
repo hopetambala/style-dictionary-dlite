@@ -60,7 +60,7 @@ StyleDictionary.registerFormat({
 
     // Font families
     lines.push(`.font-sans { font-family: ${ref(`tk-dlite-semantic-typography-font-body`)}, Arial, Helvetica, sans-serif; }`);
-    lines.push(`.font-heading { font-family: ${ref(`tk-dlite-semantic-typography-font-heading`)}, Arial, Helvetica, sans-serif; }`);
+    lines.push(`.font-heading { font-family: ${ref(`tk-dlite-semantic-typography-font-heading`)}, Arial, Helvetica, sans-serif; font-weight: 900; }`);
     lines.push(`.font-mono { font-family: ${ref(`tk-dlite-semantic-typography-font-mono`)}, monospace; }`);
 
     // Font sizes: 100-1000

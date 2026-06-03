@@ -1,6 +1,12 @@
 {
   "survivor": {
     "$extends": "{global}",
+    "typography": {
+      "$type": "fontFamily",
+      "font-heading": {
+        "$value": "Fraunces"
+      }
+    },
     "themes": {
       "default": {
         "modes": {

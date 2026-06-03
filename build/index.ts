@@ -138,26 +138,114 @@ for (const brandName of brandNames) {
 
 console.log('\n==============================================');
 
-// ── Font distribution for Kooky brand ──
+type FontFormat = {
+  extension: 'woff2' | 'ttf';
+  format: 'woff2' | 'truetype';
+};
+
+type FontFace = {
+  suffix: string;
+  weight: number;
+  style: 'normal' | 'italic';
+};
+
+type BrandFontConfig = {
+  family: string;
+  filePrefix: string;
+  formats: FontFormat[];
+  faces: FontFace[];
+};
+
+const BRAND_FONT_CONFIGS: Record<string, BrandFontConfig> = {
+  kooky: {
+    family: 'Recoleta',
+    filePrefix: 'Recoleta',
+    formats: [
+      { extension: 'woff2', format: 'woff2' },
+      { extension: 'ttf', format: 'truetype' },
+    ],
+    faces: [
+      { suffix: 'Regular', weight: 400, style: 'normal' },
+      { suffix: 'Medium', weight: 500, style: 'normal' },
+      { suffix: 'Bold', weight: 700, style: 'normal' },
+      { suffix: 'Black', weight: 900, style: 'normal' },
+    ],
+  },
+  puente: {
+    family: 'Plus Jakarta Sans',
+    filePrefix: 'PlusJakartaSans',
+    formats: [
+      { extension: 'woff2', format: 'woff2' },
+    ],
+    faces: [
+      { suffix: 'Regular', weight: 400, style: 'normal' },
+      { suffix: 'Bold', weight: 700, style: 'normal' },
+    ],
+  },
+  survivor: {
+    family: 'Fraunces',
+    filePrefix: 'Fraunces',
+    formats: [
+      { extension: 'woff2', format: 'woff2' },
+    ],
+    faces: [
+      { suffix: 'Regular', weight: 400, style: 'normal' },
+      { suffix: 'Bold', weight: 700, style: 'normal' },
+    ],
+  },
+};
+
+function expectedFontFiles(config: BrandFontConfig): string[] {
+  return config.faces.flatMap((face) =>
+    config.formats.map((fontFormat) => `${config.filePrefix}-${face.suffix}.${fontFormat.extension}`),
+  );
+}
+
+function buildFontFaceCss(config: BrandFontConfig): string {
+  const blocks = config.faces.map((face) => {
+    const src = config.formats
+      .map(
+        (fontFormat) =>
+          `url('../../fonts/${config.filePrefix}-${face.suffix}.${fontFormat.extension}') format('${fontFormat.format}')`,
+      )
+      .join(',\n       ');
+
+    return `@font-face {
+  font-family: '${config.family}';
+  src: ${src};
+  font-weight: ${face.weight};
+  font-style: ${face.style};
+}`;
+  });
+
+  return `/* ${config.family} font faces */\n${blocks.join('\n\n')}\n`;
+}
+
+// ── Font distribution for configured web brands ──
 console.log('\nHandling font distribution...');
 const fontSourceDir = path.resolve('assets/fonts');
-const fontBrandDir = 'dist/web/kooky/fonts'; // Shared brand-level fonts directory
+if (!fs.existsSync(fontSourceDir)) {
+  throw new Error(
+    `Font packaging requires assets at ${fontSourceDir}, but directory does not exist.\n` +
+      'Please add the configured brand font files in assets/fonts/.',
+  );
+}
 
-if (resolved.kooky) {
-  // Guard: ensure font assets exist before attempting to copy
-  if (!fs.existsSync(fontSourceDir)) {
+for (const [brandName, fontConfig] of Object.entries(BRAND_FONT_CONFIGS)) {
+  if (!resolved[brandName]) continue;
+
+  const requiredFiles = expectedFontFiles(fontConfig);
+  const missingFiles = requiredFiles.filter((fileName) => !fs.existsSync(path.join(fontSourceDir, fileName)));
+  if (missingFiles.length > 0) {
     throw new Error(
-      `Kooky brand requires Recoleta font assets at ${fontSourceDir}, but directory does not exist.\n` +
-      'Please ensure Recoleta fonts are present in assets/fonts/ (Regular, Bold, Black in ttf & woff2 formats).'
+      `${brandName} requires missing font assets in assets/fonts/:\n- ${missingFiles.join('\n- ')}`,
     );
   }
 
-  // Copy fonts once to shared brand directory (deduplicated across themes)
-  // Only include weights used in @font-face declarations: Regular (400), Bold (700), Black (900)
+  const fontBrandDir = `dist/web/${brandName}/fonts`;
   fs.mkdirSync(fontBrandDir, { recursive: true });
-  const fontFiles = fs.readdirSync(fontSourceDir)
-    .filter(f => f.startsWith('Recoleta') && !f.includes('Medium'));
-  for (const fontFile of fontFiles) {
+
+  for (const fontFile of requiredFiles) {
     const src = path.join(fontSourceDir, fontFile);
     const dest = path.join(fontBrandDir, fontFile);
     if (!fs.existsSync(dest)) {
@@ -166,42 +254,13 @@ if (resolved.kooky) {
     }
   }
 
-  const kookyThemes = discoverThemes(resolved.kooky as TokenTree)
-    .map(combo => combo.theme)
-    .filter((theme, idx, arr) => arr.indexOf(theme) === idx); // unique themes
+  const themes = [...new Set(discoverThemes(resolved[brandName] as TokenTree).map((combo) => combo.theme))];
 
-  for (const theme of kookyThemes) {
-    const fontDistDir = `dist/web/kooky/${theme}/fonts`;
+  for (const theme of themes) {
+    const fontDistDir = `dist/web/${brandName}/${theme}/fonts`;
     fs.mkdirSync(fontDistDir, { recursive: true });
-
-    // Generate @font-face CSS with relative paths to shared brand-level fonts
-    const fontFaceCSS = `/* Recoleta font faces for Kooky brand */
-@font-face {
-  font-family: 'Recoleta';
-  src: url('../../fonts/Recoleta-Regular.woff2') format('woff2'),
-       url('../../fonts/Recoleta-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Recoleta';
-  src: url('../../fonts/Recoleta-Bold.woff2') format('woff2'),
-       url('../../fonts/Recoleta-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Recoleta';
-  src: url('../../fonts/Recoleta-Black.woff2') format('woff2'),
-       url('../../fonts/Recoleta-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-`;
-    fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), fontFaceCSS);
-    console.log(`✔︎ Generated: fonts.css for theme ${theme}`);
+    fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), buildFontFaceCss(fontConfig));
+    console.log(`✔︎ Generated: dist/web/${brandName}/${theme}/fonts/fonts.css`);
   }
 }
 
