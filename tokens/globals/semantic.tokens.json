@@ -303,6 +303,10 @@
         "$value": "{primitive.dimension.font-size.300}",
         "$type": "dimension"
       },
+      "size-350": {
+        "$value": "{primitive.dimension.font-size.350}",
+        "$type": "dimension"
+      },
       "size-400": {
         "$value": "{primitive.dimension.font-size.400}",
         "$type": "dimension"
@@ -330,6 +334,50 @@
       "size-1000": {
         "$value": "{primitive.dimension.font-size.1000}",
         "$type": "dimension"
+      },
+      "size-1100": {
+        "$value": "{primitive.dimension.font-size.1100}",
+        "$type": "dimension"
+      },
+      "letter-spacing-tight": {
+        "$value": "-0.32px",
+        "$type": "dimension"
+      },
+      "letter-spacing-normal": {
+        "$value": "0px",
+        "$type": "dimension"
+      },
+      "letter-spacing-wide": {
+        "$value": "0.4px",
+        "$type": "dimension"
+      },
+      "letter-spacing-wider": {
+        "$value": "0.8px",
+        "$type": "dimension"
+      },
+      "letter-spacing-widest": {
+        "$value": "1.6px",
+        "$type": "dimension"
+      },
+      "letter-spacing-code": {
+        "$value": "8px",
+        "$type": "dimension"
+      },
+      "line-height-tight": {
+        "$value": "{primitive.number.line-height.tight}",
+        "$type": "number"
+      },
+      "line-height-snug": {
+        "$value": "{primitive.number.line-height.snug}",
+        "$type": "number"
+      },
+      "line-height-normal": {
+        "$value": "{primitive.number.line-height.normal}",
+        "$type": "number"
+      },
+      "line-height-relaxed": {
+        "$value": "{primitive.number.line-height.relaxed}",
+        "$type": "number"
       },
       "type-display-l-size": {
         "$value": "{primitive.dimension.font-size.1100}",
