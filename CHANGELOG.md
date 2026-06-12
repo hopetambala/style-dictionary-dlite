@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.4](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.3...v0.3.4) (2026-06-12)
+
+
+### Features
+
+* **tokens:** add surface-scrim alpha color token ([16e81ab](https://github.com/hopetambala/style-dictionary-dlite/commit/16e81aba06fdd9ecbf6840bcf82ef63656d084c3))
+
 ## [0.3.3](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.2...v0.3.3) (2026-06-11)
 
 
