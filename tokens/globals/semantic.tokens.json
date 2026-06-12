@@ -229,6 +229,9 @@
       "surface-on-dark": {
         "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "alpha": 0.08, "hex": "#ffffff14" }
       },
+      "surface-scrim": {
+        "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.5, "hex": "#00000080" }
+      },
       "feedback-success-bg": {
         "$value": "{primitive.color.green.100}",
         "$extensions": { "mode": { "dark": "{primitive.color.green.900}" } }
