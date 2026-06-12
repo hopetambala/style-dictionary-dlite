@@ -272,6 +272,7 @@
   --tk-dlite-semantic-color-text-on-dark-subtle: #ffffff66;
   --tk-dlite-semantic-color-border-on-dark: #ffffff26;
   --tk-dlite-semantic-color-surface-on-dark: #ffffff14;
+  --tk-dlite-semantic-color-surface-scrim: #00000080;
   --tk-dlite-semantic-color-feedback-success-bg: #e7f1cb;
   --tk-dlite-semantic-color-feedback-success-fg: #006210;
   --tk-dlite-semantic-color-feedback-danger-bg: #fbe8e1;
