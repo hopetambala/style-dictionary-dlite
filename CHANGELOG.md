@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.5](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.4...v0.3.5) (2026-07-01)
+
+
+### Features
+
+* add sneaks ([7210c53](https://github.com/hopetambala/style-dictionary-dlite/commit/7210c53b4492ae20c3b45fe103a1ee5880cbf84b))
+
 ## [0.3.4](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.3...v0.3.4) (2026-06-12)
 
 
