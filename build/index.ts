@@ -156,43 +156,74 @@ type BrandFontConfig = {
   faces: FontFace[];
 };
 
-const BRAND_FONT_CONFIGS: Record<string, BrandFontConfig> = {
-  kooky: {
-    family: 'Recoleta',
-    filePrefix: 'Recoleta',
-    formats: [
-      { extension: 'woff2', format: 'woff2' },
-      { extension: 'ttf', format: 'truetype' },
-    ],
-    faces: [
-      { suffix: 'Regular', weight: 400, style: 'normal' },
-      { suffix: 'Medium', weight: 500, style: 'normal' },
-      { suffix: 'Bold', weight: 700, style: 'normal' },
-      { suffix: 'Black', weight: 900, style: 'normal' },
-    ],
-  },
-  puente: {
-    family: 'Plus Jakarta Sans',
-    filePrefix: 'PlusJakartaSans',
-    formats: [
-      { extension: 'woff2', format: 'woff2' },
-    ],
-    faces: [
-      { suffix: 'Regular', weight: 400, style: 'normal' },
-      { suffix: 'Bold', weight: 700, style: 'normal' },
-    ],
-  },
-  survivor: {
-    family: 'Fraunces',
-    filePrefix: 'Fraunces',
-    formats: [
-      { extension: 'woff2', format: 'woff2' },
-    ],
-    faces: [
-      { suffix: 'Regular', weight: 400, style: 'normal' },
-      { suffix: 'Bold', weight: 700, style: 'normal' },
-    ],
-  },
+const BRAND_FONT_CONFIGS: Record<string, BrandFontConfig[]> = {
+  kooky: [
+    {
+      family: 'Recoleta',
+      filePrefix: 'Recoleta',
+      formats: [
+        { extension: 'woff2', format: 'woff2' },
+        { extension: 'ttf', format: 'truetype' },
+      ],
+      faces: [
+        { suffix: 'Regular', weight: 400, style: 'normal' },
+        { suffix: 'Medium', weight: 500, style: 'normal' },
+        { suffix: 'Bold', weight: 700, style: 'normal' },
+        { suffix: 'Black', weight: 900, style: 'normal' },
+      ],
+    },
+  ],
+  puente: [
+    {
+      family: 'Plus Jakarta Sans',
+      filePrefix: 'PlusJakartaSans',
+      formats: [
+        { extension: 'woff2', format: 'woff2' },
+      ],
+      faces: [
+        { suffix: 'Regular', weight: 400, style: 'normal' },
+        { suffix: 'Bold', weight: 700, style: 'normal' },
+      ],
+    },
+  ],
+  survivor: [
+    {
+      family: 'Fraunces',
+      filePrefix: 'Fraunces',
+      formats: [
+        { extension: 'woff2', format: 'woff2' },
+      ],
+      faces: [
+        { suffix: 'Regular', weight: 400, style: 'normal' },
+        { suffix: 'Bold', weight: 700, style: 'normal' },
+      ],
+    },
+  ],
+  sneaks: [
+    {
+      family: 'Space Grotesk',
+      filePrefix: 'SpaceGrotesk',
+      formats: [
+        { extension: 'woff2', format: 'woff2' },
+      ],
+      faces: [
+        { suffix: 'Medium', weight: 500, style: 'normal' },
+        { suffix: 'SemiBold', weight: 600, style: 'normal' },
+        { suffix: 'Bold', weight: 700, style: 'normal' },
+      ],
+    },
+    {
+      family: 'Inter',
+      filePrefix: 'Inter',
+      formats: [
+        { extension: 'woff2', format: 'woff2' },
+      ],
+      faces: [
+        { suffix: 'Regular', weight: 400, style: 'normal' },
+        { suffix: 'Bold', weight: 700, style: 'normal' },
+      ],
+    },
+  ],
 };
 
 function expectedFontFiles(config: BrandFontConfig): string[] {
@@ -234,10 +265,10 @@ if (builtFontBrands.length > 0 && !fs.existsSync(fontSourceDir)) {
   );
 }
 
-for (const [brandName, fontConfig] of Object.entries(BRAND_FONT_CONFIGS)) {
+for (const [brandName, fontConfigs] of Object.entries(BRAND_FONT_CONFIGS)) {
   if (!resolved[brandName]) continue;
 
-  const requiredFiles = expectedFontFiles(fontConfig);
+  const requiredFiles = fontConfigs.flatMap(expectedFontFiles);
   const missingFiles = requiredFiles.filter((fileName) => !fs.existsSync(path.join(fontSourceDir, fileName)));
   if (missingFiles.length > 0) {
     throw new Error(
@@ -258,11 +289,12 @@ for (const [brandName, fontConfig] of Object.entries(BRAND_FONT_CONFIGS)) {
   }
 
   const themes = [...new Set(discoverThemes(resolved[brandName] as TokenTree).map((combo) => combo.theme))];
+  const fontFaceCss = fontConfigs.map(buildFontFaceCss).join('\n');
 
   for (const theme of themes) {
     const fontDistDir = `dist/web/${brandName}/${theme}/fonts`;
     fs.mkdirSync(fontDistDir, { recursive: true });
-    fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), buildFontFaceCss(fontConfig));
+    fs.writeFileSync(path.join(fontDistDir, 'fonts.css'), fontFaceCss);
     console.log(`✔︎ Generated: dist/web/${brandName}/${theme}/fonts/fonts.css`);
   }
 }

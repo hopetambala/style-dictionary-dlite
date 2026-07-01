@@ -11,6 +11,11 @@
       "label": "Puente"
     },
     {
+      "name": "sneaks/default",
+      "path": "sneaks/default",
+      "label": "Sneaks"
+    },
+    {
       "name": "survivor/default",
       "path": "survivor/default",
       "label": "Survivor"
