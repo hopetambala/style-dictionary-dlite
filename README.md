@@ -1,3 +1,4 @@
+[![Release & Publish](https://github.com/hopetambala/style-dictionary-dlite/actions/workflows/publish.yml/badge.svg)](https://github.com/hopetambala/style-dictionary-dlite/actions/workflows/publish.yml)
 # dLite Tokens and CSS classes — Multi-Brand, Multi-Theme Design Foundation
 
 [Head to this page to checkout what's available!](https://hopetambala.github.io/style-dictionary-dlite/)
