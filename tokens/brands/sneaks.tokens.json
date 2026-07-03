@@ -74,11 +74,11 @@
                 "$extensions": { "mode": { "dark": "{primitive.color.neutral.900}" } }
               },
               "action-primary": {
-                "$value": "{primitive.color.saturated-red.700}",
+                "$value": "{primitive.color.saturated-red.900}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-red.500}" } }
               },
               "action-primary-active": {
-                "$value": "{primitive.color.saturated-red.800}",
+                "$value": "{primitive.color.saturated-red.1000}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-red.400}" } }
               },
               "feedback-info": {
