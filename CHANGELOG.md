@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.8](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.6...v0.3.8) (2026-07-03)
+
+
+### Features
+
+* fix a11y contrast ([c8658bd](https://github.com/hopetambala/style-dictionary-dlite/commit/c8658bd554007b5adfe0e4ade2a668c15fe9b1f2))
+
 ## [0.3.6](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.5...v0.3.6) (2026-07-01)
 
 ## [0.3.5](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.4...v0.3.5) (2026-07-01)
