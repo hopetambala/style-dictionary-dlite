@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.9](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.8...v0.3.9) (2026-07-05)
+
+
+### Features
+
+* dark mode redesign for sneaks brand ([94dc68b](https://github.com/hopetambala/style-dictionary-dlite/commit/94dc68b671f68c21df304fc0699aaa2a4291320b))
+
 ## [0.3.8](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.6...v0.3.8) (2026-07-03)
 
 
