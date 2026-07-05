@@ -255,7 +255,7 @@ export declare const light: {
   "tkDliteSemanticColorTextOnPrimary": "#ffffff",
   "tkDliteSemanticColorActionPrimary": "#d40000",
   "tkDliteSemanticColorActionPrimaryActive": "#b90000",
-  "tkDliteSemanticColorActionSecondary": "#f7f7f7",
+  "tkDliteSemanticColorActionSecondary": "#ff000012",
   "tkDliteSemanticColorActionSecondaryActive": "#d4d4d4",
   "tkDliteSemanticColorFeedbackInfo": "#0a46b6",
   "tkDliteSemanticColorFeedbackSuccess": "#006210",

@@ -248,8 +248,8 @@
   --tk-dlite-semantic-color-success: #8fb064;
   --tk-dlite-semantic-color-warning: #f3c409;
   --tk-dlite-semantic-color-error: #e9541e;
-  --tk-dlite-semantic-color-surface-base: #161616;
-  --tk-dlite-semantic-color-surface-sunken: #101010;
+  --tk-dlite-semantic-color-surface-base: #101010;
+  --tk-dlite-semantic-color-surface-sunken: #161616;
   --tk-dlite-semantic-color-surface-raised: #202020;
   --tk-dlite-semantic-color-surface-overlay: #000000;
   --tk-dlite-semantic-color-text-primary: #f7f7f7;
@@ -259,7 +259,7 @@
   --tk-dlite-semantic-color-text-on-primary: #161616;
   --tk-dlite-semantic-color-action-primary: #ff9a88;
   --tk-dlite-semantic-color-action-primary-active: #ffd1bc;
-  --tk-dlite-semantic-color-action-secondary: #202020;
+  --tk-dlite-semantic-color-action-secondary: #ff00001f;
   --tk-dlite-semantic-color-action-secondary-active: #464646;
   --tk-dlite-semantic-color-feedback-info: #70a1fc;
   --tk-dlite-semantic-color-feedback-success: #8fb064;
@@ -281,7 +281,7 @@
   --tk-dlite-semantic-color-feedback-warning-fg: #f7dd68;
   --tk-dlite-semantic-color-feedback-info-bg: #012371;
   --tk-dlite-semantic-color-feedback-info-fg: #a3c3fd;
-  --tk-dlite-semantic-color-border-subtle: #464646;
+  --tk-dlite-semantic-color-border-subtle: #202020;
   --tk-dlite-semantic-color-border-emphasis: #a5a5a5;
   --tk-dlite-semantic-z-index-default: 0;
   --tk-dlite-semantic-z-index-sticky: 50;
