@@ -257,8 +257,8 @@
   --tk-dlite-semantic-color-text-tertiary: #a5a5a5;
   --tk-dlite-semantic-color-text-on-brand: #161616;
   --tk-dlite-semantic-color-text-on-primary: #161616;
-  --tk-dlite-semantic-color-action-primary: #ff9a88;
-  --tk-dlite-semantic-color-action-primary-active: #ffd1bc;
+  --tk-dlite-semantic-color-action-primary: #ff0000;
+  --tk-dlite-semantic-color-action-primary-active: #ff6453;
   --tk-dlite-semantic-color-action-secondary: #ff00001f;
   --tk-dlite-semantic-color-action-secondary-active: #464646;
   --tk-dlite-semantic-color-feedback-info: #70a1fc;

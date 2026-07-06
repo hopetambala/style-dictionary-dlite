@@ -75,11 +75,11 @@
               },
               "action-primary": {
                 "$value": "{primitive.color.saturated-red.900}",
-                "$extensions": { "mode": { "dark": "{primitive.color.saturated-red.500}" } }
+                "$extensions": { "mode": { "dark": "{primitive.color.saturated-red.700}" } }
               },
               "action-primary-active": {
                 "$value": "{primitive.color.saturated-red.1000}",
-                "$extensions": { "mode": { "dark": "{primitive.color.saturated-red.400}" } }
+                "$extensions": { "mode": { "dark": "{primitive.color.saturated-red.600}" } }
               },
               "action-secondary": {
                 "$value": { "colorSpace": "srgb", "components": [1, 0, 0], "alpha": 0.07, "hex": "#ff000012" },
