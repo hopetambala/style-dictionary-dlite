@@ -8,30 +8,18 @@ import {
   formatRatio,
   semanticColors,
   wcagLevel,
-  type PairResult,
 } from '../build/a11y/contrast.ts';
 
 /**
  * Contrast gate (WCAG 2.2 AA).
  *
  * Puente is gated: every pair in CONTRAST_PAIRS must meet AA in light and dark,
- * except the pairs listed in PUENTE_KNOWN_GAPS. The other brands get a printed
- * report only, because their colours are owned by their own brand files.
+ * with no exceptions. The other brands get a printed report only, because their
+ * colours are owned by their own brand files.
  */
 
 const DIST_WEB = path.resolve('dist/web');
 const GATED_BRAND = 'puente';
-
-/**
- * Pairs that fail AA today and were not part of the approved Phase 0 values.
- * Each entry is asserted to STILL fail, so fixing one forces removing it here.
- * Key: `${mode}:${fg} on ${bg}`.
- */
-const PUENTE_KNOWN_GAPS: Record<string, string> = {
-  'light:feedback-warning-fg on feedback-warning-bg': 'yellow-800 on yellow-100 is 4.36:1',
-  'dark:feedback-danger on surface-raised': 'red-500 on neutral-800 is 4.46:1',
-  'dark:feedback-danger on surface-sunken': 'red-500 on neutral-800 is 4.46:1',
-};
 
 function readMode(brand: string, theme: string, mode: string): Record<string, string> {
   const file = path.join(DIST_WEB, brand, theme, mode === 'light' ? 'variables.css' : `variables.${mode}.css`);
@@ -54,8 +42,6 @@ function combos(): { brand: string; theme: string; mode: string }[] {
   }
   return out;
 }
-
-const key = (mode: string, r: PairResult) => `${mode}:${r.fg} on ${r.bg}`;
 
 describe('contrast math', () => {
   test('matches WCAG reference values', () => {
@@ -91,17 +77,18 @@ describe(`${GATED_BRAND} meets WCAG 2.2 AA`, () => {
         }
       });
 
+      test('text-secondary and text-tertiary stay distinct', () => {
+        // Text hierarchy collapses if the two greys match (they did briefly in 0.4.0 work).
+        expect(colors['text-secondary']).not.toBe(colors['text-tertiary']);
+        const ratio = contrastRatio(colors['text-secondary'], colors['text-tertiary']);
+        expect(ratio, `secondary vs tertiary is only ${formatRatio(ratio)}:1`).toBeGreaterThanOrEqual(1.3);
+      });
+
       for (const r of results) {
-        const k = key(mode, r);
-        const gap = PUENTE_KNOWN_GAPS[k];
-        test(`${r.fg} on ${r.bg} ≥ ${AA_MIN[r.kind]}:1${gap ? ' (known gap)' : ''}`, () => {
-          if (gap) {
-            expect(r.ratio, `${k} now passes; remove it from PUENTE_KNOWN_GAPS`).toBeLessThan(AA_MIN[r.kind]);
-          } else {
-            expect(r.ratio, `${k}: ${r.fgHex} on ${r.bgHex} is ${formatRatio(r.ratio)}:1`).toBeGreaterThanOrEqual(
-              AA_MIN[r.kind],
-            );
-          }
+        test(`${r.fg} on ${r.bg} ≥ ${AA_MIN[r.kind]}:1`, () => {
+          expect(r.ratio, `${mode} ${r.fg} on ${r.bg}: ${r.fgHex} on ${r.bgHex} is ${formatRatio(r.ratio)}:1`).toBeGreaterThanOrEqual(
+            AA_MIN[r.kind],
+          );
         });
       }
     });

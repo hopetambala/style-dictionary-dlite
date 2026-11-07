@@ -151,7 +151,7 @@ function panel(c: Combo): { html: string; fails: number } {
         <thead><tr><th scope="col">Foreground</th>${SURFACES.map((s) => `<th scope="col">on ${s}</th>`).join('')}</tr></thead>
         <tbody>
           <tr class="group"><td colspan="5">Text · needs ${AA_MIN.text}:1</td></tr>
-          ${surfaceRows(['text-primary', 'text-secondary', 'text-tertiary', 'text-link', 'feedback-success', 'feedback-warning', 'feedback-danger', 'feedback-info'])}
+          ${surfaceRows(['text-primary', 'text-secondary', 'text-tertiary', 'muted', 'text-link', 'feedback-success', 'feedback-warning', 'feedback-danger', 'feedback-info'])}
           <tr class="group"><td colspan="5">Controls, focus and fills · need ${AA_MIN['non-text']}:1</td></tr>
           ${surfaceRows(['border-control', 'focus-ring', 'action-primary'])}
           <tr class="group"><td colspan="5">Button labels and status badges · need ${AA_MIN.text}:1</td></tr>

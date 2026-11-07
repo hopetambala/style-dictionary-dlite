@@ -266,7 +266,7 @@
   --tk-dlite-semantic-color-feedback-success: #8fb064;
   --tk-dlite-semantic-color-feedback-success-active: #c5d8a7;
   --tk-dlite-semantic-color-feedback-warning: #f3c409;
-  --tk-dlite-semantic-color-feedback-danger: #e9541e;
+  --tk-dlite-semantic-color-feedback-danger: #ec9471; /** Dark is red-400 so error text clears 4.5:1 on surface-raised and surface-sunken (red-500 was 4.46:1). Set here, not in semantic, because Sneaks and Survivor inherit the semantic value. */
   --tk-dlite-semantic-color-feedback-danger-active: #ec9471;
   --tk-dlite-semantic-color-text-on-dark: #ffffffeb;
   --tk-dlite-semantic-color-text-on-dark-muted: #ffffff99;
@@ -279,7 +279,7 @@
   --tk-dlite-semantic-color-feedback-danger-bg: #6b1c0b;
   --tk-dlite-semantic-color-feedback-danger-fg: #f1b198;
   --tk-dlite-semantic-color-feedback-warning-bg: #623e00;
-  --tk-dlite-semantic-color-feedback-warning-fg: #f7dd68;
+  --tk-dlite-semantic-color-feedback-warning-fg: #f7dd68; /** yellow-900 so badge text clears 4.5:1 on feedback-warning-bg (yellow-800 was 4.36:1). Set here, not in semantic, because Kooky, Sneaks and Survivor inherit the semantic value. */
   --tk-dlite-semantic-color-feedback-info-bg: #012371;
   --tk-dlite-semantic-color-feedback-info-fg: #a3c3fd;
   --tk-dlite-semantic-color-border-subtle: #464646;

@@ -85,6 +85,10 @@ describe('puente contrast values (Phase 0 table)', () => {
       'color-action-primary-active': '#043393', // blue-800
       'color-text-on-primary': '#ffffff',
       'color-text-tertiary': '#6e6e6e', // neutral-600
+      'color-text-secondary': '#464646', // neutral-700
+      'color-muted': '#6e6e6e', // neutral-600
+      'color-feedback-danger': '#bf3813', // red-700, unchanged
+      'color-feedback-warning-fg': '#623e00', // yellow-900
       'color-text-link': '#1b5fdb',
       'color-border-control': '#6e6e6e',
       'color-focus-ring': '#1b5fdb',
@@ -95,6 +99,10 @@ describe('puente contrast values (Phase 0 table)', () => {
       'color-action-primary-active': '#a3c3fd', // blue-300, unchanged
       'color-text-on-primary': '#161616', // neutral-900
       'color-text-tertiary': '#a5a5a5', // neutral-500, unchanged
+      'color-text-secondary': '#d4d4d4', // neutral-300, unchanged
+      'color-muted': '#c4c4c4', // neutral-400, unchanged
+      'color-feedback-danger': '#ec9471', // red-400
+      'color-feedback-warning-fg': '#f7dd68', // yellow-300, unchanged
       'color-text-link': '#70a1fc',
       'color-border-control': '#6e6e6e',
       'color-focus-ring': '#a3c3fd', // blue-300

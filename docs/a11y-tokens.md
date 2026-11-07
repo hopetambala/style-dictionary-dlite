@@ -53,5 +53,11 @@ The plan below is copied from the Manage overhaul plan (`docs/responsive-a11y-ov
 - **Focus ring colour.** Light is an alias of `action-primary` (the table), not blue-700 (the bullet in step 2). Dark is blue-300.
 - **Other brands.** Kooky, Sneaks and Survivor (all three themes) set `focus-ring` to their own `action-primary` and `action-primary-hover` to their own `action-primary-active`, so Puente blue doesn't leak into them. `border-control` is neutral-600 for every brand. Their existing token values are unchanged; the dist diff for them is additions only.
 - **Shared math.** `build/a11y/contrast.ts` holds the WCAG luminance math and the pair list. Both the gate and `preview/contrast.html` import it.
-- **Known gaps in the gate.** Three Puente pairs miss AA and weren't part of the approved values: dark `feedback-danger` on `surface-raised` / `surface-sunken` (4.46:1) and light `feedback-warning-fg` on `feedback-warning-bg` (4.36:1). `PUENTE_KNOWN_GAPS` in `__tests__/contrast.test.ts` lists them and fails once one is fixed. `muted` (neutral-500, 2.30:1, used by `.text-muted`) isn't gated.
+- **Four follow-up fixes (approved by Hope before merge).**
+  - Light `text-secondary` neutral-600 → neutral-700 (#464646, 8.81:1). With `text-tertiary` at neutral-600 the two greys were identical; the gate now checks they stay distinct.
+  - Light `muted` neutral-500 → neutral-600 (4.76:1). `muted` is now gated, since `.text-muted` uses it.
+  - Puente dark `feedback-danger` red-500 → red-400 (4.46 → 7.01:1 on `surface-raised` / `surface-sunken`).
+  - Puente `feedback-warning-fg` yellow-800 → yellow-900 (4.36 → 8.25:1 on `feedback-warning-bg`).
+  - The first two are in the shared semantic layer: every other brand overrides `text-secondary` and `muted`. The last two are in `tokens/brands/puente.tokens.json`, because Sneaks and Survivor inherit the semantic `feedback-danger` and every other brand inherits `feedback-warning-fg`, so an upstream change would have recoloured them. The gate has no exceptions for Puente in light or dark.
+  - Puente dark `feedback-danger` and `feedback-danger-active` are now both red-400.
 - **Not changed.** The `.focus-ring` and `.shadow-focus` utilities in `semantics.css` still use the glow, so no brand's `semantics.css` changes in this release.

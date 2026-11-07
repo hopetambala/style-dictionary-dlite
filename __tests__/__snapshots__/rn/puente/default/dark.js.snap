@@ -262,7 +262,7 @@ export const dark = {
   "tkDliteSemanticColorFeedbackSuccess": "#8fb064",
   "tkDliteSemanticColorFeedbackSuccessActive": "#c5d8a7",
   "tkDliteSemanticColorFeedbackWarning": "#f3c409",
-  "tkDliteSemanticColorFeedbackDanger": "#e9541e",
+  "tkDliteSemanticColorFeedbackDanger": "#ec9471",
   "tkDliteSemanticColorFeedbackDangerActive": "#ec9471",
   "tkDliteSemanticColorTextOnDark": "#ffffffeb",
   "tkDliteSemanticColorTextOnDarkMuted": "#ffffff99",

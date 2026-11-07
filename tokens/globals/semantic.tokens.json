@@ -33,7 +33,7 @@
         }
       },
       "muted": {
-        "$value": "{primitive.color.neutral.500}",
+        "$value": "{primitive.color.neutral.600}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.neutral.400}"
@@ -108,7 +108,7 @@
         }
       },
       "text-secondary": {
-        "$value": "{primitive.color.neutral.600}",
+        "$value": "{primitive.color.neutral.700}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.neutral.300}"

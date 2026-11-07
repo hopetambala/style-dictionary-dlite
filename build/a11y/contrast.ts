@@ -74,6 +74,7 @@ const TEXT_ON_SURFACES = [
   'text-primary',
   'text-secondary',
   'text-tertiary',
+  'muted',
   'text-link',
   'feedback-success',
   'feedback-warning',
@@ -90,7 +91,7 @@ const NON_TEXT_ON_SURFACES: [string, string][] = [
 /** Every pair the gate checks, for one brand × mode. */
 export const CONTRAST_PAIRS: ContrastPair[] = [
   ...TEXT_ON_SURFACES.flatMap((fg) =>
-    SURFACES.map((bg) => ({ fg, bg, kind: 'text' as const, role: fg.startsWith('feedback') ? 'Status text' : 'Body text' })),
+    SURFACES.map((bg) => ({ fg, bg, kind: 'text' as const, role: fg.startsWith('feedback') ? 'Status text' : fg === 'muted' ? 'Muted text (.text-muted)' : 'Body text' })),
   ),
   ...['action-primary', 'action-primary-hover', 'action-primary-active'].map((bg) => ({
     fg: 'text-on-primary',
