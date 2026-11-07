@@ -44,3 +44,17 @@ export function webPlatform(brandName: string, theme: string, mode: string) {
     },
   };
 }
+
+/** Brand-independent web outputs, built once from the shared semantic layer. */
+export function webGlobalPlatform() {
+  return {
+    'web-global': {
+      transforms: ['attribute/cti', 'name/brand-tier-kebab'],
+      buildPath: 'dist/web/',
+      files: [
+        { destination: 'custom-media.css', format: 'css/custom-media' },
+        { destination: 'breakpoints.json', format: 'json/breakpoints' },
+      ],
+    },
+  };
+}

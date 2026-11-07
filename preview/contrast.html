@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dlite Contrast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Page chrome is neutral on purpose: every swatch below is painted with its own brand × mode tokens. */
+    :root {
+      --page-bg: #f4f4f5; --page-fg: #18181b; --page-muted: #52525b; --page-line: #d4d4d8; --page-card: #ffffff;
+      --ok: #166534; --ok-bg: #dcfce7; --aaa: #1e3a8a; --aaa-bg: #dbeafe; --bad: #991b1b; --bad-bg: #fee2e2;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page-bg: #111113; --page-fg: #f4f4f5; --page-muted: #a1a1aa; --page-line: #3f3f46; --page-card: #1c1c1f;
+        --ok: #86efac; --ok-bg: #14301f; --aaa: #93c5fd; --aaa-bg: #172554; --bad: #fca5a5; --bad-bg: #3b1212;
+        color-scheme: dark;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--page-bg); color: var(--page-fg); font: 15px/1.5 'Plus Jakarta Sans', system-ui, sans-serif; }
+    a { color: inherit; }
+    .wrap { max-width: 1400px; margin: 0 auto; padding: 24px 16px 64px; display: grid; gap: 24px; }
+    header { display: grid; gap: 8px; }
+    h1 { margin: 0; font-size: clamp(22px, 3vw, 30px); line-height: 1.2; }
+    .lede { margin: 0; color: var(--page-muted); max-width: 80ch; }
+    .controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; position: sticky; top: 0; z-index: 10;
+      background: var(--page-bg); padding: 10px 0; border-bottom: 1px solid var(--page-line); }
+    .controls label { font-size: 13px; font-weight: 600; display: inline-flex; gap: 8px; align-items: center; }
+    .controls select { font: inherit; font-size: 14px; min-height: 36px; padding: 4px 8px; border-radius: 6px;
+      border: 1px solid var(--page-muted); background: var(--page-card); color: var(--page-fg); }
+    .controls input[type=checkbox] { width: 18px; height: 18px; }
+    .summary { font-size: 13px; color: var(--page-muted); margin-left: auto; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--page-muted); }
+    .brand { display: grid; gap: 12px; }
+    .brand > h2 { margin: 0; font-size: 18px; }
+    .modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 560px), 1fr)); gap: 16px; }
+    .panel { border: 1px solid var(--page-line); border-radius: 12px; overflow: hidden; background: var(--page-card); min-width: 0; }
+    .panel > .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 10px 14px;
+      border-bottom: 1px solid var(--page-line); font-weight: 600; }
+    .panel > .head .fails { font-size: 13px; font-weight: 600; }
+    .specimen { padding: 16px; display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center;
+      background: var(--tk-dlite-semantic-color-background); color: var(--tk-dlite-semantic-color-text-primary);
+      font-family: var(--tk-dlite-semantic-typography-font-heading), system-ui, sans-serif; }
+    .specimen p { margin: 0; flex-basis: 100%; }
+    .specimen .t2 { color: var(--tk-dlite-semantic-color-text-secondary); }
+    .specimen .t3 { color: var(--tk-dlite-semantic-color-text-tertiary); }
+    .specimen .link { color: var(--c-link); text-decoration: underline; text-underline-offset: 2px; }
+    .specimen .btn { font: inherit; font-weight: 600; font-size: 14px; border: 0; border-radius: 8px; padding: 10px 16px; min-height: 44px;
+      background: var(--tk-dlite-semantic-color-action-primary); color: var(--tk-dlite-semantic-color-text-on-primary); }
+    .specimen .btn.hover { background: var(--c-hover); }
+    .specimen .btn.focus { outline: var(--c-ring-width) solid var(--c-ring); outline-offset: var(--c-ring-offset); }
+    .specimen .btn.glow { outline: 0; box-shadow: 0 0 0 2px var(--c-ring); }
+    .specimen .field { display: grid; gap: 4px; font-size: 13px; color: var(--tk-dlite-semantic-color-text-secondary); }
+    .specimen .input { width: 180px; min-height: 40px; border-radius: 6px; border: 1px solid var(--c-control);
+      background: var(--tk-dlite-semantic-color-surface-base); color: var(--tk-dlite-semantic-color-text-primary); padding: 8px 10px; font: inherit; font-size: 14px; }
+    .specimen .check { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+    .specimen .box { width: 18px; height: 18px; border: 2px solid var(--c-control); border-radius: 4px; background: var(--tk-dlite-semantic-color-surface-base); }
+    .specimen .radio { width: 18px; height: 18px; border: 2px solid var(--c-control); border-radius: 50%; background: var(--tk-dlite-semantic-color-surface-base); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .scroll { overflow-x: auto; }
+    th, td { padding: 6px 8px; border-top: 1px solid var(--page-line); text-align: left; vertical-align: middle; }
+    th { font-weight: 600; color: var(--page-muted); font-size: 12px; white-space: nowrap; }
+    th[scope=row] { color: var(--page-fg); font-family: 'Source Code Pro', ui-monospace, monospace; font-weight: 500; }
+    th[scope=row] small { display: block; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--page-muted); font-weight: 400; }
+    .group td { background: var(--page-bg); font-weight: 600; font-size: 12px; color: var(--page-muted); text-transform: uppercase; letter-spacing: .05em; }
+    .cell { display: flex; align-items: center; gap: 8px; min-width: 132px; }
+    .chip { flex: none; width: 44px; height: 32px; border-radius: 6px; display: grid; place-items: center; font-weight: 700; font-size: 15px;
+      border: 1px solid var(--page-line); font-family: var(--tk-dlite-semantic-typography-font-heading), system-ui, sans-serif; }
+    .chip.nt span { width: 24px; height: 14px; border-radius: 3px; }
+    .chip.nt.ring span { background: transparent; }
+    .num { font-variant-numeric: tabular-nums; font-family: 'Source Code Pro', ui-monospace, monospace; }
+    .badge { font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 999px; white-space: nowrap; }
+    .b-AAA { background: var(--aaa-bg); color: var(--aaa); }
+    .b-AA { background: var(--ok-bg); color: var(--ok); }
+    .b-fail { background: var(--bad-bg); color: var(--bad); }
+    .fallback { display: block; font-size: 11px; color: var(--bad); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    .only-fails tr.pass { display: none; }
+    .error { color: var(--bad); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Contrast by brand and mode</h1>
+      <p class="lede">Every brand × mode, painted with its built tokens. Ratios are WCAG 2.2 contrast, computed live from <code>dist/web/*/variables*.css</code>.
+        Text needs 4.5:1 (AA) or 7:1 (AAA). Control boundaries, focus rings and button fills need 3:1 against the surface.
+        Rows marked “not defined” use the fallback a consumer would reach for today.</p>
+      <p class="lede"><a href="./index.html">← Token preview</a></p>
+    </header>
+    <div class="controls" role="group" aria-label="Filters">
+      <label>Brand <select id="brand"><option value="">All brands</option></select></label>
+      <label><input type="checkbox" id="fails" /> Show failures only</label>
+      <span class="summary" id="summary" aria-live="polite"></span>
+    </div>
+    <div class="legend"><span><span class="badge b-AAA">AAA</span> ≥ 7:1 text</span><span><span class="badge b-AA">AA</span> ≥ 4.5:1 text, ≥ 3:1 non-text</span><span><span class="badge b-fail">Fail</span> below AA</span></div>
+    <main id="out"><p>Loading tokens…</p></main>
+  </div>
+  <script type="module" src="./contrast.ts"></script>
+</body>
+</html>

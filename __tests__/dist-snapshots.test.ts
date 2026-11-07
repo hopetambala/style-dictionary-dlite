@@ -89,6 +89,16 @@ describe('manifest', () => {
   });
 });
 
+// ── Global (brand-independent) web outputs ──
+describe('global web outputs', () => {
+  for (const file of ['custom-media.css', 'breakpoints.json']) {
+    test(`${file} matches snapshot`, async () => {
+      const content = fs.readFileSync(path.join(DIST_WEB, file), 'utf-8');
+      await expect(content).toMatchFileSnapshot(`__snapshots__/web/${file}.snap`);
+    });
+  }
+});
+
 // ── React Native snapshots ──
 const rnBrands = fs.existsSync(DIST_RN)
   ? fs.readdirSync(DIST_RN, { withFileTypes: true })

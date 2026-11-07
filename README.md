@@ -117,6 +117,8 @@ At build time, `build.ts`:
 
 ```
 dist/web/
+├── custom-media.css               ← breakpoints as @custom-media (all brands)
+├── breakpoints.json               ← breakpoints as px numbers, for JS
 ├── puente/
 │   └── default/
 │       ├── variables.css          ← light mode CSS custom properties
@@ -221,13 +223,41 @@ Animation values (durations, spring presets, easing, scale, opacity) ship under 
 - [Motion usage — Web (pure CSS)](docs/MOTION_USAGE_WEB.md)
 - [Motion usage — React Native (Reanimated)](docs/MOTION_USAGE_REACT_NATIVE.md)
 
+### Accessibility and layout tokens
+
+Every brand ships these semantic tokens (web names shown; React Native uses the camelCase `tkDliteSemantic*` keys):
+
+| Token | Use | Puente light / dark |
+|-------|-----|---------------------|
+| `--tk-dlite-semantic-color-text-link` | Inline link text. Follows `action-primary`. | #1b5fdb / #70a1fc |
+| `--tk-dlite-semantic-color-border-control` | Boundary of inputs, checkboxes and radios (3:1, WCAG 1.4.11). Decorative dividers keep `color-border`. | #6e6e6e / #6e6e6e |
+| `--tk-dlite-semantic-color-focus-ring` | Focus indicator colour (3:1 against the surface). | #1b5fdb / #a3c3fd |
+| `--tk-dlite-semantic-focus-ring-width` / `-offset` | Focus outline width and offset. | 2px / 2px |
+| `--tk-dlite-semantic-color-action-primary-hover` | Primary button hover fill. | #0a46b6 / #a3c3fd |
+| `--tk-dlite-semantic-sizing-target-min` | Minimum pointer target (WCAG 2.5.8). | 24px |
+| `--tk-dlite-semantic-sizing-target-comfortable` | Comfortable touch target. | 44px |
+
+```css
+:focus-visible {
+  outline: var(--tk-dlite-semantic-focus-ring-width) solid var(--tk-dlite-semantic-color-focus-ring);
+  outline-offset: var(--tk-dlite-semantic-focus-ring-offset);
+}
+```
+
+Breakpoints (`semantic.breakpoint`: sm 640, md 768, lg 1024, xl 1280) can't be used inside `@media` as custom properties, so the build also writes two brand-independent files:
+
+- `web/custom-media.css`: `@custom-media --tk-dlite-bp-{sm,md,lg,xl}-up` (`min-width`) and `-down` (`max-width: <bp - 0.02px>`, so `-up` and `-down` never overlap). Needs [postcss-custom-media](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media) or native support.
+- `web/breakpoints.json`: `{ "sm": 640, "md": 768, "lg": 1024, "xl": 1280 }` for JS, such as an MUI theme.
+
+**Contrast gate.** `__tests__/contrast.test.ts` fails the build if any Puente text pair drops below 4.5:1, or a control border, focus ring or button fill below 3:1, in light or dark. It prints the same report for the other brands without failing. `preview/contrast.html` shows every brand × mode with rendered swatches and live ratios. See [docs/a11y-tokens.md](docs/a11y-tokens.md) for the values and why they changed in 0.4.0.
+
 ### Build commands
 
 ```sh
 npm install
 npm run build          # generates dist/
 npm run clean          # removes dist/
-npm run test           # runs snapshot tests against dist/
+npm run test           # snapshot tests + contrast gate against dist/
 npm run test:update    # updates snapshots after intentional changes
 ```
 
@@ -248,7 +278,7 @@ To build the static preview site (same page deployed to GitHub Pages):
 npm run build:preview
 ```
 
-The live preview is available at **https://hopetambala.github.io/style-dictionary-dlite/**.
+The live preview is available at **https://hopetambala.github.io/style-dictionary-dlite/**. The contrast report is at `contrast.html` on the same site.
 
 ## Adding a new brand
 
