@@ -258,6 +258,7 @@
   --tk-dlite-semantic-color-text-on-brand: #052b1a;
   --tk-dlite-semantic-color-text-on-primary: #052b1a;
   --tk-dlite-semantic-color-action-primary: #81c7b0;
+  --tk-dlite-semantic-color-action-primary-hover: #9fd7c3;
   --tk-dlite-semantic-color-action-primary-active: #9fd7c3;
   --tk-dlite-semantic-color-action-secondary: #0b5223;
   --tk-dlite-semantic-color-action-secondary-active: #006210;
@@ -283,6 +284,11 @@
   --tk-dlite-semantic-color-feedback-info-fg: #a3c3fd;
   --tk-dlite-semantic-color-border-subtle: #464646;
   --tk-dlite-semantic-color-border-emphasis: #a5a5a5;
+  --tk-dlite-semantic-color-border-control: #6e6e6e; /** 3:1 boundary for inputs, checkboxes and radios (WCAG 1.4.11). Decorative dividers keep using border. */
+  --tk-dlite-semantic-color-text-link: #81c7b0; /** Inline link text. Follows action-primary. */
+  --tk-dlite-semantic-color-focus-ring: #81c7b0;
+  --tk-dlite-semantic-focus-ring-width: 2px;
+  --tk-dlite-semantic-focus-ring-offset: 2px;
   --tk-dlite-semantic-z-index-default: 0;
   --tk-dlite-semantic-z-index-sticky: 50;
   --tk-dlite-semantic-z-index-dropdown: 100;
@@ -367,6 +373,8 @@
   --tk-dlite-semantic-sizing-icon-sm: 1rem;
   --tk-dlite-semantic-sizing-icon-md: 1.5rem;
   --tk-dlite-semantic-sizing-icon-lg: 2rem;
+  --tk-dlite-semantic-sizing-target-min: 24px; /** Minimum pointer target (WCAG 2.5.8, AA). */
+  --tk-dlite-semantic-sizing-target-comfortable: 44px; /** Comfortable touch target (WCAG 2.5.5, AAA / platform guidance). */
   --tk-dlite-semantic-sizing-modal-width-narrow: 20rem;
   --tk-dlite-semantic-sizing-modal-width-normal: 40rem;
   --tk-dlite-semantic-sizing-modal-width-wide: 60rem;

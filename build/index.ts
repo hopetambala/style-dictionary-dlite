@@ -5,7 +5,7 @@ import type { TokenTree } from './types.ts';
 import { loadTokenFiles, resolveExtends, extractTokens, discoverThemes } from './tokens.ts';
 import './transforms/index.ts';
 import './formats/index.ts';
-import { webPlatform, reactNativePlatform } from './platform/index.ts';
+import { webPlatform, webGlobalPlatform, reactNativePlatform } from './platform/index.ts';
 import { generateManifest } from './manifest/index.ts';
 
 console.log('Build started...');
@@ -46,6 +46,19 @@ for (const brandName of brandNames) {
 
     await sd.buildAllPlatforms();
   }
+}
+
+// ── Global web outputs (brand-independent): breakpoints as @custom-media + JSON ──
+{
+  console.log(`\n==============================================`);
+  console.log(`\nProcessing web: [global]`);
+  const semantic = (resolved.semantic ?? {}) as TokenTree;
+  const sd = new StyleDictionary({
+    tokens: { breakpoint: structuredClone(semantic.breakpoint) },
+    usesDtcg: true,
+    platforms: webGlobalPlatform(),
+  } as any);
+  await sd.buildAllPlatforms();
 }
 
 // ── React Native build (combined JS per brand/theme) ──

@@ -33,7 +33,7 @@
         }
       },
       "muted": {
-        "$value": "{primitive.color.neutral.500}",
+        "$value": "{primitive.color.neutral.600}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.neutral.400}"
@@ -108,7 +108,7 @@
         }
       },
       "text-secondary": {
-        "$value": "{primitive.color.neutral.600}",
+        "$value": "{primitive.color.neutral.700}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.neutral.300}"
@@ -116,7 +116,12 @@
         }
       },
       "text-tertiary": {
-        "$value": "{primitive.color.neutral.500}"
+        "$value": "{primitive.color.neutral.600}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.neutral.500}"
+          }
+        }
       },
       "text-on-brand": {
         "$value": "{primitive.color.neutral.900}",
@@ -130,20 +135,28 @@
         "$value": "{primitive.color.white}",
         "$extensions": {
           "mode": {
-            "dark": "{primitive.color.white}"
+            "dark": "{primitive.color.neutral.900}"
           }
         }
       },
       "action-primary": {
-        "$value": "{primitive.color.blue.500}",
+        "$value": "{primitive.color.blue.600}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.blue.400}"
           }
         }
       },
-      "action-primary-active": {
+      "action-primary-hover": {
         "$value": "{primitive.color.blue.700}",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.blue.300}"
+          }
+        }
+      },
+      "action-primary-active": {
+        "$value": "{primitive.color.blue.800}",
         "$extensions": {
           "mode": {
             "dark": "{primitive.color.blue.300}"
@@ -271,6 +284,33 @@
       "border-emphasis": {
         "$value": "{primitive.color.neutral.400}",
         "$extensions": { "mode": { "dark": "{primitive.color.neutral.500}" } }
+      },
+      "border-control": {
+        "$value": "{primitive.color.neutral.600}",
+        "$description": "3:1 boundary for inputs, checkboxes and radios (WCAG 1.4.11). Decorative dividers keep using border."
+      },
+      "text-link": {
+        "$value": "{color.action-primary}",
+        "$description": "Inline link text. Follows action-primary."
+      },
+      "focus-ring": {
+        "$value": "{color.action-primary}",
+        "$description": "Focus indicator colour (WCAG 2.4.7 / 1.4.11, 3:1 against the surface).",
+        "$extensions": {
+          "mode": {
+            "dark": "{primitive.color.blue.300}"
+          }
+        }
+      }
+    },
+    "focus-ring": {
+      "width": {
+        "$type": "dimension",
+        "$value": "2px"
+      },
+      "offset": {
+        "$type": "dimension",
+        "$value": "2px"
       }
     },
     "z-index": {
@@ -575,6 +615,14 @@
       },
       "icon-lg": {
         "$value": "2rem"
+      },
+      "target-min": {
+        "$value": "24px",
+        "$description": "Minimum pointer target (WCAG 2.5.8, AA)."
+      },
+      "target-comfortable": {
+        "$value": "44px",
+        "$description": "Comfortable touch target (WCAG 2.5.5, AAA / platform guidance)."
       },
       "modal-width-narrow": {
         "$value": "20rem"

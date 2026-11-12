@@ -75,6 +75,8 @@
                 "$value": "{primitive.color.saturated-yellow.700}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-yellow.500}" } }
               },
+              "action-primary-hover": { "$value": "{color.action-primary-active}" },
+              "focus-ring": { "$value": "{color.action-primary}" },
               "action-secondary": {
                 "$value": "{primitive.color.saturated-pink.700}",
                 "$extensions": { "mode": { "dark": "{primitive.color.saturated-pink.500}" } }

@@ -15,6 +15,11 @@ jobs:
         with:
           node-version: 22
 
+      # Match publish.yml: npm 10.x (Node 22's default) crashes resolving this
+      # tree without a lockfile ("Cannot read properties of null (reading 'edgesOut')").
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: rm -f package-lock.json && npm install
 

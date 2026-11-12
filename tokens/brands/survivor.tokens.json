@@ -75,6 +75,8 @@
                 "$value": "{primitive.color.orange.700}",
                 "$extensions": { "mode": { "dark": "{primitive.color.orange.400}" } }
               },
+              "action-primary-hover": { "$value": "{color.action-primary-active}" },
+              "focus-ring": { "$value": "{color.action-primary}" },
               "action-secondary": {
                 "$value": "{primitive.color.sand.200}",
                 "$extensions": { "mode": { "dark": "{primitive.color.sand.800}" } }
@@ -167,6 +169,8 @@
                 "$value": "{primitive.color.red.800}",
                 "$extensions": { "mode": { "dark": "{primitive.color.red.300}" } }
               },
+              "action-primary-hover": { "$value": "{color.action-primary-active}" },
+              "focus-ring": { "$value": "{color.action-primary}" },
               "action-secondary": {
                 "$value": "{primitive.color.green.100}",
                 "$extensions": { "mode": { "dark": "{primitive.color.green.900}" } }
@@ -265,6 +269,8 @@
                 "$value": "{primitive.color.green.900}",
                 "$extensions": { "mode": { "dark": "{primitive.color.mint.400}" } }
               },
+              "action-primary-hover": { "$value": "{color.action-primary-active}" },
+              "focus-ring": { "$value": "{color.action-primary}" },
               "action-secondary": {
                 "$value": "{primitive.color.mint.200}",
                 "$extensions": { "mode": { "dark": "{primitive.color.green.800}" } }

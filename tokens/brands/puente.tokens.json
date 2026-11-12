@@ -10,7 +10,21 @@
     "themes": {
       "default": {
         "modes": {
-          "light": {},
+          "light": {
+            "color": {
+              "$type": "color",
+              "feedback-danger": {
+                "$value": "{primitive.color.red.700}",
+                "$description": "Dark is red-400 so error text clears 4.5:1 on surface-raised and surface-sunken (red-500 was 4.46:1). Set here, not in semantic, because Sneaks and Survivor inherit the semantic value.",
+                "$extensions": { "mode": { "dark": "{primitive.color.red.400}" } }
+              },
+              "feedback-warning-fg": {
+                "$value": "{primitive.color.yellow.900}",
+                "$description": "yellow-900 so badge text clears 4.5:1 on feedback-warning-bg (yellow-800 was 4.36:1). Set here, not in semantic, because Kooky, Sneaks and Survivor inherit the semantic value.",
+                "$extensions": { "mode": { "dark": "{primitive.color.yellow.300}" } }
+              }
+            }
+          },
           "dark": {}
         }
       }

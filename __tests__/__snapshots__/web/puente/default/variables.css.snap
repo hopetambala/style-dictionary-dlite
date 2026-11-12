@@ -243,7 +243,7 @@
   --tk-dlite-semantic-color-brand: #f3c409;
   --tk-dlite-semantic-color-background: #f7f7f7;
   --tk-dlite-semantic-color-foreground: #161616;
-  --tk-dlite-semantic-color-muted: #a5a5a5;
+  --tk-dlite-semantic-color-muted: #6e6e6e;
   --tk-dlite-semantic-color-border: #d4d4d4;
   --tk-dlite-semantic-color-success: #006210;
   --tk-dlite-semantic-color-warning: #976500;
@@ -253,19 +253,20 @@
   --tk-dlite-semantic-color-surface-raised: #ffffff;
   --tk-dlite-semantic-color-surface-overlay: #000000;
   --tk-dlite-semantic-color-text-primary: #161616;
-  --tk-dlite-semantic-color-text-secondary: #6e6e6e;
-  --tk-dlite-semantic-color-text-tertiary: #a5a5a5;
+  --tk-dlite-semantic-color-text-secondary: #464646;
+  --tk-dlite-semantic-color-text-tertiary: #6e6e6e;
   --tk-dlite-semantic-color-text-on-brand: #161616;
   --tk-dlite-semantic-color-text-on-primary: #ffffff;
-  --tk-dlite-semantic-color-action-primary: #3d80fc;
-  --tk-dlite-semantic-color-action-primary-active: #0a46b6;
+  --tk-dlite-semantic-color-action-primary: #1b5fdb;
+  --tk-dlite-semantic-color-action-primary-hover: #0a46b6;
+  --tk-dlite-semantic-color-action-primary-active: #043393;
   --tk-dlite-semantic-color-action-secondary: #f7f7f7;
   --tk-dlite-semantic-color-action-secondary-active: #d4d4d4;
   --tk-dlite-semantic-color-feedback-info: #1b5fdb;
   --tk-dlite-semantic-color-feedback-success: #006210;
   --tk-dlite-semantic-color-feedback-success-active: #0b5223;
   --tk-dlite-semantic-color-feedback-warning: #976500;
-  --tk-dlite-semantic-color-feedback-danger: #bf3813;
+  --tk-dlite-semantic-color-feedback-danger: #bf3813; /** Dark is red-400 so error text clears 4.5:1 on surface-raised and surface-sunken (red-500 was 4.46:1). Set here, not in semantic, because Sneaks and Survivor inherit the semantic value. */
   --tk-dlite-semantic-color-feedback-danger-active: #8e280e;
   --tk-dlite-semantic-color-text-on-dark: #ffffffeb;
   --tk-dlite-semantic-color-text-on-dark-muted: #ffffff99;
@@ -278,11 +279,16 @@
   --tk-dlite-semantic-color-feedback-danger-bg: #fbe8e1;
   --tk-dlite-semantic-color-feedback-danger-fg: #bf3813;
   --tk-dlite-semantic-color-feedback-warning-bg: #faefc5;
-  --tk-dlite-semantic-color-feedback-warning-fg: #976500;
+  --tk-dlite-semantic-color-feedback-warning-fg: #623e00; /** yellow-900 so badge text clears 4.5:1 on feedback-warning-bg (yellow-800 was 4.36:1). Set here, not in semantic, because Kooky, Sneaks and Survivor inherit the semantic value. */
   --tk-dlite-semantic-color-feedback-info-bg: #ebf2ff;
   --tk-dlite-semantic-color-feedback-info-fg: #0a46b6;
   --tk-dlite-semantic-color-border-subtle: #e9e9e9;
   --tk-dlite-semantic-color-border-emphasis: #c4c4c4;
+  --tk-dlite-semantic-color-border-control: #6e6e6e; /** 3:1 boundary for inputs, checkboxes and radios (WCAG 1.4.11). Decorative dividers keep using border. */
+  --tk-dlite-semantic-color-text-link: #1b5fdb; /** Inline link text. Follows action-primary. */
+  --tk-dlite-semantic-color-focus-ring: #1b5fdb; /** Focus indicator colour (WCAG 2.4.7 / 1.4.11, 3:1 against the surface). */
+  --tk-dlite-semantic-focus-ring-width: 2px;
+  --tk-dlite-semantic-focus-ring-offset: 2px;
   --tk-dlite-semantic-z-index-default: 0;
   --tk-dlite-semantic-z-index-sticky: 50;
   --tk-dlite-semantic-z-index-dropdown: 100;
@@ -367,6 +373,8 @@
   --tk-dlite-semantic-sizing-icon-sm: 1rem;
   --tk-dlite-semantic-sizing-icon-md: 1.5rem;
   --tk-dlite-semantic-sizing-icon-lg: 2rem;
+  --tk-dlite-semantic-sizing-target-min: 24px; /** Minimum pointer target (WCAG 2.5.8, AA). */
+  --tk-dlite-semantic-sizing-target-comfortable: 44px; /** Comfortable touch target (WCAG 2.5.5, AAA / platform guidance). */
   --tk-dlite-semantic-sizing-modal-width-narrow: 20rem;
   --tk-dlite-semantic-sizing-modal-width-normal: 40rem;
   --tk-dlite-semantic-sizing-modal-width-wide: 60rem;
