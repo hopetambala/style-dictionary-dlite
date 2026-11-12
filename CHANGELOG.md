@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.0](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.10...v0.4.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Puente's action-primary, action-primary-active,
+text-tertiary and dark text-on-primary values change. Consumers pinned
+to ^0.3 keep the old colours until they opt in to 0.4.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+* ci: upgrade npm before the lockfile-less install
+
+npm 10.9.9 (Node 22's default on the runner) crashes resolving this
+dependency tree without a lockfile: "Cannot read properties of null
+(reading 'edgesOut')". npm 11 resolves it. publish.yml already upgrades
+npm first, so CI now runs the same install that publishing does.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+* fix: close Puente's remaining contrast gaps
+
+- text-secondary (light): neutral-600 -> neutral-700. It had become the
+  same grey as text-tertiary, so the text hierarchy collapsed.
+- muted (light): neutral-500 -> neutral-600 (2.30 -> 4.76:1); now gated.
+- Puente feedback-danger (dark): red-500 -> red-400 (4.46 -> 7.01:1 on
+  surface-raised/sunken).
+- Puente feedback-warning-fg (light): yellow-800 -> yellow-900
+  (4.36 -> 8.25:1 on feedback-warning-bg).
+
+The last two are Puente brand overrides because Sneaks and Survivor
+inherit the semantic feedback-danger and every other brand inherits
+feedback-warning-fg. Other brands' outputs are unchanged.
+
+The contrast gate drops its known-gap exceptions and checks that
+text-secondary and text-tertiary stay distinct.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+### Features
+
+* accessible contrast, focus, target and breakpoint tokens ([#13](https://github.com/hopetambala/style-dictionary-dlite/issues/13)) ([ce0720b](https://github.com/hopetambala/style-dictionary-dlite/commit/ce0720b4744816cf8d97f06d65dbcd50a6a604f5))
+
 ## [0.3.10](https://github.com/hopetambala/style-dictionary-dlite/compare/v0.3.9...v0.3.10) (2026-07-06)
 
 
